@@ -1,0 +1,206 @@
+{
+  "base_commit": "7c9070ba9e82113dab6e7335a1d716bec17d4f91",
+  "canonical_dispatched": false,
+  "canonical_tree_rss_limit_bytes": 12884901888,
+  "contracts": {
+    "new_files": {
+      "contracts/evaluation/v38/development_policies.default.json": "09c6ba0eef4275f83af027911ad79fe5f6c411fdbdaa2f6a2bef935adf24bf53",
+      "contracts/evaluation/v38/development_policy_set.schema.json": "6cd6deb82b75bb6b52452b90ef815fa427600bf4e80794285f5b606778806408",
+      "contracts/evaluation/v38/forecast_group_recipe_evaluation_receipt.schema.json": "bcbfa47ab0f218058bff0cf615749e0e0a92ed1465200727533a6d7e828637d9",
+      "contracts/evaluation/v38/frozen_development_policies.schema.json": "8267a6660cb61f3b103dd9a81e401fc2e1ad54f9c487fe6a9273fc0c7b485d69",
+      "contracts/evaluation/v38/required_group_recipe.schema.json": "67aa2f562d2938a53c0b662248bd7ba652b182a32e38ff33b9b4f68c4b3489fc"
+    },
+    "original_files_byte_unchanged": 391
+  },
+  "final_test_source_sha256": {
+    "tests/test_campaign_evaluation.py": "920ac9c72d863e2fb34d832f43617c8e4fbb9f5220f4a97fe495e3a89ece935c",
+    "tests/test_campaign_required_group_evaluation.py": "307a051485f462430e64a0df44efcba540fd298fe7227d9d36b57ed1c371a265",
+    "tests/test_campaign_required_group_recipe.py": "004475bf2a12d52fca5f1d26d4558f28b2afa51bfcbd68d1e0703dc5decd720f",
+    "tests/test_campaign_required_groups.py": "4cbd18501008ef0017d6ca32b554c33146e99f42f7c41faa61f1bbbe27c6942c",
+    "tests/test_development_policy_freeze.py": "b2847c9a31038f1e2c71e534adcb9c5351ac138de307073eb09b6809290ac22b"
+  },
+  "fresh_final_reads": 0,
+  "implementation_sha256": {
+    "pyproject.toml": "9d69b45b0ac9573b27dbba042bcf0bfc215655919bcb45d629452f76a484ed8a",
+    "scripts/freeze_ai09_development_policies.py": "62f727ee74956dd4c31f441774eb74a6337414acf6fdd6062743a8846bacfaae",
+    "scripts/update_evaluation_preparation_contracts.py": "715c7711f8a184230eacda00f0d394a4d61c4ca5e4cfc42a74adbdaeb7b82e82",
+    "src/retailops_ai/evaluation_campaign/campaign_evaluation.py": "7709df755efc829e9ba5842ab1099ea3d47fc0b24f97d758dada2100e487a636",
+    "src/retailops_ai/evaluation_campaign/campaign_evaluation_worker.py": "90cf8ff69440291df24aa00e9e40c926c98880fe008d994418d91bee76bd32f9",
+    "src/retailops_ai/evaluation_campaign/campaign_required_group_contract.py": "15cc5a14df58a3f7eea55d3299c8485cac0a5c194c4d2760ebaac72aa65e9315",
+    "src/retailops_ai/evaluation_campaign/campaign_required_group_recipe.py": "e1241d97c8a99f507dcf5cb63c2bb768d2ddc74111930affb3f72b3e92e5ead1",
+    "src/retailops_ai/evaluation_campaign/campaign_robust_receipt.py": "14296c1a13e42be7c1fec25fda6d6253cea4524088cea72488fb9f48909ab033",
+    "src/retailops_ai/evaluation_campaign/campaign_robust_validation.py": "1fa7afca3f766927b3276e13c90c4a2a68309116365142d1c624ce434273dbbb",
+    "src/retailops_ai/evaluation_campaign/campaign_selected_robustness.py": "bdea5f91bcc077e906919737db6bf34fde9d39f33e7372eb5c777f8dfeaf8e88",
+    "src/retailops_ai/evaluation_campaign/development_policy_freeze.py": "239664bf8dc720b69d4a5bd26cfc9bfede2a7a87c920ed9ad812d78cd58100ce"
+  },
+  "mypy_and_native_catalog": {
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1460305920,
+      "minimum_free_disk_bytes": 37097172992,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 118784,
+      "sampled_peak_scratch_logical_bytes": 100056,
+      "sampled_tree_peak_rss_bytes": 189038592,
+      "sampled_worker_cpu_seconds": 1.7562093070000002,
+      "samples": 28,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 402653184,
+      "wall_seconds": 2.9385868340032175
+    },
+    "mypy_files": 780,
+    "native_metadata": {
+      "category_count": 8,
+      "final_data_read": false,
+      "native_catalog_metadata_verified": true,
+      "policies_sha256": "78df81d81246bfbe66656de402a6d2e873e8192a5dd05f5809b8dd9b39a8c856",
+      "producer_commit": "d2363a5c78e0b190132e5e3d804da73b3136487d",
+      "project_data_generated": false,
+      "project_models_fitted": false,
+      "runtime_code_sha256": "7e75e72992ead2bb13ccc6a1708c707ffa167f87977cbb2ca1517736cdf34a12",
+      "scope": "actual clean accepted Source catalog metadata and policy freeze/load control, not a Project campaign initialization"
+    },
+    "scratch_measurement_note": "Monitor roots include logs/evidence only. The private reused Mypy cache is outside these roots; the global6GiB disk reserve remains enforced."
+  },
+  "new_Project_fits": 0,
+  "new_Project_generations": 0,
+  "observed_at_utc": "2026-10-11T15:56:52.834271+00:00",
+  "package": {
+    "acceptance": {
+      "controlled_25_50_setups_per_suite": 0,
+      "same_test_case_inventory": true,
+      "source_pins_unchanged": true,
+      "tests_per_suite": 88
+    },
+    "installed_junit_sha256": "c554f1ab34a233c988ec68605b008b423abcadea4f0bf0abaa980a44c7003e58",
+    "installed_monitor": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1285652480,
+      "minimum_free_disk_bytes": 36921192448,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 24576,
+      "sampled_peak_scratch_logical_bytes": 15150,
+      "sampled_tree_peak_rss_bytes": 181714944,
+      "sampled_worker_cpu_seconds": 232.63503564799998,
+      "samples": 2171,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "wall_seconds": 236.86875812499784
+    },
+    "installed_tests": {
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "88",
+      "time": "236.347"
+    },
+    "phases": {
+      "build": "passed",
+      "install": "passed",
+      "installed-import": "passed",
+      "installed-tests": "passed"
+    },
+    "wheel": {
+      "bytes": 2745525,
+      "new_contract_files_equal": 28,
+      "private_files_absent": true,
+      "python_modules_equal": 649,
+      "sha256": "3bb0bc72894e11f148d5e1fc7addeee16dc2bb24375fa60edc2786160c22cc5a",
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl"
+    }
+  },
+  "policy_choices": {
+    "anomaly_reference": "Original AI07-v4 numerical quality policy, not AI09 source qualification; separately bound AI09 report still required",
+    "stockout_decisions": "Original selected AI08 risk thresholds25/50/90percent and50percent physical-key capacity, not a model or lifecycle approval",
+    "stockout_quality": "Strict AP/Brier/support/ECE0.15 with8categories and3/4stock locations; AI08 category-only ECE0.20 exception not carried forward",
+    "uncertainty": "Unchanged28day blocks,min8blocks,min30series,999replicates",
+    "weights": "Equal fixed seed/scenario weights before results"
+  },
+  "publication_checks": {
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1335574528,
+      "minimum_free_disk_bytes": 36925317120,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 16384,
+      "sampled_peak_scratch_logical_bytes": 3784,
+      "sampled_tree_peak_rss_bytes": 364036096,
+      "sampled_worker_cpu_seconds": 108.099131577,
+      "samples": 183,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 402653184,
+      "wall_seconds": 20.686761791992467
+    },
+    "scope": [
+      "Ruff whole tree",
+      "format1355files",
+      "documentation links and Required CI contract",
+      "gitleaks969commits and working tree",
+      "installed policy freezer import"
+    ],
+    "status": "passed"
+  },
+  "remaining": [
+    "Bind policy context to actual original Source preparation journals and freeze full workflow",
+    "Execute original25/50/100 development and all three use cases on real Project sources",
+    "Calibration, independent/final three-seed evaluation, costs, uncertainty, MLflow, lifecycle and model cards",
+    "Full current localCI and exact PR/main acceptance"
+  ],
+  "retained_nonpassing_attempts": [
+    {
+      "resolution": "Split checks and lower pytest cap to256MiB; retain1GiB RAM and6GiB disk reserve. Full Mypy retained384MiB cap.",
+      "result": {
+        "elapsed_seconds": 301.406440791965,
+        "worker_started": false
+      },
+      "scope": "combined Mypy and pytest admission",
+      "worker_started": false
+    }
+  ],
+  "scope": "Prospective variant group ownership, original evaluation worker/receipt integration and actual policy/catalog metadata freeze. Controlled Source and model doubles in evaluation tests. No Project generation, fit or final read.",
+  "source_tests": {
+    "junit_sha256": "ad424962743a75e839c8c4b06503a7805a35698bc295c39302780d46c725d427",
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1250787328,
+      "minimum_free_disk_bytes": 37105385472,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 114688,
+      "sampled_peak_scratch_logical_bytes": 101753,
+      "sampled_tree_peak_rss_bytes": 186122240,
+      "sampled_worker_cpu_seconds": 217.153342151,
+      "samples": 1976,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 268435456,
+      "wall_seconds": 222.00318624998908
+    },
+    "note": "Six warnings from test-only instance model_fields access; changed to class access before installed-suite execution. Same production code and same case inventory.",
+    "tests": {
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "88",
+      "time": "219.181"
+    }
+  },
+  "stage_ready": false,
+  "version": "ai09-prospective-development-policies-evidence-1.0.0"
+}

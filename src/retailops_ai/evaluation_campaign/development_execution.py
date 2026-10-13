@@ -28,6 +28,9 @@ from retailops_ai.evaluation_campaign.campaign_fit import (
     verify_campaign_forecast_bundle,
 )
 from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
+from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CanonicalQualificationEvaluationReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_score import (
     score_campaign_forecast,
     verify_campaign_forecast_scores,
@@ -45,6 +48,9 @@ from retailops_ai.evaluation_campaign.canonical_forecast import verify_canonical
 from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
     CompletedCanonicalForecast,
     PreparedCanonicalForecastProtocol,
+)
+from retailops_ai.evaluation_campaign.canonical_qualification import (
+    PreparedCanonicalQualificationProtocol,
 )
 from retailops_ai.evaluation_campaign.development_advancement import (
     capture_completed_screening,
@@ -71,6 +77,7 @@ Protocol = (
     MultiscaleSelectionProtocol
     | PreparedForecastAdvancementProtocol
     | PreparedCanonicalForecastProtocol
+    | PreparedCanonicalQualificationProtocol
 )
 Receipt = TypeVar("Receipt", bound=Contract)
 
@@ -115,6 +122,7 @@ def _protocol(ledger: CampaignJournal) -> Protocol:
             MultiscaleSelectionProtocol,
             PreparedForecastAdvancementProtocol,
             PreparedCanonicalForecastProtocol,
+            PreparedCanonicalQualificationProtocol,
         ),
     ):
         raise SnapshotError("development_execution_frozen_multiscale_forecast_required")
@@ -176,7 +184,11 @@ def _receipt(
     journal: Path, completed: dict[str, str], operation: str, kind: type[Receipt]
 ) -> Receipt:
     return kind.model_validate_json(
-        read_bytes(journal, "receipts/" + completed[operation] + ".json", MAX_BYTES)
+        read_bytes(
+            journal,
+            "receipts/" + completed[operation] + ".json",
+            8 * 1024**2 if kind is CanonicalQualificationEvaluationReceipt else MAX_BYTES,
+        )
     )
 
 
@@ -184,7 +196,7 @@ def run_development_forecast(
     journal: Path,
     paths: DevelopmentExecutionPaths,
     *,
-    maximum_new_operations: Annotated[int, Field(ge=1, le=12)] = 12,
+    maximum_new_operations: Annotated[int, Field(ge=1, le=16)] = 12,
 ) -> dict[str, object]:
     """Run a completed prefix onward; failed or interrupted attempts stay consumed.
 
@@ -192,21 +204,43 @@ def run_development_forecast(
     reopens original metadata; only a new controller reservation can read labels.
     A process dying inside an operation leaves a reservation and cannot auto-resume.
     """
-    if type(maximum_new_operations) is not int or not 1 <= maximum_new_operations <= 12:
+    if type(maximum_new_operations) is not int or not 1 <= maximum_new_operations <= 16:
         raise SnapshotError("development_execution_operation_limit")
     with locked(journal):
         ledger = campaign_journal.inspect(journal)
         protocol = _protocol(ledger)
+        if maximum_new_operations > 12 and not isinstance(
+            protocol, PreparedCanonicalQualificationProtocol
+        ):
+            raise SnapshotError("development_execution_operation_limit")
         completed = _completed_prefix(ledger)
         _freeze_paths(journal, paths, ledger)
+        from retailops_ai.evaluation_campaign.canonical_qualification_execution import (
+            QualificationExecution,
+        )
+
+        qualification = (
+            QualificationExecution(journal, paths, protocol, ledger)
+            if isinstance(protocol, PreparedCanonicalQualificationProtocol)
+            else None
+        )
+        forecast_protocol = (
+            protocol.qualification.prefix
+            if isinstance(protocol, PreparedCanonicalQualificationProtocol)
+            else protocol
+        )
         prefix = (
-            protocol.screening if isinstance(protocol, MultiscaleSelectionProtocol) else protocol
+            forecast_protocol.screening
+            if isinstance(forecast_protocol, MultiscaleSelectionProtocol)
+            else forecast_protocol
         )
         scores = (
-            protocol.screening.scores
-            if isinstance(protocol, MultiscaleSelectionProtocol)
-            else (protocol.score,)
+            forecast_protocol.screening.scores
+            if isinstance(forecast_protocol, MultiscaleSelectionProtocol)
+            else (forecast_protocol.score,)
         )
+        if isinstance(protocol, PreparedCanonicalQualificationProtocol):
+            scores = (*scores, protocol.qualification.calibration_score)
         exports: dict[str, CampaignDevelopmentExportReceipt] = {}
         fits: dict[str, CampaignForecastFitReceipt] = {}
         scored: dict[str, CampaignForecastScoreReceipt] = {}
@@ -219,7 +253,11 @@ def run_development_forecast(
             if not reused and new_operations == maximum_new_operations:
                 break
             LOGGER.info("AI09 %s %s", "verify_original" if reused else "start", key)
-            if position < 3:
+            if qualification is not None and position >= 9:
+                if selected is None:
+                    raise SnapshotError("canonical_qualification_original_tune_required")
+                qualification.step(position, completed, exports, fits, scored, selected)
+            elif position < 3:
                 if reused:
                     exported = _receipt(journal, completed, key, CampaignDevelopmentExportReceipt)
                     validate_completed_export(journal, exported)
@@ -259,7 +297,7 @@ def run_development_forecast(
                         exported=exported,
                     )
                 fits[key] = fitted
-            elif position < len(protocol.operations) - 1:
+            elif position != len(forecast_protocol.operations) - 1:
                 score = next(
                     s for s in scores if s.content_sha256() == operation.execution_recipe_sha256
                 )
@@ -284,7 +322,7 @@ def run_development_forecast(
                     )
                 scored[key] = result
             else:
-                tune = protocol.selection_plan
+                tune = forecast_protocol.selection_plan
                 if reused:
                     selected = _receipt(journal, completed, key, CampaignForecastTuneReceipt)
                     validate_completed_tune(journal, selected)
@@ -313,6 +351,11 @@ def run_development_forecast(
                 ):
                     raise SnapshotError("development_execution_controller_completion_required")
             LOGGER.info("AI09 completed %s", key)
+            if qualification is not None:
+                if position == 7 and selected is not None:
+                    qualification.verify_tune(selected)
+                if qualification.reasons:
+                    break
         latest = campaign_journal.inspect(journal)
         completed = _completed_prefix(latest)
         if latest.protocol != protocol:
@@ -327,6 +370,26 @@ def run_development_forecast(
             "final_test_access_authorized": False,
             "stage_ready": False,
         }
+        if qualification is not None:
+            qualification_result = qualification.result(latest)
+            if qualification_result is not None:
+                document = qualification_result.model_dump(mode="json")
+                target = journal / "qualification-execution-result.json"
+                if target.exists() or target.is_symlink():
+                    if (
+                        read_bytes(journal, target.name, MAX_BYTES)
+                        != canonical_bytes(document) + b"\n"
+                    ):
+                        raise SnapshotError("canonical_qualification_original_result_changed")
+                else:
+                    write_once(target, document)
+                summary.update(
+                    status=qualification_result.status,
+                    development_quality_qualified=qualification_result.development_quality_qualified,
+                    quality_qualified=False,
+                    reasons=list(qualification_result.reasons),
+                )
+            return summary
         if selected is not None:
             bundle = output / selected.reservation_id / "bundle"
             evidence: (
@@ -338,8 +401,10 @@ def run_development_forecast(
                 evidence = capture_completed_screening(bundle, journal=journal, selected=selected)
             elif isinstance(protocol, PreparedForecastAdvancementProtocol):
                 evidence = verify_forecast_advancement(bundle, journal=journal, selected=selected)
-            else:
+            elif isinstance(protocol, PreparedCanonicalForecastProtocol):
                 evidence = verify_canonical_forecast(bundle, journal=journal, selected=selected)
+            else:
+                raise SnapshotError("development_execution_original_result_protocol_required")
             document = evidence.model_dump(mode="json")
             target = journal / "forecast-execution-result.json"
             if target.exists() or target.is_symlink():

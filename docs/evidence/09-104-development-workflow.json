@@ -1,0 +1,308 @@
+{
+  "base_commit": "0e5f5023045540f3f1e69edf9aee7fb1a2934228",
+  "canonical_dispatched": false,
+  "fresh_final_reads": 0,
+  "implementation_sha256": {
+    "contracts/evaluation/v40/development_workflow_options.schema.json": "db8c38d3b9815510e8ca822136e1d4cfb3810c01dd5ea15cb87434578a3a0a6a",
+    "pyproject.toml": "69fc83e363a5c1bcca13c0415c452d9581740d28ff990e47d275677834c06f11",
+    "scripts/run_ai09_workflow.py": "c23139f7ad4b5a840a422e8c051f0899ab1b29b5a70fceabfbe79a754760a24d",
+    "scripts/update_evaluation_preparation_contracts.py": "6941475b4c7059d219a969fa432ade38fccce41de21af4facab67bcdcac315ba",
+    "src/retailops_ai/evaluation_campaign/development_workflow.py": "bc36b2292a6e4a11ec1fa983af03a71c24ffb6798f4b3fce4486c208cb0a8ce1",
+    "src/retailops_ai/evaluation_campaign/development_workflow_contract.py": "da9108a8e84b8268696a705e06c048ce65b1467731fa663c1c254d739766c2f4",
+    "tests/test_development_workflow.py": "75e125f3061c7adc678ef89558a83f7282ae4b9bc9d0b1c47ef848c787d41cb0"
+  },
+  "native_metadata": {
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1343062016,
+      "minimum_free_disk_bytes": 34037100544,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 131072,
+      "sampled_peak_scratch_logical_bytes": 113828,
+      "sampled_tree_peak_rss_bytes": 180158464,
+      "sampled_worker_cpu_seconds": 2.268996407,
+      "samples": 34,
+      "scratch_measurement": "guard/log files and private Mypy cache; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 268435456,
+      "wall_seconds": 3.746692666958552
+    },
+    "result": {
+      "Project_fits": 0,
+      "Project_generations": 0,
+      "Project_journals_initialized": false,
+      "final_reads": 0,
+      "options_sha256": "f822135efea15cd198e91a073782fe92d2ce0550777ca5d0f6193b4d907f05d9",
+      "policy_sha256": "78df81d81246bfbe66656de402a6d2e873e8192a5dd05f5809b8dd9b39a8c856",
+      "producer_pin": {
+        "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+        "producer_commit": "d2363a5c78e0b190132e5e3d804da73b3136487d",
+        "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+        "producer_planner_sha256": "fdbec7faccb51df43b21c407dc3813edb318d74d8ef4d37ca653ea6ec317c4a7"
+      },
+      "runtime_code_sha256": "b8364435e63d5e155d6f9310f87940716ea7ff170e20490c08577348008cfe16",
+      "same_metadata_resume": true,
+      "scope": "actual native producer and model dependency metadata plus write-once complete workflow options; this private control is not a Project campaign initialization",
+      "versions": {
+        "keras": "3.11.3",
+        "mlflow-skinny": "3.4.0",
+        "numpy": "2.2.6",
+        "scikit-learn": "1.9.1",
+        "scipy": "1.17.1",
+        "tensorflow": "2.20.0"
+      },
+      "worker_environment_lock_sha256": "105f6de592a64c4da475c938ffdede6e4e8c640032f48101c1127ad0dd26ff88",
+      "worker_python_version": "3.11.15",
+      "worker_runtime_matches_controller": true
+    },
+    "scratch_measurement_note": "Guard/log files and metadata-only frozen options; no Mypy cache or Project dataset."
+  },
+  "new_Project_fits": 0,
+  "new_Project_generations": 0,
+  "observed_at_utc": "2026-10-11T17:27:20.006179+00:00",
+  "original_contracts_byte_unchanged": 398,
+  "package": {
+    "acceptance": {
+      "controlled_25_50_setups_per_suite": 0,
+      "same_test_case_inventory": true,
+      "source_pins_unchanged": true,
+      "tests_per_suite": 39
+    },
+    "guard_choice": {
+      "installed_phase_budget_bytes": 335544320,
+      "reason": "Measured source peak leaves less than 2 MiB under 256 MiB; use 320 MiB for independent installed validation while preserving 1 GiB memory and 6 GiB disk reserves. Project and canonical budgets unchanged.",
+      "source_budget_bytes": 268435456,
+      "source_peak_rss_bytes": 266289152
+    },
+    "junit_sha256": "b6cd6a28741a703e62c556c2581ee5b2325539618d0ed018ac5a9f6f3dc54887",
+    "phase_monitors": {
+      "build": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1572519936,
+        "minimum_free_disk_bytes": 33865756672,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 8192,
+        "sampled_peak_scratch_logical_bytes": 294,
+        "sampled_tree_peak_rss_bytes": 84967424,
+        "sampled_worker_cpu_seconds": 0.485578897,
+        "samples": 8,
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "wall_seconds": 0.7932543749921024
+      },
+      "install": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1478115328,
+        "minimum_free_disk_bytes": 33863819264,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 8192,
+        "sampled_peak_scratch_logical_bytes": 590,
+        "sampled_tree_peak_rss_bytes": 20856832,
+        "sampled_worker_cpu_seconds": 0.004876249,
+        "samples": 2,
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "wall_seconds": 0.11437308299355209
+      },
+      "installed-import": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1491402752,
+        "minimum_free_disk_bytes": 33864245248,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 8192,
+        "sampled_peak_scratch_logical_bytes": 341,
+        "sampled_tree_peak_rss_bytes": 146735104,
+        "sampled_worker_cpu_seconds": 0.698982176,
+        "samples": 10,
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "wall_seconds": 1.0225265409681015
+      },
+      "installed-tests": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1215643648,
+        "minimum_free_disk_bytes": 33366487040,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 16384,
+        "sampled_peak_scratch_logical_bytes": 6246,
+        "sampled_tree_peak_rss_bytes": 212680704,
+        "sampled_worker_cpu_seconds": 1003.274985472,
+        "samples": 9214,
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "wall_seconds": 1021.4385246250313
+      }
+    },
+    "status": "passed",
+    "tests": {
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "39",
+      "time": "1020.793"
+    },
+    "wheel": {
+      "bytes": 2777806,
+      "new_contract_files_equal": 31,
+      "private_files_absent": true,
+      "python_modules_equal": 654,
+      "sha256": "d1a9001f4a280dd7374e2363b36e9f259b5086af25ed14330a4ce962be9ca82c",
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl"
+    }
+  },
+  "preserved": [
+    "Every original reservation, receipt, failed/unfinished attempt and cold cost",
+    "Exactly6/3/3 forecast fits across25/50/100 and original winner configurations",
+    "All original data histories/keys and Source preparation phases",
+    "Prospective options/policies/runtime/worker lock before first Source operation; future journal paths before first fit",
+    "External initialization markers prevent recreating lost Source sessions or forecast journals",
+    "No worker on completed resume; changed/missing evidence blocks further operations",
+    "No foreign process/session restart; canonical diagnostic remains disabled with12GiB RSS limit"
+  ],
+  "publication_checks": {
+    "gitleaks_resources": {
+      "GOMAXPROCS": "1",
+      "GOMEMLIMIT": "128MiB"
+    },
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1264746496,
+      "minimum_free_disk_bytes": 33629700096,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 16384,
+      "sampled_peak_scratch_logical_bytes": 4403,
+      "sampled_tree_peak_rss_bytes": 181387264,
+      "sampled_worker_cpu_seconds": 93.109467661,
+      "samples": 856,
+      "scratch_measurement": "guard/log files and private Mypy cache; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 268435456,
+      "wall_seconds": 94.20065687503666
+    },
+    "scope": [
+      "Ruff whole tree",
+      "format1366files",
+      "documentation links and Required CI contract",
+      "Gitleaks whole history and working tree with unchanged scan coverage",
+      "installed CLI --help"
+    ],
+    "scratch_measurement_note": "Guard/log files only; no Mypy cache measured in this control. Global6GiB disk reserve enforced.",
+    "status": "passed"
+  },
+  "remaining": [
+    "Full local CI and exact PR/main acceptance for this combined workflow",
+    "Connect original completed canonical forecast ancestry to predeclared calibration/independent evaluation without rewriting receipts or appending operations to a started journal",
+    "Complete all3usecase integration before actual Project execution: runtime pins cover all modules and cannot change mid-campaign",
+    "Execute actual Source/models, calibration, final seeds/segments/costs/uncertainty and MLflow/lifecycle/cards"
+  ],
+  "retained_earlier_controls": [
+    {
+      "attempts": 2,
+      "correction": "Explicit Mapping[str, object] argument; full Mypy787 passed.",
+      "errors_per_attempt": 1,
+      "scope": "Initial Mypy annotations",
+      "tests_started": false
+    },
+    {
+      "correction": "Retain the imported pytest fixture explicitly during Ruff checks.",
+      "errors": 9,
+      "scope": "Initial fixture registration",
+      "tests_executed": false
+    },
+    {
+      "correction": "Two test-only issues: parse serialized strict contracts with model_validate_json, and use1024byte reserve sample to exercise the intended1GiB guard. Original43operation result existed; its deserialization and original cost sum were independently verified before the successful final39case run.",
+      "failed": 2,
+      "monitor": {
+        "code_pins_unchanged": true,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1334345728,
+        "minimum_free_disk_bytes": 34303827968,
+        "reason": "worker_exit",
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 278528,
+        "sampled_peak_scratch_logical_bytes": 262175,
+        "sampled_tree_peak_rss_bytes": 237125632,
+        "sampled_worker_cpu_seconds": 531.783156824,
+        "samples": 4889,
+        "scratch_measurement": "guard/log files and private Mypy cache; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "status": "failed",
+        "tree_rss_budget_bytes": 268435456,
+        "wall_seconds": 538.0145234579686
+      },
+      "passed": 7,
+      "scope": "First full workflow controller test"
+    },
+    {
+      "correction": "Metadata control used256MiB guard with unchanged1GiB memory and6GiB disk reserves; actual peak180158464bytes, passed.",
+      "result": {
+        "elapsed_seconds": 301.1626726249815,
+        "worker_started": false
+      },
+      "scope": "Native metadata384MiB admission",
+      "worker_started": false
+    }
+  ],
+  "scope": "Original 43 Source/forecast operations and 12 fits at25/50/100 through existing controllers. Source/model workers are explicit test doubles; separate actual native environment and frozen-metadata control. No Project data/model execution.",
+  "source": {
+    "junit_sha256": "6d4df62588e191f792ce7c29066568125109604f3214d75f50a949a8b06e37ef",
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1257373696,
+      "minimum_free_disk_bytes": 33938173952,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 106496,
+      "sampled_peak_scratch_logical_bytes": 92735,
+      "sampled_tree_peak_rss_bytes": 266289152,
+      "sampled_worker_cpu_seconds": 933.5450037630001,
+      "samples": 8612,
+      "scratch_measurement": "guard/log files and private Mypy cache; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 268435456,
+      "wall_seconds": 945.0188609580509
+    },
+    "mypy_evidence": "Earlier full check at identical production module pins in control4; no production module changed afterward.",
+    "mypy_files": 787,
+    "other_checks": [
+      "Ruff whole tree",
+      "format1366files",
+      "documentation links and Required CI contract",
+      "all contract schema snapshots"
+    ],
+    "scratch_measurement_note": "Guard/log/evidence only in this final control; reused Mypy cache and pytest temporary files excluded, global6GiB disk reserve enforced.",
+    "tests": {
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "39",
+      "time": "940.342"
+    }
+  },
+  "stage_ready": false,
+  "version": "ai09-original-development-workflow-evidence-1.0.0"
+}

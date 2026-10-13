@@ -1,0 +1,45 @@
+{
+  "$id": "urn:retailops:evaluation:stockout_public_context:43.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "curated_dataset_id": {
+      "pattern": "^curated-sha256-[0-9a-f]{64}$",
+      "title": "Curated Dataset Id",
+      "type": "string"
+    },
+    "data_seed": {
+      "enum": [
+        42,
+        137,
+        2026
+      ],
+      "title": "Data Seed",
+      "type": "integer"
+    },
+    "snapshot_id": {
+      "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-stockout-public-context-1.0.0",
+      "default": "ai09-stockout-public-context-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "data_seed",
+    "source_dataset_id",
+    "curated_dataset_id",
+    "snapshot_id"
+  ],
+  "title": "CampaignStockoutContextScope",
+  "type": "object"
+}

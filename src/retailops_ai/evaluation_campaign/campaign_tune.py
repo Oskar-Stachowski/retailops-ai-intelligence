@@ -42,6 +42,9 @@ from retailops_ai.evaluation_campaign.campaign_tune_data import choose
 from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
     PreparedCanonicalForecastProtocol,
 )
+from retailops_ai.evaluation_campaign.canonical_qualification import (
+    PreparedCanonicalQualificationProtocol,
+)
 from retailops_ai.evaluation_campaign.development_advancement_contract import (
     PreparedForecastAdvancementProtocol,
 )
@@ -274,7 +277,11 @@ def select_campaign_forecast(
         _verify_bundle(root / "bundle", receipt)
         if family_screening or isinstance(
             ledger.protocol,
-            (PreparedForecastAdvancementProtocol, PreparedCanonicalForecastProtocol),
+            (
+                PreparedForecastAdvancementProtocol,
+                PreparedCanonicalForecastProtocol,
+                PreparedCanonicalQualificationProtocol,
+            ),
         ):
             validate_completed_export(journal, exported)
             for key in plan.score_operation_ids:
@@ -392,16 +399,23 @@ def validate_completed_tune(journal: Path, receipt: CampaignForecastTuneReceipt)
         if not has_ranking or receipt.plan != ledger.protocol.selection_plan:
             raise SnapshotError("screening_completed_selection_requires_frozen_family_ranking")
         verify_prepared_development_parents(ledger.protocol.screening.parents)
-    elif isinstance(ledger.protocol, PreparedCanonicalForecastProtocol):
+    elif isinstance(
+        ledger.protocol, (PreparedCanonicalForecastProtocol, PreparedCanonicalQualificationProtocol)
+    ):
         from retailops_ai.evaluation_campaign.canonical_development import (
             verify_canonical_development_parents,
         )
         from retailops_ai.evaluation_campaign.canonical_forecast import verify_completed_advancement
 
-        if has_ranking or receipt.plan != ledger.protocol.selection_plan:
+        prefix = (
+            ledger.protocol.qualification.prefix
+            if isinstance(ledger.protocol, PreparedCanonicalQualificationProtocol)
+            else ledger.protocol
+        )
+        if has_ranking or receipt.plan != prefix.selection_plan:
             raise SnapshotError("canonical_forecast_completed_selection_frozen_plan_required")
-        verify_completed_advancement(ledger.protocol.advancement)
-        verify_canonical_development_parents(ledger.protocol.parents)
+        verify_completed_advancement(prefix.advancement)
+        verify_canonical_development_parents(prefix.parents)
     elif isinstance(ledger.protocol, PreparedForecastAdvancementProtocol):
         from retailops_ai.evaluation_campaign.development_advancement import (
             verify_completed_screening,

@@ -1,0 +1,127 @@
+{
+  "recorded_at_utc": "2026-10-11T20:35:33.684265+00:00",
+  "scope": "Full public stockout origins, native AI08 physical features/category/upstream and complete sealed artifact. Exposed Source1.1 inventory and Source1.2 demand/physical repository fixtures; no Project capacity or quality qualification.",
+  "source": {
+    "status": "passed",
+    "tests": 93,
+    "skipped": 0,
+    "suite_seconds": 512.127,
+    "cases_by_module": {
+      "tests.test_campaign_stockout_public": 30,
+      "tests.test_campaign_stockout_parent": 27,
+      "tests.test_campaign_context_facts": 36
+    },
+    "junit_sha256": "c70490962d208648b7b77de18e38b7141233801bf46a4401b91339fa75ff869a",
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 515.7519511249848,
+      "sampled_tree_peak_rss_bytes": 157401088,
+      "sampled_worker_cpu_seconds": 501.25833572000005,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 158899,
+      "sampled_peak_scratch_allocated_bytes": 172032,
+      "minimum_free_disk_bytes": 29957619712,
+      "minimum_available_memory_bytes": 1248067584,
+      "samples": 4743,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; reused existing U private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 402653184,
+      "code_pins_unchanged": true
+    },
+    "mypy_files": 795
+  },
+  "compatibility": {
+    "prior_contract_files_unchanged": 406,
+    "closed_AI08_modules_unchanged": 129,
+    "new_v44_schemas": 2
+  },
+  "guarantees": [
+    "complete physical population including ineligible and missing forecasts",
+    "all original native per-origin feature/upstream values and hashes",
+    "all-version disk index and native foreign ambiguity checks",
+    "chronological upstream iteration with one global validation per day",
+    "source parent and private index changes block publication",
+    "whole-artifact and per-record budgets never publish truncated population",
+    "all rows reloaded with exact original dataset identity, canonical keys and hashes",
+    "atomic new-target publication and no overwrite"
+  ],
+  "package": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 2808378,
+    "sha256": "7a0b252b7dc48d8fd66da48aae42c270e2c74b8342f9c87f496fcf1bab4361ad",
+    "python_modules_equal": 662,
+    "new_contract_files_equal": 39,
+    "private_files_absent": true
+  },
+  "installed_tests": {
+    "status": "passed",
+    "tests": 93,
+    "skipped": 0,
+    "suite_seconds": 478.948,
+    "junit_sha256": "1391405d6a22c4ee0080c2e06f17b0ee6dc006b89d33bfcb48936a3a8b739784",
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 479.3842788749607,
+      "sampled_tree_peak_rss_bytes": 159842304,
+      "sampled_worker_cpu_seconds": 471.205699584,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 15870,
+      "sampled_peak_scratch_allocated_bytes": 24576,
+      "minimum_free_disk_bytes": 29805035520,
+      "minimum_available_memory_bytes": 1314947072,
+      "samples": 4365,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "source_and_control_pins_unchanged": true,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+    },
+    "acceptance": {
+      "same_test_case_inventory": true,
+      "tests_per_suite": 93,
+      "controlled_25_50_setups_per_suite": 0,
+      "source_pins_unchanged": true
+    }
+  },
+  "retained_control1_failure": {
+    "reason": "Mypy inferred heterogeneous manifest dict values as object; explicit dict[str,Any] fixed the argument type before control2",
+    "tests_started": false,
+    "monitor": {
+      "status": "failed",
+      "reason": "worker_exit",
+      "exit_code": 1,
+      "wall_seconds": 3.828598125022836,
+      "sampled_tree_peak_rss_bytes": 197853184,
+      "sampled_worker_cpu_seconds": 2.997190839,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 137106,
+      "sampled_peak_scratch_allocated_bytes": 151552,
+      "minimum_free_disk_bytes": 30118961152,
+      "minimum_available_memory_bytes": 1427587072,
+      "samples": 36,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; reused existing U private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 402653184,
+      "code_pins_unchanged": true
+    }
+  },
+  "remaining": [
+    "private qualified window intake plus native ledger replay",
+    "complete mature train/tune/calibration/evaluation membership",
+    "prospectively reserved model/calibration/selection/threshold/evaluation operations without hidden refits",
+    "all-three-usecase integration and fixed runtime before Project execution",
+    "exact protected PR and main CI"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "quality_qualified": false,
+  "stage_ready": false
+}

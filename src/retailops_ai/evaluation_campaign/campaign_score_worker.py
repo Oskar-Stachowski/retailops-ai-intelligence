@@ -14,7 +14,7 @@ from typing import Any
 
 from retailops_ai.data_contracts.common import ForecastKey
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
-from retailops_ai.evaluation_campaign.campaign_fit import _verify_bundle_content
+from retailops_ai.evaluation_campaign.campaign_fit_artifact import _verify_bundle_content
 from retailops_ai.evaluation_campaign.campaign_fit_contract import (
     CampaignForecastEncoding,
     CampaignForecastFitReceipt,

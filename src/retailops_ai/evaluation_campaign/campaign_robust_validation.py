@@ -11,8 +11,8 @@ from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
 from retailops_ai.evaluation_campaign.campaign_evaluation_gates import assess_frozen_metrics
 from retailops_ai.evaluation_campaign.campaign_portfolio_contract import CampaignPortfolioProtocol
 from retailops_ai.evaluation_campaign.campaign_raw_context import _metrics, context_record
-from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
-    CampaignPortfolioRequiredGroupPolicy,
+from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
+    RequiredGroupPolicy,
 )
 from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
     CampaignForecastUncertaintyPolicy,
@@ -34,7 +34,7 @@ def validate_selected_robustness(
     policy: CampaignForecastUncertaintyPolicy,
     *,
     retained_median_baseline: bool,
-    required_group_policy: CampaignPortfolioRequiredGroupPolicy | None = None,
+    required_group_policy: RequiredGroupPolicy | None = None,
     portfolio_protocol: CampaignPortfolioProtocol | None = None,
 ) -> bool:
     """No original outcome read and no permission from a completeness header.

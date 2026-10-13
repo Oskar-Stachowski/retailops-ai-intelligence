@@ -16,6 +16,7 @@ from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.evaluation_campaign import campaign_evaluation as runner
 from retailops_ai.evaluation_campaign import campaign_evaluation_worker as worker
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CampaignForecastGroupRecipeEvaluationReceipt,
     CampaignForecastRequiredGroupEvaluationReceipt,
     parse_forecast_evaluation_receipt,
 )
@@ -28,6 +29,9 @@ from retailops_ai.source_snapshot.files import SnapshotError
         "portfolio-ordinary-required-robust",
         "portfolio-demand-required-robust",
         "portfolio-physical-required-robust",
+        "portfolio-ordinary-required-recipe-robust",
+        "portfolio-demand-required-recipe-robust",
+        "portfolio-physical-required-recipe-robust",
     ],
     indirect=True,
 )
@@ -38,6 +42,8 @@ def test_public_required_groups_bind_protocol_worker_receipt_and_all_actual_repo
         control, declared_context, required_group_policy=control["required_group_policy"]
     )
     assert isinstance(receipt, CampaignForecastRequiredGroupEvaluationReceipt)
+    if "variants" in type(control["required_group_policy"]).model_fields:
+        assert type(receipt) is CampaignForecastGroupRecipeEvaluationReceipt
     assert (
         receipt.required_group_policy.content_sha256()
         == control["protocol"].selection_policy_sha256
@@ -63,7 +69,11 @@ def test_public_required_groups_bind_protocol_worker_receipt_and_all_actual_repo
     )
 
 
-@pytest.mark.parametrize("control", ["portfolio-ordinary-required-robust"], indirect=True)
+@pytest.mark.parametrize(
+    "control",
+    ["portfolio-ordinary-required-robust", "portfolio-ordinary-required-recipe-robust"],
+    indirect=True,
+)
 @pytest.mark.parametrize("attack", ["missing-uncertainty", "changed-policy"])
 def test_policy_not_frozen_before_role_workers_is_rejected(control, declared_context, attack):
     policy = control["required_group_policy"]
@@ -72,15 +82,20 @@ def test_policy_not_frozen_before_role_workers_is_rejected(control, declared_con
         changes["uncertainty_policy"] = None
     else:
         value = policy.model_dump(mode="json")
-        value["sources"][0]["required"].append({"dimension": "history", "value": "cold_start"})
-        value["sources"][0]["required"].sort(key=lambda g: (g["dimension"], g["value"]))
+        owner = value.get("sources", value.get("variants"))[0]
+        owner["required"].append({"dimension": "history", "value": "cold_start"})
+        owner["required"].sort(key=lambda g: (g["dimension"], g["value"]))
         changes["required_group_policy"] = type(policy).model_validate_json(canonical_bytes(value))
     with pytest.raises(SnapshotError):
         robust_execute(control, declared_context, **changes)
     assert not {"prepare", "predict", "consume", "finalize"}.intersection(control["calls"])
 
 
-@pytest.mark.parametrize("control", ["portfolio-ordinary-required-robust"], indirect=True)
+@pytest.mark.parametrize(
+    "control",
+    ["portfolio-ordinary-required-robust", "portfolio-ordinary-required-recipe-robust"],
+    indirect=True,
+)
 @pytest.mark.parametrize("artifact", ["required-groups.json", "portfolio-protocol.json"])
 def test_resealed_policy_or_protocol_cannot_pass_public_receipt_verifier(
     control, declared_context, artifact
@@ -97,7 +112,11 @@ def test_resealed_policy_or_protocol_cannot_pass_public_receipt_verifier(
         parse_forecast_evaluation_receipt(canonical_bytes(raw))
 
 
-@pytest.mark.parametrize("control", ["portfolio-ordinary-required-robust"], indirect=True)
+@pytest.mark.parametrize(
+    "control",
+    ["portfolio-ordinary-required-robust", "portfolio-ordinary-required-recipe-robust"],
+    indirect=True,
+)
 def test_required_group_metadata_cannot_enter_model_inference(control, tmp_path):
     plan = control["recipe"].resolve(control["configuration"])
     with pytest.raises(SnapshotError, match="inference_request_contains_outcomes"):

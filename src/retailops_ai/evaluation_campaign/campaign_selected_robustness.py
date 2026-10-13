@@ -12,8 +12,8 @@ from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
 from retailops_ai.evaluation_campaign.campaign_evaluation_metrics import EvaluationSegment
 from retailops_ai.evaluation_campaign.campaign_portfolio_contract import CampaignPortfolioProtocol
 from retailops_ai.evaluation_campaign.campaign_raw_context import context_record
-from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
-    CampaignPortfolioRequiredGroupPolicy,
+from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
+    RequiredGroupPolicy,
 )
 from retailops_ai.evaluation_campaign.campaign_segment_contract import (
     CampaignForecastKeyContext,
@@ -41,7 +41,7 @@ class SelectedRobustness:
         policy: CampaignForecastUncertaintyPolicy,
         *,
         retained_median_baseline: bool,
-        required_group_policy: CampaignPortfolioRequiredGroupPolicy | None = None,
+        required_group_policy: RequiredGroupPolicy | None = None,
         portfolio_protocol: CampaignPortfolioProtocol | None = None,
     ) -> None:
         self.receipt, self.census = context_record(record, plan, population)

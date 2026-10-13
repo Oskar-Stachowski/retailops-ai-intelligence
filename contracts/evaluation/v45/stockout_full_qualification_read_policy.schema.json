@@ -1,0 +1,43 @@
+{
+  "$id": "urn:retailops:evaluation:stockout_full_qualification_read_policy:45.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "chunk_bytes": {
+      "default": 8192,
+      "maximum": 65536,
+      "minimum": 1,
+      "title": "Chunk Bytes",
+      "type": "integer"
+    },
+    "max_bytes": {
+      "default": 2147483648,
+      "maximum": 4294967296,
+      "minimum": 4096,
+      "title": "Max Bytes",
+      "type": "integer"
+    },
+    "max_record_bytes": {
+      "default": 16384,
+      "maximum": 65536,
+      "minimum": 1024,
+      "title": "Max Record Bytes",
+      "type": "integer"
+    },
+    "max_windows": {
+      "default": 1000000,
+      "maximum": 1000000,
+      "minimum": 1,
+      "title": "Max Windows",
+      "type": "integer"
+    },
+    "version": {
+      "const": "ai09-stockout-full-qualification-read-1.0.0",
+      "default": "ai09-stockout-full-qualification-read-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "title": "CampaignStockoutQualificationPolicy",
+  "type": "object"
+}

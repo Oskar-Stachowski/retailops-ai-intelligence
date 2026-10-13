@@ -24,6 +24,9 @@ from retailops_ai.evaluation_campaign.campaign_segment_contract import (
     CampaignForecastSegmentPolicy,
     CampaignOriginRoute,
 )
+from retailops_ai.evaluation_campaign.campaign_stockout_parent_contract import (
+    CampaignStockoutContextScope,
+)
 from retailops_ai.forecasting.features_contract import InputRow
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
@@ -45,16 +48,23 @@ from retailops_ai.stockout_storage.store import keys
 class CampaignContextFacts:
     """One use, one sealed parent, bounded SQL queries, one cached origin point."""
 
+    fact_tables: tuple[str, ...] = FEATURE_TABLES
+    fact_keys = staticmethod(keys)
+
     def __init__(
         self,
         curated: Path,
         *,
-        scope: CampaignForecastContextScope,
+        scope: CampaignForecastContextScope | CampaignStockoutContextScope,
         policy: CampaignContextStoragePolicy,
         scratch: Path,
     ) -> None:
         self.curated, self.scratch = curated, scratch
-        self.scope = CampaignForecastContextScope.model_validate_json(scope.model_dump_json())
+        self.scope: CampaignForecastContextScope | CampaignStockoutContextScope = (
+            CampaignStockoutContextScope.model_validate_json(scope.model_dump_json())
+            if isinstance(scope, CampaignStockoutContextScope)
+            else CampaignForecastContextScope.model_validate_json(scope.model_dump_json())
+        )
         self.policy = CampaignContextStoragePolicy.model_validate_json(policy.model_dump_json())
         self._stack = ExitStack()
         self._db: sqlite3.Connection | None = None
@@ -144,7 +154,7 @@ class CampaignContextFacts:
         ):
             raise SnapshotError("campaign_context_facts_complete_parent_scope_mismatch")
         specs = {t["table"]: t for t in document["tables"]}
-        if not set(FEATURE_TABLES) <= set(specs):
+        if not set(self.fact_tables) <= set(specs):
             raise SnapshotError("campaign_context_facts_missing_ai08_tables")
         self._refs = [f for t in [*document["tables"], document["quarantine"]] for f in t["files"]]
         if (
@@ -173,11 +183,11 @@ class CampaignContextFacts:
         )
         db.execute("CREATE INDEX facts_lookup ON facts(table_name,product,stock,ready,position)")
         self._version = document["schema_version"]
-        self._columns = {name: columns_for(name, self._version) for name in FEATURE_TABLES}
+        self._columns = {name: columns_for(name, self._version) for name in self.fact_tables}
         summaries = []
         order = hashlib.sha256()
         try:
-            for name in FEATURE_TABLES:
+            for name in self.fact_tables:
                 spec = specs[name]
                 path = directory / "table-seal.sqlite"
                 digest = Digest(path, self._columns[name], spec["grain"])
@@ -187,7 +197,7 @@ class CampaignContextFacts:
                     ):
                         digest.add(row)
                         raw = encoded(row)
-                        product, stock, ready = keys(name, row)
+                        product, stock, ready = self.fact_keys(name, row)
                         checksum = hashlib.sha256(raw).hexdigest()
                         db.execute(
                             "INSERT INTO facts VALUES(?,?,?,?,?,?,?)",
@@ -263,7 +273,7 @@ class CampaignContextFacts:
         db = self._connection()
         rows = 0
         trace = hashlib.sha256()
-        for table in FEATURE_TABLES:
+        for table in self.fact_tables:
             position = 0
             for stored_position, product, stock, ready, raw, checksum in db.execute(
                 "SELECT position,product,stock,ready,payload,checksum FROM facts WHERE table_name=? ORDER BY position",
@@ -272,7 +282,8 @@ class CampaignContextFacts:
                 if (
                     stored_position != position
                     or hashlib.sha256(raw).hexdigest() != checksum
-                    or keys(table, decoded(raw, self._columns[table])) != (product, stock, ready)
+                    or self.fact_keys(table, decoded(raw, self._columns[table]))
+                    != (product, stock, ready)
                 ):
                     raise SnapshotError("campaign_context_facts_complete_private_index_mismatch")
                 trace.update(canonical_json([table, position, checksum]) + b"\n")
@@ -306,7 +317,7 @@ class CampaignContextFacts:
             if hashlib.sha256(raw).hexdigest() != checksum:
                 raise SnapshotError("campaign_context_facts_private_row_checksum_mismatch")
             row = decoded(raw, self._columns[table])
-            if keys(table, row) != (product, stock, ready):
+            if self.fact_keys(table, row) != (product, stock, ready):
                 raise SnapshotError("campaign_context_facts_private_row_index_mismatch")
             selected.append((position, row, len(raw)))
         return selected
@@ -316,7 +327,7 @@ class CampaignContextFacts:
             origin = utc_time(as_of).isoformat(timespec="microseconds")
             result = {}
             count = size = 0
-            for table in FEATURE_TABLES:
+            for table in self.fact_tables:
                 selected = []
                 for p, s in {(p, s) for p in (None, product) for s in (None, stock)}:
                     for position, row, length in self._selected(
@@ -387,7 +398,17 @@ class CampaignContextFacts:
                 raise SnapshotError("campaign_context_facts_declared_route_does_not_match_source")
             if route is None:
                 return None
-            key = feature.product_id, route.stock_location_id, feature.forecast_origin
+            return self.physical_point(
+                feature.product_id, route.stock_location_id, feature.forecast_origin
+            )
+        except Exception:
+            self._failed = True
+            raise
+
+    def physical_point(self, product: str, stock: str, as_of: datetime) -> FeaturePoint:
+        """The same AI08 projection, addressed directly at its physical grain."""
+        try:
+            key = product, stock, utc_time(as_of)
             if self._point_key != key:
                 self._point = self._point_key = None
                 if (
@@ -417,12 +438,17 @@ class CampaignContextFacts:
                 self._point_key = key
                 self.stats["origin_point_projections"] += 1
             self._connection()
+            if self._point is None:
+                raise SnapshotError("campaign_context_facts_causal_point_missing")
             return self._point
         except Exception:
             self._failed = True
             raise
 
     def check_categories(self, policy: CampaignForecastSegmentPolicy) -> None:
+        if not isinstance(self.scope, CampaignForecastContextScope):
+            self._failed = True
+            raise SnapshotError("campaign_context_forecast_segment_scope_required")
         db = self._connection()
         categories = set()
         for product, stock, ready, raw, checksum in db.execute(
@@ -432,7 +458,7 @@ class CampaignContextFacts:
                 self._failed = True
                 raise SnapshotError("campaign_context_facts_private_row_checksum_mismatch")
             row = decoded(raw, self._columns["product_catalog"])
-            if keys("product_catalog", row) != (product, stock, ready):
+            if self.fact_keys("product_catalog", row) != (product, stock, ready):
                 self._failed = True
                 raise SnapshotError("campaign_context_facts_private_row_index_mismatch")
             categories.add(row["category_id"])

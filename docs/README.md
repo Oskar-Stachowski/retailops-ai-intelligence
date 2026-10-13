@@ -1,6 +1,18 @@
 **AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
 i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
+[Wspólny wykonawca 25 → 50 → 100](ai09-development-workflow.md) zamraża program
+przed generacją i łączy 43 oryginalne operacje z zachowaniem 12 fitów oraz kosztów.
+[09.104](evidence/09-104-development-workflow.json) potwierdza 39 kontroli źródeł
+i te same 39 z paczki; pełny CI, publikacja i rzeczywista kampania pozostają otwarte.
+[Wykonawca przygotowania Source](ai09-source-preparation-execution.md) zachowuje
+pięć oryginalnych operacji i ich koszty. [09.103](evidence/09-103-source-preparation-execution.json)
+potwierdza 111 kontroli źródeł i te same 111 z paczki; rzeczywista kampania
+i pełny odbiór pozostają wymagane.
+[Polityki przed generowaniem](ai09-prospective-policies.md) zapisują rzeczywiste
+reguły i kategorie Source bez oczekiwania na identyfikatory przyszłych danych.
+[09.102](evidence/09-102-prospective-development-policies.json) potwierdza
+88 kontroli źródeł i te same 88 z paczki; pełny workflow i publikacja są otwarte.
 [Wykonawca development](ai09-development-execution.md) uruchamia zamrożone
 dzienniki prognoz 25/50/100 i zachowuje próby oraz koszty przy wznowieniu.
 [09.101](evidence/09-101-development-execution.json) potwierdza 11 kontroli źródeł i te same 11 z paczki;

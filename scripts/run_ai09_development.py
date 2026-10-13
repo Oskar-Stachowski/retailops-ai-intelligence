@@ -17,7 +17,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--journal", required=True, type=Path)
     parser.add_argument("--paths", required=True, type=Path)
-    parser.add_argument("--maximum-new-operations", type=int, default=12, choices=range(1, 13))
+    parser.add_argument("--maximum-new-operations", type=int, default=12, choices=range(1, 17))
     args = parser.parse_args()
     paths = DevelopmentExecutionPaths.model_validate_json(
         read_bytes(args.paths.parent, args.paths.name, 65536)

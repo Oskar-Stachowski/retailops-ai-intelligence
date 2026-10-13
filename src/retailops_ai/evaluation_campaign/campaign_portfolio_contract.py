@@ -20,7 +20,7 @@ from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignSourceRecipe,
 )
 from retailops_ai.evaluation_campaign.contract import USE_CASES
-from retailops_ai.source_snapshot.files import decode_json
+from retailops_ai.source_snapshot.files import SnapshotError, decode_json
 
 if TYPE_CHECKING:
     from retailops_ai.evaluation_campaign.campaign_generation_contract import CampaignGenerationPlan
@@ -177,6 +177,12 @@ class CampaignPortfolioJournal(CampaignJournal):
 
 def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
     document = decode_json(raw)
+    if document.get("portfolio_version") == "ai09-canonical-qualification-portfolio-1.0.0":
+        from retailops_ai.evaluation_campaign.canonical_qualification import (
+            PreparedCanonicalQualificationProtocol,
+        )
+
+        return PreparedCanonicalQualificationProtocol.model_validate_json(raw)
     if "canonical_forecast_version" in document:
         from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
             PreparedCanonicalForecastProtocol,
@@ -245,9 +251,25 @@ def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
     return model.model_validate_json(canonical_bytes(document))
 
 
+def parse_portfolio_protocol(raw: bytes) -> CampaignPortfolioProtocol:
+    protocol = parse_campaign_protocol(raw)
+    if not isinstance(protocol, CampaignPortfolioProtocol):
+        raise SnapshotError("campaign_explicit_portfolio_protocol_required")
+    return protocol
+
+
 def parse_campaign_journal(raw: bytes) -> CampaignJournal:
     document = decode_json(raw)
     protocol = document.get("protocol")
+    if (
+        isinstance(protocol, dict)
+        and protocol.get("portfolio_version") == "ai09-canonical-qualification-portfolio-1.0.0"
+    ):
+        from retailops_ai.evaluation_campaign.canonical_qualification import (
+            PreparedCanonicalQualificationJournal,
+        )
+
+        return PreparedCanonicalQualificationJournal.model_validate_json(raw)
     if isinstance(protocol, dict) and "canonical_forecast_version" in protocol:
         from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
             PreparedCanonicalForecastJournal,

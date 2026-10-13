@@ -1,0 +1,227 @@
+{
+  "actual_native_metadata": {
+    "environment": "isolated producer Python with exact accepted API and Parquet requirements; original producer_environment checks passed",
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1411039232,
+      "minimum_free_disk_bytes": 36170620928,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 4096,
+      "sampled_peak_scratch_logical_bytes": 1904,
+      "sampled_tree_peak_rss_bytes": 119963648,
+      "sampled_worker_cpu_seconds": 1.676402088,
+      "samples": 110,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 268435456,
+      "wall_seconds": 12.095213458000217
+    },
+    "producer_pin": {
+      "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+      "producer_commit": "d2363a5c78e0b190132e5e3d804da73b3136487d",
+      "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+      "producer_planner_sha256": "fdbec7faccb51df43b21c407dc3813edb318d74d8ef4d37ca653ea6ec317c4a7"
+    },
+    "scratch_measurement_note": "Only logs measured as scratch; isolated dependency installation excluded, global6GiB disk reserve enforced. No Project Source data."
+  },
+  "base_commit": "d6a800f923d3b3d8380f1eb65b1157b339f1130f",
+  "canonical_dispatched": false,
+  "fresh_final_reads": 0,
+  "implementation_sha256": {
+    "pyproject.toml": "d21de92f00e15a32f0fa2c64d7e63c04642ac22b865991ad24ab3a80ada5d5f0",
+    "scripts/prepare_ai09_sources.py": "7c2661b8ff1849d858716a8cf9cd4d5d3843198ddd98e3d5dbf685c0f2e28180",
+    "scripts/update_evaluation_preparation_contracts.py": "ba442ef87eb95b4945a8c9a139c1dccf3f262894d1776986a84105d9824b63ac",
+    "src/retailops_ai/evaluation_campaign/source_preparation.py": "084598b29b452a90a1412e2fbb8b79501877c17047e86ce63b4e151a5bbe9386",
+    "src/retailops_ai/evaluation_campaign/source_preparation_contract.py": "a334d57bf9483990e0d0219795e3e742870ef60b66dfeff513983665e191b9c9",
+    "src/retailops_ai/evaluation_campaign/source_preparation_metadata.py": "0ef59890e1eb8a878cab84c1dc523d9408ac3d875210ad3e8e82ad5ca533e7d8",
+    "tests/test_source_preparation.py": "fb52fd16fc8b04ea98d53450c6b201f95d87f67699d6bc0322aa48c4a9713b8e"
+  },
+  "new_Project_fits": 0,
+  "new_Project_generations": 0,
+  "new_schemas": {
+    "contracts/evaluation/v39/source_preparation_options.schema.json": "ffc163ab1ab86521b687d52b626bf08a9e3de620a8d887224aa5273cbf597986",
+    "contracts/evaluation/v39/source_preparation_session.schema.json": "c426334fe838a5514addf3893e54f875af30a7a5730bfc1c32afa1acb4446c81"
+  },
+  "observed_at_utc": "2026-10-11T16:31:16.759503+00:00",
+  "original_contracts_byte_unchanged": 396,
+  "package": {
+    "acceptance": {
+      "controlled_25_50_setups_per_suite": 0,
+      "same_test_case_inventory": true,
+      "source_pins_unchanged": true,
+      "tests_per_suite": 111
+    },
+    "installed_junit_sha256": "f84b6e7b1e89f75bfd7a08c97afb059ad344bd6e63e7fd36788980d0708eb1dc",
+    "installed_monitor": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1294548992,
+      "minimum_free_disk_bytes": 36081233920,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 28672,
+      "sampled_peak_scratch_logical_bytes": 18192,
+      "sampled_tree_peak_rss_bytes": 167297024,
+      "sampled_worker_cpu_seconds": 100.971659423,
+      "samples": 935,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "wall_seconds": 103.92773095902521
+    },
+    "installed_tests": {
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "111",
+      "time": "103.337"
+    },
+    "phase_statuses": {
+      "build": "passed",
+      "install": "passed",
+      "installed-import": "passed",
+      "installed-tests": "passed"
+    },
+    "wheel": {
+      "bytes": 2769532,
+      "new_contract_files_equal": 30,
+      "private_files_absent": true,
+      "python_modules_equal": 652,
+      "sha256": "414d7aba77faaae28927978e8fb274a083f47454745fce9fac90aa28bf29b5ef",
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl"
+    }
+  },
+  "preserved": [
+    "Original reservations/receipts/cold costs and all six phases per generation",
+    "Global five-operation wall budget without resetting generation/planning costs",
+    "Failure or unfinished attempt blocks automatic retry; initialization intent prevents recreating lost journals",
+    "Same fixed policy context and Source pins at every scale; existing original wire contracts unchanged",
+    "No foreign session restarts or mutation; canonical diagnostic remains disabled with12GiB cap"
+  ],
+  "publication_checks": {
+    "gitleaks_resources": {
+      "GOMAXPROCS": "1",
+      "GOMEMLIMIT": "128MiB",
+      "scan_coverage_reduced": false
+    },
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1317830656,
+      "minimum_free_disk_bytes": 36078178304,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 24576,
+      "sampled_peak_scratch_logical_bytes": 7598,
+      "sampled_tree_peak_rss_bytes": 189546496,
+      "sampled_worker_cpu_seconds": 72.14479046299999,
+      "samples": 652,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 268435456,
+      "wall_seconds": 72.17218900000444
+    },
+    "producer_pin": {
+      "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+      "producer_commit": "d2363a5c78e0b190132e5e3d804da73b3136487d",
+      "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+      "producer_planner_sha256": "fdbec7faccb51df43b21c407dc3813edb318d74d8ef4d37ca653ea6ec317c4a7"
+    },
+    "scope": [
+      "Ruff whole tree",
+      "format 1361 files",
+      "documentation links and Required CI contract",
+      "gitleaks 970 commits and full working tree",
+      "installed Source preparation import",
+      "public metadata inspector against the actual accepted producer and isolated native interpreter",
+      "original 25/100 planning compilers with actual pins; no Project journal initialized"
+    ],
+    "scratch_measurement_note": "Only guard/log files measured as scratch; reused caches and installed dependencies excluded, global 6 GiB disk reserve enforced.",
+    "status": "passed"
+  },
+  "remaining": [
+    "Full current localCI and exact PR/main acceptance",
+    "Bind prepared original parents to actual frozen forecast training workflow",
+    "Execute real Project25/50/100 and all3usecases, calibration, final seeds/segments/costs/uncertainty, MLflow/lifecycle/cards"
+  ],
+  "retained_earlier_attempts": [
+    {
+      "result": {
+        "elapsed_seconds": 301.3090869580046,
+        "worker_started": false
+      },
+      "scope": "initial384MiB type-check admission",
+      "worker_started": false
+    },
+    {
+      "correction": "Explicit resolved-protocol/receipt unions and typed variant inventory, then full Mypy784passed.",
+      "errors": 3,
+      "scope": "initial warm type-check",
+      "status": "failed",
+      "tests_started": false
+    },
+    {
+      "monitor": {
+        "code_pins_unchanged": true,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1281163264,
+        "minimum_free_disk_bytes": 36392517632,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 20480,
+        "sampled_peak_scratch_logical_bytes": 5707,
+        "sampled_tree_peak_rss_bytes": 164462592,
+        "sampled_worker_cpu_seconds": 21.012753966000002,
+        "samples": 199,
+        "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "tree_rss_budget_bytes": 268435456,
+        "wall_seconds": 22.256605415954255
+      },
+      "scope": "initial driver controls before lost-journal guard",
+      "tests_passed": 14
+    }
+  ],
+  "scope": "Five original Source preparation controllers and journals for25/50/full100: ordinary generation, native planning, paid ordinary reuse, demand, physical. Explicit Source worker doubles in controller tests; separate real native metadata/environment check. No Project data/model generation.",
+  "source_tests": {
+    "junit_sha256": "f871fe3ee153fe81307f3d41c43d1d38d9efa3d9bc327214be376511feec3184",
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1266860032,
+      "minimum_free_disk_bytes": 36196032512,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 118784,
+      "sampled_peak_scratch_logical_bytes": 103451,
+      "sampled_tree_peak_rss_bytes": 169771008,
+      "sampled_worker_cpu_seconds": 98.84366181199998,
+      "samples": 936,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 268435456,
+      "wall_seconds": 102.10196004097816
+    },
+    "mypy_files": 784,
+    "scratch_measurement_note": "Monitor roots include logs/evidence only. Reused Mypy cache and pytest temporary files are outside these roots; the global 6 GiB disk reserve remains enforced.",
+    "tests": {
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "111",
+      "time": "98.404"
+    }
+  },
+  "stage_ready": false,
+  "version": "ai09-original-source-preparation-execution-evidence-1.0.0"
+}

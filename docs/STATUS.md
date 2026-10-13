@@ -1,5 +1,202 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: poprawka podziału testów po pełnym wyniku PR 68.**
+[09.123](evidence/09-123-integration-ci-rebalance.json) zachowuje nieudany Required CI kodu `60b4a03`: **14 jobs success**, błąd RSS natywnego scoringu, anulowany po 90 minutach shard 2 i nieudany agregator. Żaden z tych wyników nie jest odbiorem. Wagi 266 w pełni zakończonych plików testowych zaktualizowano z oryginalnych pomiarów Linux; 20 niedokończonych lub nierozpoczętych plików zachowuje wcześniejsze wagi. Cztery shardy, pełna kolekcja, limit 90 minut i wszystkie 17 jobs pozostają wymagane.
+
+Test całego workflow trwał **1020,6 s**, przy wcześniejszej domyślnej wadze **1 s**. Nowy podział szacuje około **69 minut na shard**; to prognoza harmonogramu, wymagająca rzeczywistego CI. Włączono również poprawkę importów [09.119](evidence/09-119-forecast-worker-imports.json). Pełny PR/main, wspólny wykonawca trzech zastosowań, kampania, final, MLflow i lifecycle pozostają otwarte. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-12 — AI 09: mniejszy narzut pamięci workerów prognoz.**
+[09.119](evidence/09-119-forecast-worker-imports.json) zachowuje rzeczywistą odmowę RSS natywnego joba PR 68 oraz poprawkę importów. Oba workery korzystają z tych samych funkcji kontroli artefaktu i tożsamości Source bez ładowania kontrolerów; AST czterech przeniesionych funkcji jest identyczne. Lokalna mediana zimnego importu scoringu spadła z **125,4 do 74,8 MiB (40,4%)**. To pomiar samego importu; pełny scoring na Linux wymaga ponownego odbioru.
+
+**163 testy kodu i te same 163 testy z paczki przeszły**, Mypy **802 pliki**, 669 modułów i 47 kontraktów mają zgodne bajty. Limity i asercje nie zostały poluzowane. [Opis poprawki](ai09-forecast-worker-imports.md) oddziela ten wynik od pełnego Required CI PR i wynikowego main. Wspólny wykonawca trzech zastosowań, kampania, final, MLflow i lifecycle pozostają otwarte. Canonical wyłączony, **12 GiB** z rezerwą **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-12 — AI 09: pełny lokalny CI połączonego przygotowania.**
+[09.118](evidence/09-118-development-integration-local-ci.json) zachowuje wynik `make ci-local` dla kodu `dcc36e8`: Mypy **800 plików** i osobno 10 natywnych, **5922 testy passed / 55 zadeklarowanych skips** oraz kolejne bramki do natywnego CPU. Wynik całego polecenia to **failed**: 3 kontrole natywne przeszły, 5 odmówiono przed uruchomieniem workerów z powodu `preflight_reserve`. Kod nie zmienił się podczas kontroli. Rezerwy pozostają zachowane; wymagany jest pełny Required CI dokładnego PR oraz wynikowego main.
+
+PR 67 ma odebrany wynikowy main `5875321`: **17/17 jobs success**, [run 38173378231](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38173378231). Bieżące połączenie wymaga własnego odbioru. Pełne role i operacje stockout, wspólny protokół i runtime trzech zastosowań, kampania, MLflow i lifecycle pozostają otwarte. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-11 — AI 09: połączona gałąź kwalifikacji prognoz i komponentów stockout.**
+[09.111](evidence/09-111-development-integration.json) łączy wykonawcę 51 operacji,
+pełny trening liczbowy stockout, publiczne cechy/upstream i odczyt oryginalnej
+kwalifikacji. Wszystkie 667 modułów, 300 modułów testowych i 416 kontraktów
+mają bajty odebranych komponentów; zachowano schematy v41–v45.
+**84 kontrole po połączeniu przeszły**, Mypy sprawdził 800 plików oraz osobno
+10 plików natywnej przestrzeni nazw. Te same **84 testy z paczki przeszły**;
+667 modułów i 47 kontraktów mają zgodne bajty. To odbiór połączenia
+komponentów; pełny CI pozostaje wymagany.
+
+PR 67 został scalony do `main` jako `5875321` po pełnych **17/17 jobs**.
+[CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38173378231)
+trwa. Bieżąca gałąź zawiera ten merge i zachowuje wcześniejszą lokalną odmowę
+pięciu workerów TensorFlow z powodu rezerwy RAM.
+
+Odtworzenie etykiet stockout z ledgeru, pełne dojrzałe role oraz zarezerwowane
+operacje selekcji, progów i oceny stockout/anomaly nadal wymagają połączenia.
+Przed pierwszą generacją Project trzeba zamrozić wspólny protokół wszystkich
+trzech zastosowań i runtime. Final, MLflow, karty modeli i lifecycle pozostają
+otwarte. Canonical nieuruchomiony, **12 GiB** i rezerwa **1 GiB**; AI 09
+**`not_ready`**. Poniższe wpisy zachowują historię odbioru poszczególnych przyrostów.
+
+**2026-10-11 — AI 09: strumieniowy odczyt pełnej kwalifikacji stockout.**
+[Nowy adapter](ai09-stockout-qualification-intake.md) wiąże oryginalne prywatne
+okna z publicznym snapshotem Source i sprawdza cały zbiór bez ładowania go jako
+jednego dokumentu metadanych. Zachowuje chronologię, nieznane wyniki, pełne
+hashe i regułę odbioru dopiero po zakończeniu oraz kontroli rodziców.
+
+**61 testów źródeł przeszło**, w tym oryginalne kwalifikacje 1.1/1.2, ponad
+10 000 rekordów i ponad 4 MiB, uszkodzenia, częściowy odczyt i zmiana tożsamości.
+Te same **61 testów z paczki przeszło**;
+[09.110](evidence/09-110-stockout-qualification-intake.json) zachowuje wynik
+i zgodność 660 modułów oraz 38 kontraktów. Odtworzenie ledgeru, dojrzałe role, zarezerwowane treningi
+i niezależna ocena pozostają otwarte. Canonical wyłączony, **12 GiB**,
+AI 09 **`not_ready`**.
+
+
+**2026-10-11 — AI 09: pełne publiczne przygotowanie stockout z upstream.**
+[Nowy adapter](ai09-stockout-public-preparation.md) łączy wszystkie fizyczne
+obserwacje z natywnymi cechami, kategorią znaną w chwili obserwacji oraz
+retrospektywną prognozą AI 08. Indeks pozostaje na dysku, wspólna kontrola
+wersji wykonuje się raz na datę, a brak prognozy pozostaje jawnym wynikiem.
+Publikacja i ponowny odczyt sprawdzają całą populację oraz tożsamość artefaktu.
+
+Błąd typowania manifestu znaleziony w pierwszej kontroli został poprawiony.
+Formatowanie, Ruff i Mypy **795 plików** przeszły. **93 testy źródeł**
+zaliczyły porównanie z natywnymi wynikami i regresję wcześniejszych adapterów.
+[09.109](evidence/09-109-stockout-public-upstream.json) zachowuje pełny wynik.
+Te same **93 testy z paczki przeszły**, bez pominięć; 662 moduły
+i 39 kontraktów mają zgodne bajty. Prywatne etykiety, dojrzałe role oraz zarezerwowane operacje
+treningu, selekcji i oceny pozostają otwarte. Nie uruchomiono danych ani modeli
+Project, a limit canonical **12 GiB** i rezerwa **1 GiB** pozostają zachowane.
+AI 09 **`not_ready`**.
+
+**2026-10-11 — AI 09: przygotowany pełny publiczny odczyt stockout.**
+[Adapter publicznego Source](ai09-stockout-public-parent.md) odtwarza wszystkie
+fakty i klucze fizyczne, zachowuje statusy niekwalifikowania i korzysta z
+niezmienionych obliczeń AI 08. Odbiór powstaje dopiero po pełnym odczycie i
+końcowych kontrolach rodziców. **63 testy źródeł przeszły w 390,10 s**:
+publiczne fixtures 1.1/1.2 oraz regresja kontekstu forecastingu.
+[09.108](evidence/09-108-stockout-public-parent.json) zawiera także zaliczenie
+tych samych **63 testów z paczki w 395,98 s**, zgodność 659 modułów i 37
+kontraktów. Pełna publikacja PR/main nadal jest wymagana. Prywatne etykiety, upstream,
+pełny podział i rezerwacje stockout nadal wymagają integracji. Canonical nie
+został uruchomiony; limit **12 GiB** zachowany, AI 09 `not_ready`.
+
+**2026-10-11 — AI 09: natywny trening i kalibracja stockout powyżej 10 000 wierszy.**
+[Nowy komponent](ai09-native-stockout-training.md) zachowuje równania LR/HGB,
+preprocessing całego TRAIN i późniejszą kalibrację warunkową. Nie próbkuje
+populacji; dotychczasowy kod i limity AI 08 pozostają niezmienione.
+**29 testów źródeł i te same 29 z paczki przeszło bez pominięć**, w tym rzeczywiste fity i odczyt modeli
+na 10 001 wierszach oraz zgodność z AI 08 na wspólnej populacji. Mypy sprawdził
+790 plików. [Dowód 09.107](evidence/09-107-native-stockout-full-training.json)
+potwierdza zgodność 657 modułów i 35 plików kontraktów w paczce i instalacji.
+Cztery nowe schematy v42 zachowują starsze kontrakty. Publikacja,
+adapter rzeczywistych rodziców i dziennika oraz pełna kwalifikacja
+trzech zastosowań pozostają wymagane. Nie uruchomiono Project ani final;
+limit 12 GiB zachowany. AI 09 nadal **`not_ready`**.
+
+**2026-10-11 — AI 09: trwa połączenie canonical z kalibracją i pełną oceną.**
+Na gałęzi roboczej powstał plan 16 operacji: osiem wcześniejszych kroków
+prognoz, scoring Calibration, fit kalibratora oraz kontekst i ocena każdego
+wariantu ordinary/demand/physical. Korzysta z oryginalnych zwycięzców 25/50,
+polityk i wcześniej zamrożonych budżetów; zachowuje 12 treningów modeli
+oraz osobno rozlicza jeden fit kalibratora. Cały dziennik musi powstać przed
+pierwszym eksportem canonical. Rozpoczętego dziennika ośmiu operacji nie
+można rozszerzyć ani przepisać jego receipts.
+
+Podłączenie istniejących kontrolerów zachowuje oryginalne dowody Source,
+kalibrację i obowiązkową ocenę segmentów oraz niepewności. **75 kontroli**
+zapisu protokołu oraz eksportu i oceny przeszło po poprawce zależności od
+kolejności kluczy JSON. Test oryginalnych 35 operacji i kolejnych dziesięciu
+potwierdził zatrzymanie po niewystarczającej kalibracji, zachowanie kosztów
+i wznowienie bez nowych workerów. **30 kontroli** przeszło dla workera oceny
+i osobnego odczytu dużych metadanych; limit wejść Source pozostaje 2 MiB.
+Mypy sprawdził 791 plików. Siedem schematów v41 zachowuje wcześniejsze wersje.
+
+Nowa wersja wspólnego programu zamraża **51 operacji** przed pierwszą
+generacją Source: 12 fitów modeli oraz osobny kalibrator i pełną ocenę
+trzech wariantów prognoz. **27 testów przeszło w 1866,15 s**, potwierdzając
+zamrożenie programu, zatrzymanie przy niewystarczającej kalibracji, zachowanie
+kosztów przy wznowieniu i zgodność ze starszą wersją 43 operacji. Kolejne
+**8 testów źródeł przeszło w 2060,78 s**: pełne 51 operacji, wznowienie 47+4,
+pełna kalibracja i ocena trzech wariantów oraz ponowne wznowienie bez workerów.
+[09.106](evidence/09-106-canonical-qualification.json) zachowuje osobno odmowę
+przy niepełnej kalibracji. Paczka ma zgodne bajty 658 modułów i 38 kontraktów;
+te same **8 testów z instalacji przeszło w 2232.60 s**,
+bez pominięć i przy niezmienionych źródłach oraz kontrolach.
+Nie uruchomiono danych ani modeli Project. AI 09 pozostaje **`not_ready`**.
+
+Wcześniejszy wykonawca prognoz 25/50/100 jest w
+[PR 67](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/67).
+Jego lokalny CI dał 5690 zaliczeń i 55 jawnych pominięć, a końcowo pięć
+odmów `preflight_reserve` przed startem natywnych workerów. Wynik pozostał
+nieudany. Pełny Required CI commitu `551d7bc` zaliczył **17/17 jobs**.
+Oznaczenie PR jako gotowego do review uruchomiło zgodnie z workflow kolejny
+pełny CI `38168569806`; jego odbiór i wynikowy main pozostają wymagane.
+
+**2026-10-11 — AI 09: wspólny wykonawca Source i prognoz 25/50/100.**
+[09.104](evidence/09-104-development-workflow.json) i
+[instrukcja](ai09-development-workflow.md) łączą 43 oryginalne operacje,
+w tym 12 fitów. Cały program, polityki, konfiguracje i przyszłe budżety są
+zapisywane przed pierwszą generacją; wcześniejsze wyniki i koszty pozostają
+w oryginalnych dziennikach. Utrata całej sesji Source albo dziennika prognoz
+blokuje odtworzenie zużytych prób.
+
+**39 testów źródeł i te same 39 z paczki przeszło bez pominięć**, w tym komplet 43 operacji,
+wznowienie bez nowych workerów i porównanie wszystkich kosztów. Mypy sprawdził
+**787 plików**. Rzeczywiste zależności producenta i workerów modeli oraz zgodność
+runtime zostały sprawdzone; kontrolowane dane i modele w testach pozostają
+jawnymi zastępnikami. **398 wcześniejszych kontraktów pozostaje niezmienionych.**
+654 moduły i 31 plików kontraktów mają zgodne bajty w źródłach, paczce
+i instalacji. Kontrole formatowania, dokumentacji i sekretów przeszły.
+
+Do właściwej kampanii trzeba jeszcze dołączyć kalibrację i ocenę trzech
+zastosowań. Dziennik prognoz kończy się na selekcji; nie można dopisać do niego
+kolejnych operacji po starcie ani zmienić runtime w trakcie kampanii.
+Pełny CI wcześniejszego przyrostu oraz publikacja bieżących zmian są otwarte.
+Nie uruchomiono nowych danych ani modeli Project. Canonical wyłączony,
+limit **12 GiB** zachowany; AI 09 **`not_ready`**.
+
+**2026-10-11 — AI 09: wykonawca pięciu oryginalnych operacji Source.**
+[09.103](evidence/09-103-source-preparation-execution.json) i
+[instrukcja przygotowania](ai09-source-preparation-execution.md) łączą rzeczywiste
+zamrożone polityki z generacją ordinary, natywnym planowaniem, płatną
+weryfikacją ordinary i wariantami demand/physical dla 25/50/100 produktów.
+Utrata dziennika, brak artefaktu lub niedokończona próba blokuje ponowny start;
+ukończone operacje zachowują oryginalne receipts i koszty.
+
+**111 kontroli źródeł i te same 111 z paczki** przeszło bez pominięć.
+Mypy sprawdził **784 pliki**; 652 moduły i 30 plików kontraktów mają zgodne
+bajty w instalacji. Zachowano wszystkie 396 wcześniejszych kontraktów.
+Kontrole pięciu operacji używają jawnych zastępników workerów Source;
+osobno sprawdzono rzeczywiste metadane, zależności i natywny planer
+zaakceptowanego producenta `d2363a5c` w izolowanym środowisku.
+
+Pełny CI wcześniejszego `7c9070b` nadal trwa. Odbiór i publikacja bieżących
+przyrostów, rzeczywiste dane/treningi oraz końcowa ocena trzech zastosowań
+pozostają otwarte. Canonical wyłączony, limit **12 GiB** zachowany;
+AI 09 **`not_ready`**.
+
+**2026-10-11 — AI 09: rzeczywiste reguły oceny przed planowaniem źródeł.**
+[09.102](evidence/09-102-prospective-development-policies.json) i
+[instrukcja zamrożenia](ai09-prospective-policies.md) wiążą dokumenty polityk,
+kategorie natywnego producenta oraz historyczne koszty. Nowe reguły grup
+można zamrozić przed wyznaczeniem identyfikatorów źródeł; późniejsza ocena
+nadal wymaga oryginalnego protokołu, planu i spisu populacji. Wszystkie
+krytyczne grupy i wcześniejsze formaty pozostają zachowane.
+
+**88 testów źródeł i te same 88 z paczki** przeszło bez pominięć.
+Mypy sprawdził **780 plików**. Zweryfikowano rzeczywisty odczyt ośmiu
+kategorii z zaakceptowanego Source `d2363a5c` oraz zapis/odczyt polityk.
+649 modułów i 28 plików kontraktów mają zgodne bajty w paczce; wszystkie
+391 wcześniejszych plików kontraktów są niezmienione. Pierwsze dopuszczenie
+testów wygasło bez startu workera; rozdzielone kontrole zachowały rezerwy.
+
+To odbiór komponentu. Przypięcie polityk do rzeczywistego workflow, generacja,
+treningi, ocena trzech zastosowań i final/lifecycle oraz pełny CI i publikacja
+pozostają otwarte. Pełny CI poprzedniego przyrostu `7c9070b` nadal trwa
+w odrębnym, niezmienianym drzewie. Canonical wyłączony; limit **12 GiB**
+zachowany; AI 09 **`not_ready`**.
+
 **2026-10-11 — AI 09: pełny lokalny CI wykonawcy zakończony błędem rezerwy RAM.**
 [09.105](evidence/09-105-canonical-forecast-local-ci.json) zachowuje wynik dla
 `7c9070b`: główny pytest **5690 zaliczeń i 55 jawnych pominięć** oraz wszystkie

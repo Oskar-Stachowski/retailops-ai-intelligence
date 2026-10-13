@@ -39,6 +39,7 @@ from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
     CampaignForecastEvaluationPrediction,
     CampaignForecastFrozenConfiguration,
 )
+from retailops_ai.evaluation_campaign.campaign_evaluation_metadata import MAX_PARENT_METADATA_BYTES
 from retailops_ai.evaluation_campaign.campaign_evaluation_receipt import (
     CampaignForecastEvaluationReceipt,
     CampaignForecastEvaluationRecipe,
@@ -46,8 +47,8 @@ from retailops_ai.evaluation_campaign.campaign_evaluation_receipt import (
     trial_metrics_name,
 )
 from retailops_ai.evaluation_campaign.campaign_export import (
-    MAX_RECEIPT_BYTES,
     _store_receipt,
+    receipt_size_limit,
     validate_completed_export,
 )
 from retailops_ai.evaluation_campaign.campaign_export_contract import (
@@ -66,22 +67,31 @@ from retailops_ai.evaluation_campaign.campaign_fit_contract import (
 from retailops_ai.evaluation_campaign.campaign_generation import _environment
 from retailops_ai.evaluation_campaign.campaign_generation_monitor import monitor, scratch_bytes
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
-from retailops_ai.evaluation_campaign.campaign_portfolio_contract import CampaignPortfolioProtocol
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import (
+    CampaignPortfolioProtocol,
+    parse_portfolio_protocol,
+)
 from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract import (
     CampaignPortfolioForecastEvaluationBinding,
+    CanonicalQualificationEvaluationBinding,
+    parse_portfolio_evaluation_binding,
 )
 from retailops_ai.evaluation_campaign.campaign_raw_context import (
     context_record,
     validate_raw_context_metrics,
 )
-from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
-    CampaignPortfolioRequiredGroupPolicy,
+from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
+    CampaignRequiredGroupRecipe,
+    RequiredGroupPolicy,
+    parse_required_group_policy,
 )
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CampaignForecastGroupRecipeEvaluationReceipt,
     CampaignForecastPortfolioEvaluationReceipt,
     CampaignForecastPortfolioRobustEvaluationReceipt,
     CampaignForecastRequiredGroupEvaluationReceipt,
     CampaignForecastRobustEvaluationReceipt,
+    CanonicalQualificationEvaluationReceipt,
     ForecastEvaluationReceipt,
     is_robust_evaluation,
     parse_forecast_evaluation_receipt,
@@ -101,6 +111,9 @@ from retailops_ai.evaluation_campaign.campaign_tune import verify_campaign_forec
 from retailops_ai.evaluation_campaign.campaign_tune_contract import CampaignForecastTuneReceipt
 from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
     CampaignForecastUncertaintyPolicy,
+)
+from retailops_ai.evaluation_campaign.canonical_qualification import (
+    PreparedCanonicalQualificationProtocol,
 )
 from retailops_ai.evaluation_campaign.development_contract import MODELS
 from retailops_ai.evaluation_campaign.partitions import membership_key
@@ -123,7 +136,6 @@ POPULATION = (
     "eligible_keys_sha256",
     "role_population_sha256",
 )
-MAX_PARENT_METADATA_BYTES = 16 * 1024**2
 
 
 def _operation(ledger: CampaignJournal, operation_id: str) -> CampaignOperationPlan:
@@ -207,12 +219,21 @@ def _binding(
         ):
             raise SnapshotError("campaign_evaluation_portfolio_training_source_mismatch")
         if plan.phase == "development":
-            portfolio_binding = CampaignPortfolioForecastEvaluationBinding(
-                protocol=ledger.protocol,
-                operation_id=operation.operation_id,
-                recipe=recipe,
-                training_dataset_id=configuration.development_dataset_id,
-                evaluation_dataset_id=exported.dataset_id,
+            binding_class = (
+                CanonicalQualificationEvaluationBinding
+                if isinstance(ledger.protocol, PreparedCanonicalQualificationProtocol)
+                else CampaignPortfolioForecastEvaluationBinding
+            )
+            portfolio_binding = binding_class.model_validate_json(
+                canonical_bytes(
+                    {
+                        "protocol": ledger.protocol.model_dump(mode="json"),
+                        "operation_id": operation.operation_id,
+                        "recipe": recipe.model_dump(mode="json"),
+                        "training_dataset_id": configuration.development_dataset_id,
+                        "evaluation_dataset_id": exported.dataset_id,
+                    }
+                )
             )
             if not portfolio_binding.matches(configuration, plan):
                 raise SnapshotError("campaign_evaluation_portfolio_source_binding_mismatch")
@@ -404,7 +425,7 @@ def evaluate_campaign_forecast(
     raw_context_bundle: Path | None = None,
     raw_context_receipt: CampaignContextBundleReceipt | None = None,
     uncertainty_policy: CampaignForecastUncertaintyPolicy | None = None,
-    required_group_policy: CampaignPortfolioRequiredGroupPolicy | None = None,
+    required_group_policy: RequiredGroupPolicy | None = None,
 ) -> tuple[Path, ForecastEvaluationReceipt]:
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, operation_id)
@@ -457,9 +478,18 @@ def evaluate_campaign_forecast(
             if isinstance(exported, CampaignFinalExportReceipt)
             else None
         )
+        if isinstance(ledger.protocol, PreparedCanonicalQualificationProtocol):
+            frozen_policies = ledger.protocol.qualification.policies.policies
+            if (
+                required_group_policy != frozen_policies.required_groups
+                or uncertainty_policy != frozen_policies.uncertainty
+                or raw_context_bundle is None
+                or raw_context_receipt is None
+            ):
+                raise SnapshotError("canonical_qualification_complete_robustness_required")
         raw_context = None
         if required_group_policy is not None:
-            required_group_policy = CampaignPortfolioRequiredGroupPolicy.model_validate_json(
+            required_group_policy = parse_required_group_policy(
                 required_group_policy.model_dump_json()
             )
             if (
@@ -786,7 +816,11 @@ def evaluate_campaign_forecast(
         if uncertainty_policy is not None and raw_context is not None:
             context_parent, census = context_record(raw_context, plan, population)
             robust_model = (
-                CampaignForecastRequiredGroupEvaluationReceipt
+                CanonicalQualificationEvaluationReceipt
+                if isinstance(ledger.protocol, PreparedCanonicalQualificationProtocol)
+                else CampaignForecastGroupRecipeEvaluationReceipt
+                if isinstance(required_group_policy, CampaignRequiredGroupRecipe)
+                else CampaignForecastRequiredGroupEvaluationReceipt
                 if required_group_policy is not None
                 else CampaignForecastPortfolioRobustEvaluationReceipt
                 if portfolio_binding is not None
@@ -867,10 +901,10 @@ def _verify_bundle(bundle: Path, receipt: ForecastEvaluationReceipt) -> None:
     if files != receipt.artifact_files or size != receipt.artifact_bytes:
         raise SnapshotError("campaign_evaluation_artifact_checksum_mismatch")
     if isinstance(receipt, CampaignForecastRequiredGroupEvaluationReceipt):
-        required = CampaignPortfolioRequiredGroupPolicy.model_validate_json(
+        required = parse_required_group_policy(
             read_bytes(bundle, "required-groups.json", MAX_PARENT_METADATA_BYTES)
         )
-        protocol = CampaignPortfolioProtocol.model_validate_json(
+        protocol = parse_portfolio_protocol(
             read_bytes(bundle, "portfolio-protocol.json", MAX_PARENT_METADATA_BYTES)
         )
         if required != receipt.required_group_policy or protocol != receipt.portfolio_protocol:
@@ -887,7 +921,7 @@ def _verify_bundle(bundle: Path, receipt: ForecastEvaluationReceipt) -> None:
         or isinstance(receipt, CampaignForecastRequiredGroupEvaluationReceipt)
         and receipt.portfolio_binding is not None
     ):
-        binding = CampaignPortfolioForecastEvaluationBinding.model_validate_json(
+        binding = parse_portfolio_evaluation_binding(
             read_bytes(bundle, "portfolio.json", MAX_PARENT_METADATA_BYTES)
         )
         if binding != receipt.portfolio_binding or not binding.matches(
@@ -1170,7 +1204,7 @@ def validate_completed_evaluation(journal: Path, receipt: ForecastEvaluationRece
         with regular_file(journal, "receipts/" + receipt.reservation_id + ".json") as stream:
             if stat.S_IMODE(os.fstat(stream.fileno()).st_mode) != 0o600:
                 raise SnapshotError("campaign_evaluation_private_receipt_required")
-            raw = stream.read(MAX_RECEIPT_BYTES + 1)
+            raw = stream.read(receipt_size_limit(receipt) + 1)
     except OSError:
         raise SnapshotError("campaign_evaluation_receipt_unavailable") from None
     if raw != canonical_bytes(receipt.model_dump(mode="json")) + b"\n":

@@ -8,6 +8,11 @@ zwycięskie konfiguracje, wspólny scoring i selekcję.
 
 Dziennik musi już zawierać protokół `MultiscaleSelectionProtocol`,
 `PreparedForecastAdvancementProtocol` albo `PreparedCanonicalForecastProtocol`.
+Na gałęzi integracji dopuszczono także pełny, zamrożony przed pierwszym
+eksportem `PreparedCanonicalQualificationProtocol` z 16 operacjami.
+Osiem kontroli pełnej ścieżki i odmowy przeszło ze źródeł i z paczki;
+odrębne 27 testów zachowuje regresję wcześniejszych kontrolerów.
+[09.106](evidence/09-106-canonical-qualification.json) podaje pełny zakres.
 Budżety, rodzice, środowisko, polityki i wcześniejsze koszty pochodzą
 z [przygotowania danych](ai09-development-preparation.md) oraz
 [zweryfikowanej selekcji](ai09-screening-selection.md).
@@ -27,7 +32,10 @@ python scripts/run_ai09_development.py \
 ```
 
 Limit jednej nowej operacji pozwala zakończyć proces na granicy operacji.
-Domyślna wartość 12 wykonuje cały pozostały dziennik. Ścieżki są trwale
+Domyślna wartość 12 wykonuje do 12 nowych operacji. Pełny dziennik kwalifikacji
+obejmuje 16 operacji i wymaga kolejnego wywołania po takim zatrzymaniu.
+Dla tego protokołu można jawnie podać limit 16 i wykonać cały dziennik
+w jednym wywołaniu; wcześniejsze protokoły zachowują limit 12. Ścieżki są trwale
 zapisywane przed pierwszym eksportem; ponowne wywołanie musi podać dokładnie
 tę samą konfigurację. Log wypisuje rozpoczęcie, sprawdzanie i zakończenie
 operacji. Wynik polecenia rozróżnia liczbę nowych operacji od całego
@@ -43,7 +51,15 @@ nadal rezerwują każdą operację w oryginalnym dzienniku.
 Po selekcji wykonawca ponownie odbiera oryginalny wynik całej skali
 i zapisuje niezmienny `forecast-execution-result.json`. Plik jest wejściem
 do istniejącego kompilatora kolejnej skali. Samo ukończenie dziennika
-zachowuje `quality_qualified=false`, `final_test_access_authorized=false`+i `stage_ready=false`.
+zachowuje `quality_qualified=false`, `final_test_access_authorized=false`
+i `stage_ready=false`.
+
+Nowy dziennik kwalifikacji kontynuuje po Tune przez scoring Calibration,
+kalibrator i kontekst oraz ocenę trzech wariantów. Nieprawidłowy wynik Tune
+lub niewystarczająca kalibracja zatrzymuje dalsze operacje z `not_ready`.
+Wynik `qualification-execution-result.json` zachowuje pełny protokół,
+oryginalne skróty receipts i koszty. Ocenę development raportuje osobno;
+`stage_ready` i dostęp final pozostają wyłączone.
 
 **11 kontroli przeszło bez pominięć**, w tym wszystkie 12 operacji oraz
 ponowny odbiór ukończonego dziennika bez startu workera. Pełny Mypy sprawdził

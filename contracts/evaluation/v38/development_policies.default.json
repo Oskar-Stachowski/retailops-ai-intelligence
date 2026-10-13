@@ -1,0 +1,661 @@
+{
+  "actual_source_catalog_verified": false,
+  "anomaly_metrics": {
+    "average_precision": "score_ties_grouped_stepwise_average_precision",
+    "early_lead_days": 0,
+    "episode_coverage": "all_mature_episodes_in_complete_requested_census",
+    "false_alert_denominator": "scored_mature_truth_clean_observations",
+    "late_tolerance_days": 1,
+    "overlap": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+    "repeat_alerts": "report_without_increasing_episode_recall",
+    "unknown_truth": "excluded_and_counted",
+    "version": "anomaly-evaluation-1.0.0",
+    "zero_prediction_precision": "not_evaluable"
+  },
+  "anomaly_reference_quality": {
+    "maximum_false_alerts_per_1000": 10.0,
+    "minimum_clean_per_case": 300,
+    "minimum_episode_recall": 0.75,
+    "minimum_episode_recall_per_type": 0.5,
+    "minimum_episodes_per_type": 3,
+    "minimum_evaluable_coverage": 0.55,
+    "minimum_high_severity_precision": 0.9,
+    "minimum_positive_observations_per_type": 3,
+    "minimum_precision": 0.8,
+    "minimum_recall": 0.65,
+    "null_required_metric": "blocks_qualification",
+    "qualification_scope": "synthetic_ai_07_portfolio_v4",
+    "required_types": [
+      "one_day_spike",
+      "multi_day_spike",
+      "sustained_drop",
+      "return_spike",
+      "inventory_censored_episode"
+    ],
+    "segment_policy": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+    "source_scenarios": [
+      "demand",
+      "physical"
+    ],
+    "source_seeds": [
+      42,
+      137,
+      2026
+    ],
+    "version": "anomaly-portfolio-quality-1.0.0"
+  },
+  "catalog": {
+    "category_inventory": [
+      "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+      "28b88987-7084-5c08-a3c5-2b8ffa807492",
+      "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+      "445dff34-464a-5d4e-b54d-324bf9aca10e",
+      "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+      "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+      "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+      "d916b3fd-e110-5a11-af32-41fdef07aaa0"
+    ],
+    "code_sha256": {
+      "data/generator/business_calendar.py": "0b4478800f6654957259d136a119367370d8e6915736b17e0927fa8550d40e34",
+      "data/generator/common.py": "e60a7003424088f5dd45dc1901c8f080185bc99e3f021fc8478a7923cc503915",
+      "data/generator/dimension_schema.py": "7fb6543d4f266c3faca9e56abe4cb773e1ad07a5446eb5a7e82cee1618c05566",
+      "data/generator/dimensions.py": "364641248c502986988bfb88ef1f7aeb7a6e075ec998e02d1ac9902f2bf953f7"
+    },
+    "method": "native_catalog_metadata_from_pinned_source_code_before_any_dataset_generation",
+    "producer_commit": "d2363a5c78e0b190132e5e3d804da73b3136487d"
+  },
+  "final_test_access_authorized": false,
+  "forecast_quality": {
+    "evaluation_use": "independent_and_final_after_frozen_selection_no_reselection",
+    "interval_objective": "central_interval_score_no_regression_against_baseline",
+    "legacy_width_ratio_threshold": 2.0,
+    "maximum_absolute_normalized_mean_bias": 0.1,
+    "maximum_segment_mae_regression": 0.1,
+    "minimum_calibration_rows_per_horizon": 100,
+    "minimum_eligibility_coverage": 0.8,
+    "minimum_empirical_coverage": 0.8,
+    "minimum_global_rows": 100,
+    "minimum_prediction_coverage": 1.0,
+    "minimum_relative_mae_improvement": 0.05,
+    "minimum_segment_rows": 30,
+    "nominal_coverage": 0.9,
+    "reference_functionals": "separate_tune_choices_not_a_joint_distribution",
+    "version": "ai09-campaign-forecast-quality-1.0.0",
+    "zero_actuals": "absolute_errors_and_false_positive_units_no_ratio_gate"
+  },
+  "model_fit_authorized": false,
+  "required_groups": {
+    "coverage_rule": "same_preregistered_variant_owners_in_every_seed_without_pooling",
+    "critical_insufficient_sample": "blocks_qualification",
+    "diagnostics": "all_census_groups_metrics_counts_validity_and_uncertainty_retained",
+    "final_access_authorized": false,
+    "native_scenario_effects_qualified": false,
+    "promotion_allowed": false,
+    "segment_policy": {
+      "availability_membership": "independent_boolean_strata_overlap_not_a_partition",
+      "categories": "complete_verified_source_catalog_not_selected_from_outcomes",
+      "category_inventory": [
+        "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+        "28b88987-7084-5c08-a3c5-2b8ffa807492",
+        "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+        "445dff34-464a-5d4e-b54d-324bf9aca10e",
+        "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+        "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+        "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+        "d916b3fd-e110-5a11-af32-41fdef07aaa0"
+      ],
+      "final_access_authorized": false,
+      "intermittency_basis": "known_open_history_days_missing_or_closed_are_not_sales_zeros",
+      "inventory_basis": "origin_known_unreserved_available_quantity_not_future_stock",
+      "late_observation_hours": 24,
+      "lead_time_basis": "origin_known_supplier_quote_not_realized_delivery_or_truth",
+      "lead_time_boundaries": [
+        2,
+        7
+      ],
+      "max_rows": 10000000,
+      "max_segments": 512,
+      "maximum_inventory_snapshot_age_hours": 24,
+      "promotion_allowed": false,
+      "scenario_basis": "source_bound_preregistered_annotation_never_actual_target",
+      "stage_ready": false,
+      "version": "ai09-complete-forecast-segments-1.0.0",
+      "volume_basis": "origin_known_rolling_28_mean_not_target_outcome",
+      "volume_boundaries": [
+        0,
+        5,
+        20
+      ]
+    },
+    "source_binding": "original_protocol_source_recipe_and_evaluation_scope",
+    "stage_ready": false,
+    "unknown_category_encoding_qualified": false,
+    "variants": [
+      {
+        "required": [
+          {
+            "dimension": "anomaly",
+            "value": "clean_control"
+          },
+          {
+            "dimension": "availability",
+            "value": "complete"
+          },
+          {
+            "dimension": "availability",
+            "value": "late_history"
+          },
+          {
+            "dimension": "availability",
+            "value": "missing_history"
+          },
+          {
+            "dimension": "category",
+            "value": "197c13ee-8ab3-580d-8ccc-a0c3195d9925"
+          },
+          {
+            "dimension": "category",
+            "value": "28b88987-7084-5c08-a3c5-2b8ffa807492"
+          },
+          {
+            "dimension": "category",
+            "value": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb"
+          },
+          {
+            "dimension": "category",
+            "value": "445dff34-464a-5d4e-b54d-324bf9aca10e"
+          },
+          {
+            "dimension": "category",
+            "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+          },
+          {
+            "dimension": "category",
+            "value": "655e5f7a-c40d-5c55-b071-175c1b2d6502"
+          },
+          {
+            "dimension": "category",
+            "value": "c8956032-5a0a-57f1-9118-b9b2c526cbda"
+          },
+          {
+            "dimension": "category",
+            "value": "d916b3fd-e110-5a11-af32-41fdef07aaa0"
+          },
+          {
+            "dimension": "channel",
+            "value": "online"
+          },
+          {
+            "dimension": "channel",
+            "value": "store"
+          },
+          {
+            "dimension": "global",
+            "value": "all"
+          },
+          {
+            "dimension": "history",
+            "value": "cold_start"
+          },
+          {
+            "dimension": "history",
+            "value": "established"
+          },
+          {
+            "dimension": "horizon",
+            "value": "1"
+          },
+          {
+            "dimension": "horizon",
+            "value": "10"
+          },
+          {
+            "dimension": "horizon",
+            "value": "11"
+          },
+          {
+            "dimension": "horizon",
+            "value": "12"
+          },
+          {
+            "dimension": "horizon",
+            "value": "13"
+          },
+          {
+            "dimension": "horizon",
+            "value": "14"
+          },
+          {
+            "dimension": "horizon",
+            "value": "2"
+          },
+          {
+            "dimension": "horizon",
+            "value": "3"
+          },
+          {
+            "dimension": "horizon",
+            "value": "4"
+          },
+          {
+            "dimension": "horizon",
+            "value": "5"
+          },
+          {
+            "dimension": "horizon",
+            "value": "6"
+          },
+          {
+            "dimension": "horizon",
+            "value": "7"
+          },
+          {
+            "dimension": "horizon",
+            "value": "8"
+          },
+          {
+            "dimension": "horizon",
+            "value": "9"
+          },
+          {
+            "dimension": "intermittency",
+            "value": "all_zero_known_open_history"
+          },
+          {
+            "dimension": "intermittency",
+            "value": "intermittent_known_open_history"
+          },
+          {
+            "dimension": "intermittency",
+            "value": "positive_on_all_known_open_days"
+          },
+          {
+            "dimension": "inventory",
+            "value": "known_positive"
+          },
+          {
+            "dimension": "inventory",
+            "value": "known_zero"
+          },
+          {
+            "dimension": "lead_time",
+            "value": "gt_2_le_7_days"
+          },
+          {
+            "dimension": "lead_time",
+            "value": "gt_7_days"
+          },
+          {
+            "dimension": "lead_time",
+            "value": "le_2_days"
+          },
+          {
+            "dimension": "scenario",
+            "value": "normal"
+          },
+          {
+            "dimension": "scenario",
+            "value": "promotion"
+          },
+          {
+            "dimension": "volume",
+            "value": "high"
+          },
+          {
+            "dimension": "volume",
+            "value": "low"
+          },
+          {
+            "dimension": "volume",
+            "value": "medium"
+          },
+          {
+            "dimension": "volume",
+            "value": "zero"
+          }
+        ],
+        "variant": "ordinary"
+      },
+      {
+        "required": [
+          {
+            "dimension": "anomaly",
+            "value": "multi_day_spike"
+          },
+          {
+            "dimension": "anomaly",
+            "value": "one_day_spike"
+          },
+          {
+            "dimension": "anomaly",
+            "value": "sustained_drop"
+          },
+          {
+            "dimension": "category",
+            "value": "197c13ee-8ab3-580d-8ccc-a0c3195d9925"
+          },
+          {
+            "dimension": "category",
+            "value": "28b88987-7084-5c08-a3c5-2b8ffa807492"
+          },
+          {
+            "dimension": "category",
+            "value": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb"
+          },
+          {
+            "dimension": "category",
+            "value": "445dff34-464a-5d4e-b54d-324bf9aca10e"
+          },
+          {
+            "dimension": "category",
+            "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+          },
+          {
+            "dimension": "category",
+            "value": "655e5f7a-c40d-5c55-b071-175c1b2d6502"
+          },
+          {
+            "dimension": "category",
+            "value": "c8956032-5a0a-57f1-9118-b9b2c526cbda"
+          },
+          {
+            "dimension": "category",
+            "value": "d916b3fd-e110-5a11-af32-41fdef07aaa0"
+          },
+          {
+            "dimension": "channel",
+            "value": "online"
+          },
+          {
+            "dimension": "channel",
+            "value": "store"
+          },
+          {
+            "dimension": "global",
+            "value": "all"
+          },
+          {
+            "dimension": "horizon",
+            "value": "1"
+          },
+          {
+            "dimension": "horizon",
+            "value": "10"
+          },
+          {
+            "dimension": "horizon",
+            "value": "11"
+          },
+          {
+            "dimension": "horizon",
+            "value": "12"
+          },
+          {
+            "dimension": "horizon",
+            "value": "13"
+          },
+          {
+            "dimension": "horizon",
+            "value": "14"
+          },
+          {
+            "dimension": "horizon",
+            "value": "2"
+          },
+          {
+            "dimension": "horizon",
+            "value": "3"
+          },
+          {
+            "dimension": "horizon",
+            "value": "4"
+          },
+          {
+            "dimension": "horizon",
+            "value": "5"
+          },
+          {
+            "dimension": "horizon",
+            "value": "6"
+          },
+          {
+            "dimension": "horizon",
+            "value": "7"
+          },
+          {
+            "dimension": "horizon",
+            "value": "8"
+          },
+          {
+            "dimension": "horizon",
+            "value": "9"
+          },
+          {
+            "dimension": "scenario",
+            "value": "demand_shock"
+          }
+        ],
+        "variant": "demand"
+      },
+      {
+        "required": [
+          {
+            "dimension": "anomaly",
+            "value": "inventory_censored_episode"
+          },
+          {
+            "dimension": "anomaly",
+            "value": "return_spike"
+          },
+          {
+            "dimension": "category",
+            "value": "197c13ee-8ab3-580d-8ccc-a0c3195d9925"
+          },
+          {
+            "dimension": "category",
+            "value": "28b88987-7084-5c08-a3c5-2b8ffa807492"
+          },
+          {
+            "dimension": "category",
+            "value": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb"
+          },
+          {
+            "dimension": "category",
+            "value": "445dff34-464a-5d4e-b54d-324bf9aca10e"
+          },
+          {
+            "dimension": "category",
+            "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+          },
+          {
+            "dimension": "category",
+            "value": "655e5f7a-c40d-5c55-b071-175c1b2d6502"
+          },
+          {
+            "dimension": "category",
+            "value": "c8956032-5a0a-57f1-9118-b9b2c526cbda"
+          },
+          {
+            "dimension": "category",
+            "value": "d916b3fd-e110-5a11-af32-41fdef07aaa0"
+          },
+          {
+            "dimension": "channel",
+            "value": "online"
+          },
+          {
+            "dimension": "channel",
+            "value": "store"
+          },
+          {
+            "dimension": "global",
+            "value": "all"
+          },
+          {
+            "dimension": "horizon",
+            "value": "1"
+          },
+          {
+            "dimension": "horizon",
+            "value": "10"
+          },
+          {
+            "dimension": "horizon",
+            "value": "11"
+          },
+          {
+            "dimension": "horizon",
+            "value": "12"
+          },
+          {
+            "dimension": "horizon",
+            "value": "13"
+          },
+          {
+            "dimension": "horizon",
+            "value": "14"
+          },
+          {
+            "dimension": "horizon",
+            "value": "2"
+          },
+          {
+            "dimension": "horizon",
+            "value": "3"
+          },
+          {
+            "dimension": "horizon",
+            "value": "4"
+          },
+          {
+            "dimension": "horizon",
+            "value": "5"
+          },
+          {
+            "dimension": "horizon",
+            "value": "6"
+          },
+          {
+            "dimension": "horizon",
+            "value": "7"
+          },
+          {
+            "dimension": "horizon",
+            "value": "8"
+          },
+          {
+            "dimension": "horizon",
+            "value": "9"
+          },
+          {
+            "dimension": "scenario",
+            "value": "inventory_constraint"
+          }
+        ],
+        "variant": "physical"
+      }
+    ],
+    "version": "ai09-prospective-required-group-recipe-1.0.0"
+  },
+  "scenario_weights": {
+    "demand_shock": 1,
+    "inventory_constraint": 1,
+    "normal": 1,
+    "promotion": 1
+  },
+  "seed_weights": {
+    "137": 1,
+    "2026": 1,
+    "42": 1
+  },
+  "stage_ready": false,
+  "stockout_decision_reference": {
+    "approval_status": "proposal_requires_operator_review",
+    "capacity": {
+      "fraction": 0.5,
+      "mode": "top_fraction",
+      "ties": "product_stock_lexical",
+      "top_n": null,
+      "unit": "physical_product_stock_keys_per_origin"
+    },
+    "costs": {
+      "false_attention": 1.0,
+      "interpretation": "operator_proposal_not_validated_business_savings",
+      "missed_incident": 5.0
+    },
+    "evaluation_role": "calibration",
+    "final_test_access": "forbidden",
+    "thresholds": {
+      "critical_from": 0.9,
+      "high_from": 0.5,
+      "medium_from": 0.25
+    },
+    "version": "stockout-threshold-proposal-2.0.0"
+  },
+  "stockout_labels": {
+    "episode_policy": "zero_after_event_including_instantaneous",
+    "horizon_days": 7,
+    "max_ledger_rows": 100000,
+    "max_snapshot_age_seconds": 86400,
+    "max_windows": 10000,
+    "reservation_policy": "none",
+    "stock_measure": "available_qty",
+    "version": "incident-stockout-labels-1.0.0"
+  },
+  "stockout_metric_rules": "native_AP_above_no_skill_Brier_below_train_constant_ECE_and_complete_segment_support",
+  "stockout_quality": {
+    "development": {
+      "expected_category_count": 8,
+      "expected_stock_location_count": 3,
+      "maximum_expected_calibration_error": 0.15,
+      "minimum_segment_per_class": 5,
+      "minimum_segment_rows": 20,
+      "quality_policy_status": "proposal_before_final_test"
+    },
+    "final": {
+      "expected_category_count": 8,
+      "expected_stock_location_count": 4,
+      "maximum_expected_calibration_error": 0.15,
+      "minimum_segment_per_class": 5,
+      "minimum_segment_rows": 20,
+      "quality_policy_status": "proposal_before_final_test"
+    }
+  },
+  "uncertainty": {
+    "assumptions": [
+      "time_blocks_approximate_weak_dependence_no_stationarity_guarantee",
+      "series_clusters_assume_between_cluster_independence",
+      "methods_are_separate_sensitivity_reports_not_joint_multiway_inference"
+    ],
+    "confidence_level": 0.95,
+    "final_access_authorized": false,
+    "independent_row_resampling": false,
+    "max_cluster_cells": 100000,
+    "max_index_bytes": 1073741824,
+    "max_resampled_cluster_visits": 10000000,
+    "max_rows": 10000000,
+    "methods": [
+      "time_block",
+      "series_cluster"
+    ],
+    "minimum_eligible_series_clusters": 30,
+    "minimum_eligible_time_blocks": 8,
+    "nominal_coverage_guaranteed": false,
+    "nominal_interval_coverage": 0.9,
+    "pairing": "same_cluster_multiplicities_for_candidate_reference_and_actual",
+    "partial_boundary_blocks": "retain_full_membership_never_drop_rows",
+    "promotion_allowed": false,
+    "quantile_method": "linear_percentile",
+    "random_generator": "numpy_PCG64",
+    "resamples": 999,
+    "resampling_seed": 137,
+    "series_clusters": "whole_product_selling_location_channel_all_origins_and_horizons",
+    "stage_ready": false,
+    "time_basis": "forecast_origin_utc_calendar_day",
+    "time_block_anchor": "2000-01-03",
+    "time_block_days": 28,
+    "time_blocks": "fixed_disjoint_calendar_blocks_all_series_jointly",
+    "version": "ai09-paired-cluster-uncertainty-1.0.0"
+  },
+  "version": "ai09-prospective-development-policies-1.0.0"
+}

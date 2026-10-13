@@ -42,8 +42,15 @@ from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
     CampaignForecastPortfolioRobustEvaluationReceipt,
     CampaignForecastRequiredGroupEvaluationReceipt,
     CampaignForecastRobustEvaluationReceipt,
+    CanonicalQualificationEvaluationReceipt,
 )
 from retailops_ai.evaluation_campaign.campaign_score_contract import CampaignForecastScoreReceipt
+from retailops_ai.evaluation_campaign.campaign_source_identity import (
+    _producer as _producer,
+)
+from retailops_ai.evaluation_campaign.campaign_source_identity import (
+    _producer_values as _producer_values,
+)
 from retailops_ai.evaluation_campaign.campaign_tune_contract import CampaignForecastTuneReceipt
 from retailops_ai.evaluation_campaign.development_planning_contract import (
     NativeDevelopmentPlanningReceipt,
@@ -57,7 +64,6 @@ from retailops_ai.evaluation_campaign.physical_forecast import (
     verify_physical_forecast,
 )
 from retailops_ai.evaluation_campaign.source_replay import (
-    PrivateSourceReplay,
     _open_verified_source_parent,
     physical_limits,
 )
@@ -70,6 +76,16 @@ from retailops_ai.source_snapshot.files import (
 )
 
 MAX_RECEIPT_BYTES = 512 * 1024
+
+
+def receipt_size_limit(receipt: object) -> int:
+    # The versioned qualification receipt embeds verified 25/50/100 ancestry.
+    # Keep the established small-receipt limit for every earlier wire version.
+    return (
+        8 * 1024**2
+        if isinstance(receipt, CanonicalQualificationEvaluationReceipt)
+        else MAX_RECEIPT_BYTES
+    )
 
 
 def _operation(ledger: CampaignJournal, operation_id: str) -> CampaignOperationPlan:
@@ -163,27 +179,6 @@ def _binding(
     return source
 
 
-def _producer(replay: PrivateSourceReplay, source: CampaignSourceRecipe) -> None:
-    # Inventory sources pin API/generator dependencies separately from Arrow.
-    # New generation plans freeze the exporter lock explicitly before execution.
-    exporter_lock = source.exporter_lock_sha256 or replay.declared_exporter_lock_sha256
-    _producer_values(replay, source.producer_commit, source.producer_lock_sha256, exporter_lock)
-
-
-def _producer_values(
-    replay: PrivateSourceReplay, commit: str, producer_lock: str, exporter_lock: str | None
-) -> None:
-    if (
-        replay.producer_commit != commit
-        or replay.producer_code_state != "clean"
-        or replay.producer_lock_sha256 != producer_lock
-        or replay.exporter_commit != commit
-        or replay.exporter_lock_sha256 is None
-        or replay.exporter_lock_sha256 != exporter_lock
-    ):
-        raise SnapshotError("campaign_export_verified_producer_or_lock_mismatch")
-
-
 def _store_receipt(
     root: Path,
     receipt: CampaignDevelopmentExportReceipt
@@ -207,7 +202,7 @@ def _store_receipt(
 ) -> None:
     """Keep output evidence durable before completing the charged operation."""
     raw = canonical_bytes(receipt.model_dump(mode="json")) + b"\n"
-    if len(raw) > MAX_RECEIPT_BYTES:
+    if len(raw) > receipt_size_limit(receipt):
         raise SnapshotError("campaign_export_receipt_size_limit")
     directory = root / "receipts"
     try:

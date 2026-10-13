@@ -1,0 +1,125 @@
+{
+  "recorded_at_utc": "2026-10-11T20:49:13.766430+00:00",
+  "scope": "Combined accepted forecast51 qualification, full stockout numerical training/public features/upstream and original qualification intake. Complete three-usecase campaign remains unfinished.",
+  "component_code_parity": {
+    "accepted_components": [
+      "7b25a0e",
+      "1dff628",
+      "9b4090e"
+    ],
+    "integration_head": "a6783b53de115dc4e6279f09e9dd6dd399549e9a",
+    "source_modules": 667,
+    "test_modules": 300,
+    "contracts": 416,
+    "every_source_test_and_contract_blob_equal_to_an_accepted_component": true,
+    "contract_generator_and_package_mapping_merge": "both branches retained, integration checks pending",
+    "new_Project_operations": 0,
+    "code_unchanged_after_merging_PR67_main": true,
+    "current_integration_head": "b16356011f5129ac9e44e882edf1387de94a17c8"
+  },
+  "integration_controls": {
+    "tests": 84,
+    "test_modules": {
+      "campaign_evaluation_metadata": 6,
+      "campaign_stockout_training": 17,
+      "campaign_stockout_qualification": 61
+    },
+    "suite_seconds": 7.097,
+    "skipped": 0,
+    "junit_sha256": "7c3699d079bf40a06e101423fbc859d153ec19570131545006b5b5eea24b1dcb",
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 13.401179209002294,
+      "sampled_tree_peak_rss_bytes": 265109504,
+      "sampled_worker_cpu_seconds": 10.365299284999999,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 156883,
+      "sampled_peak_scratch_allocated_bytes": 172032,
+      "minimum_free_disk_bytes": 29788921856,
+      "minimum_available_memory_bytes": 1356693504,
+      "samples": 120,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; reused existing U private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 402653184,
+      "code_pins_unchanged": true
+    },
+    "mypy_files": 800,
+    "native_namespace_mypy_files": 10,
+    "prior_and_new_schema_generation": "all --check passed",
+    "documentation_and_required_CI_contract": "passed"
+  },
+  "accepted_component_evidence": [
+    "09-106-canonical-qualification.json",
+    "09-107-native-stockout-full-training.json",
+    "09-108-stockout-public-parent.json",
+    "09-109-stockout-public-upstream.json",
+    "09-110-stockout-qualification-intake.json"
+  ],
+  "installed_integration_controls": {
+    "status": "passed",
+    "tests": 84,
+    "skipped": 0,
+    "suite_seconds": 6.089,
+    "junit_sha256": "866fcee7ed34c22ec6a50e30e2b21df8e44895578158b32e98f8e324d2b3c466",
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 6.797440916008782,
+      "sampled_tree_peak_rss_bytes": 254279680,
+      "sampled_worker_cpu_seconds": 5.860349664,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 14480,
+      "sampled_peak_scratch_allocated_bytes": 24576,
+      "minimum_free_disk_bytes": 29752545280,
+      "minimum_available_memory_bytes": 1377976320,
+      "samples": 62,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "source_and_control_pins_unchanged": true,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+    },
+    "acceptance": {
+      "same_test_case_inventory": true,
+      "tests_per_suite": 84,
+      "controlled_25_50_setups_per_suite": 0,
+      "source_pins_unchanged": true
+    },
+    "wheel": {
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 3030446,
+      "sha256": "15546c02cd3144fcea42e90e44294e34313159d5def31e0e781168be0df250f6",
+      "python_modules_equal": 667,
+      "new_contract_files_equal": 47,
+      "private_files_absent": true
+    }
+  },
+  "full_ci_local": "not_started",
+  "PR67": {
+    "head": "551d7bceda2083115ceec3336c42b951e84509e1",
+    "ready_event_CI_run": 38168569806,
+    "required_jobs_success": 17,
+    "protected_merge": "58753213fdee8c9ee7e899106ed94b36296a77ae",
+    "main_CI_run": 38173378231,
+    "main_CI": "in_progress_not_accepted"
+  },
+  "remaining": [
+    "native stockout full-ledger label replay and complete mature role membership",
+    "reserved stockout selection, original-artifact threshold assessment and independent evaluation",
+    "anomaly reserved threshold, evaluation and uncertainty integration",
+    "whole-three-usecase prospective protocol and consumer runtime freeze before first Project operation",
+    "actual full development and fresh final evaluation all three seeds/variants, costs and robustness",
+    "MLflow, model cards, lifecycle/reload/runtime evidence",
+    "full integrated ci-local, protected PR and exact main CI"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "quality_qualified": false,
+  "stage_ready": false
+}

@@ -50,6 +50,33 @@ STRUCTURAL_DIAGNOSTICS: frozenset[GroupID] = frozenset(
 )
 
 
+def validate_group_inventory(
+    segment_policy: CampaignForecastSegmentPolicy,
+    sources: dict[SourceVariant, frozenset[GroupID]],
+) -> None:
+    """Identical mandatory groups for resolved v27 and prospective variant ownership."""
+    if set(sources) != set(VARIANTS):
+        raise ValueError("campaign_required_groups_full_source_inventory")
+    inventory = frozenset(required_population_ids(segment_policy))
+    mandatory = inventory - STRUCTURAL_DIAGNOSTICS
+    every_source = frozenset(g for g in inventory if g[0] in {"global", "horizon", "channel"})
+    every_source |= frozenset(("category", c) for c in segment_policy.category_inventory)
+    scenario_owner = {
+        "normal": "ordinary",
+        "promotion": "ordinary",
+        "demand_shock": "demand",
+        "inventory_constraint": "physical",
+    }
+    for variant, required in sources.items():
+        if not every_source <= required <= inventory:
+            raise ValueError("campaign_required_groups_missing_common_or_unknown_group")
+        for scenario, owner in scenario_owner.items():
+            if variant == owner and ("scenario", scenario) not in required:
+                raise ValueError("campaign_required_groups_scenario_owner_missing")
+    if not mandatory <= frozenset().union(*sources.values()):
+        raise ValueError("campaign_required_groups_original_critical_coverage_missing")
+
+
 class CampaignRequiredGroup(Contract):
     dimension: Dimension
     value: Annotated[str, Field(min_length=1, max_length=256)]
@@ -102,32 +129,15 @@ class CampaignPortfolioRequiredGroupPolicy(Contract):
             {s.source_recipe_sha256 for s in self.sources}
         ) != 12:
             raise ValueError("campaign_required_groups_full_source_inventory")
-        inventory = frozenset(required_population_ids(self.segment_policy))
-        mandatory = inventory - STRUCTURAL_DIAGNOSTICS
-        every_source = frozenset(g for g in inventory if g[0] in {"global", "horizon", "channel"})
-        every_source |= frozenset(("category", c) for c in self.segment_policy.category_inventory)
-        scenario_owner = {
-            "normal": "ordinary",
-            "promotion": "ordinary",
-            "demand_shock": "demand",
-            "inventory_constraint": "physical",
-        }
-        for source in self.sources:
-            required = {g.identity() for g in source.required}
-            if not every_source <= required <= inventory:
-                raise ValueError("campaign_required_groups_missing_common_or_unknown_group")
-            for scenario, owner in scenario_owner.items():
-                if source.variant == owner and ("scenario", scenario) not in required:
-                    raise ValueError("campaign_required_groups_scenario_owner_missing")
         for phase, seed in phases:
-            covered = {
-                g.identity()
-                for s in self.sources
-                if (s.phase, s.seed) == (phase, seed)
-                for g in s.required
-            }
-            if not mandatory <= covered:
-                raise ValueError("campaign_required_groups_original_critical_coverage_missing")
+            validate_group_inventory(
+                self.segment_policy,
+                {
+                    s.variant: frozenset(g.identity() for g in s.required)
+                    for s in self.sources
+                    if (s.phase, s.seed) == (phase, seed)
+                },
+            )
         return self
 
     def content_sha256(self) -> str:

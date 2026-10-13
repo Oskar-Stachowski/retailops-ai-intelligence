@@ -60,15 +60,21 @@ from retailops_ai.evaluation_campaign.campaign_portfolio_contract import (
 )
 from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract import (
     CampaignPortfolioForecastEvaluationBinding,
+    CanonicalQualificationEvaluationBinding,
 )
 from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
     CampaignPortfolioRequiredGroupPolicy,
 )
+from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
+    CampaignRequiredGroupRecipe,
+)
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CampaignForecastGroupRecipeEvaluationReceipt,
     CampaignForecastPortfolioEvaluationReceipt,
     CampaignForecastPortfolioRobustEvaluationReceipt,
     CampaignForecastRequiredGroupEvaluationReceipt,
     CampaignForecastRobustEvaluationReceipt,
+    CanonicalQualificationEvaluationReceipt,
 )
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
     CampaignForecastRawPrediction,
@@ -83,6 +89,23 @@ from retailops_ai.evaluation_campaign.campaign_segment_contract import (
     CampaignForecastSegmentPolicy,
     CampaignOriginRoute,
     CampaignSourceKeyAnnotation,
+)
+from retailops_ai.evaluation_campaign.campaign_stockout_parent_contract import (
+    CampaignStockoutContextScope,
+    CampaignStockoutParentPlan,
+)
+from retailops_ai.evaluation_campaign.campaign_stockout_public_contract import (
+    CampaignStockoutPublicPlan,
+    CampaignStockoutPublicRow,
+)
+from retailops_ai.evaluation_campaign.campaign_stockout_qualification import (
+    CampaignStockoutQualificationPolicy,
+)
+from retailops_ai.evaluation_campaign.campaign_stockout_training_contract import (
+    CampaignStockoutConditionalRiskPipeline,
+    CampaignStockoutConditionalSigmoid,
+    CampaignStockoutPreprocessing,
+    CampaignStockoutRiskPipeline,
 )
 from retailops_ai.evaluation_campaign.campaign_tune_contract import (
     CampaignForecastTunePlan,
@@ -107,6 +130,14 @@ from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
     PreparedCanonicalForecastJournal,
     PreparedCanonicalForecastProtocol,
 )
+from retailops_ai.evaluation_campaign.canonical_qualification import (
+    CanonicalQualificationPlan,
+    PreparedCanonicalQualificationJournal,
+    PreparedCanonicalQualificationProtocol,
+)
+from retailops_ai.evaluation_campaign.canonical_qualification_execution_contract import (
+    CanonicalQualificationExecutionResult,
+)
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
 from retailops_ai.evaluation_campaign.development_advancement_contract import (
     CompletedForecastAdvancement,
@@ -122,6 +153,10 @@ from retailops_ai.evaluation_campaign.development_planning_contract import (
     NativeDevelopmentPlanningProtocol,
     NativeDevelopmentPlanningReceipt,
     ResolvedNativeDevelopmentPlanningReceipt,
+)
+from retailops_ai.evaluation_campaign.development_policy_freeze import (
+    DevelopmentPolicySet,
+    FrozenDevelopmentPolicies,
 )
 from retailops_ai.evaluation_campaign.development_preparation import (
     DevelopmentPreparationJournal,
@@ -148,6 +183,10 @@ from retailops_ai.evaluation_campaign.development_variants_contract import (
     ResolvedDevelopmentPreparationProtocol,
     ReusedDevelopmentParentReceipt,
 )
+from retailops_ai.evaluation_campaign.development_workflow_contract import (
+    DevelopmentWorkflowOptions,
+    QualifiedDevelopmentWorkflowOptions,
+)
 from retailops_ai.evaluation_campaign.label_contract import (
     ForecastOutcomeReadProtocol,
     OutcomeEvidence,
@@ -173,6 +212,10 @@ from retailops_ai.evaluation_campaign.physical_contract import (
     PhysicalSourceSpec,
 )
 from retailops_ai.evaluation_campaign.preparation import default_plan
+from retailops_ai.evaluation_campaign.source_preparation_contract import (
+    SourcePreparationOptions,
+    SourcePreparationSession,
+)
 from retailops_ai.evaluation_campaign.source_replay_contract import (
     ForecastSourceReplayProtocol,
     ForecastSourceReplayReceipt,
@@ -836,6 +879,136 @@ def main() -> int:
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(raw)
+    for name, policy_model in (
+        ("required_group_recipe", CampaignRequiredGroupRecipe),
+        ("forecast_group_recipe_evaluation_receipt", CampaignForecastGroupRecipeEvaluationReceipt),
+        ("development_policy_set", DevelopmentPolicySet),
+        ("frozen_development_policies", FrozenDevelopmentPolicies),
+    ):
+        schema = policy_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:38.0.0"
+        path = ROOT / "contracts/evaluation/v38" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Prospective development policy contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, source_model in (
+        ("source_preparation_options", SourcePreparationOptions),
+        ("source_preparation_session", SourcePreparationSession),
+    ):
+        schema = source_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:39.0.0"
+        path = ROOT / "contracts/evaluation/v39" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Original Source preparation contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    schema = DevelopmentWorkflowOptions.model_json_schema()
+    schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+    schema["$id"] = "urn:retailops:evaluation:development_workflow_options:40.0.0"
+    path = ROOT / "contracts/evaluation/v40/development_workflow_options.schema.json"
+    raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    if args.check:
+        if not path.is_file() or path.read_text() != raw:
+            print("Original development workflow options differ")
+            return 1
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(raw)
+    for name, qualification_model in (
+        ("qualified_development_workflow_options", QualifiedDevelopmentWorkflowOptions),
+        ("canonical_qualification_plan", CanonicalQualificationPlan),
+        ("prepared_canonical_qualification_protocol", PreparedCanonicalQualificationProtocol),
+        ("prepared_canonical_qualification_journal", PreparedCanonicalQualificationJournal),
+        ("canonical_qualification_evaluation_binding", CanonicalQualificationEvaluationBinding),
+        ("canonical_qualification_evaluation_receipt", CanonicalQualificationEvaluationReceipt),
+        ("canonical_qualification_execution_result", CanonicalQualificationExecutionResult),
+    ):
+        schema = qualification_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:41.0.0"
+        path = ROOT / "contracts/evaluation/v41" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Canonical qualification contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, stockout_model in (
+        ("stockout_full_preprocessing", CampaignStockoutPreprocessing),
+        ("stockout_full_risk_pipeline", CampaignStockoutRiskPipeline),
+        ("stockout_full_conditional_sigmoid", CampaignStockoutConditionalSigmoid),
+        ("stockout_full_conditional_pipeline", CampaignStockoutConditionalRiskPipeline),
+    ):
+        schema = stockout_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:42.0.0"
+        path = ROOT / "contracts/evaluation/v42" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Full stockout model contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, parent_model in (
+        ("stockout_public_context", CampaignStockoutContextScope),
+        ("stockout_public_parent_plan", CampaignStockoutParentPlan),
+    ):
+        schema = parent_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:43.0.0"
+        path = ROOT / "contracts/evaluation/v43" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Stockout public parent contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, public_model in (
+        ("stockout_full_public_plan", CampaignStockoutPublicPlan),
+        ("stockout_full_public_row", CampaignStockoutPublicRow),
+    ):
+        schema = public_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:44.0.0"
+        path = ROOT / "contracts/evaluation/v44" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Stockout full public preparation contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    name = "stockout_full_qualification_read_policy"
+    schema = CampaignStockoutQualificationPolicy.model_json_schema()
+    schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+    schema["$id"] = f"urn:retailops:evaluation:{name}:45.0.0"
+    path = ROOT / "contracts/evaluation/v45" / (name + ".schema.json")
+    raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    if args.check:
+        if not path.is_file() or path.read_text() != raw:
+            print("Stockout full qualification read policy differs.")
+            return 1
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(raw)
     print("Evaluation preparation contract snapshots checked.")
     return 0
 

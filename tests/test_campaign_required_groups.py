@@ -35,7 +35,7 @@ from retailops_ai.evaluation_campaign.partitions import membership_key
 from retailops_ai.source_snapshot.files import SnapshotError, file_hash
 
 
-def preregistration(root, base_document=None, segment_policy=None):
+def preregistration(root, base_document=None, segment_policy=None, *, procedural=False):
     value = deepcopy(base_document) if base_document is not None else document(root)
     segment = segment_policy or controls.policy()
     inventory = set(required_population_ids(segment))
@@ -72,6 +72,28 @@ def preregistration(root, base_document=None, segment_policy=None):
             }
         )
     )
+    if procedural:
+        from retailops_ai.evaluation_campaign.campaign_portfolio_contract import VARIANTS
+        from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
+            CampaignRequiredGroupRecipe,
+        )
+
+        policy = CampaignRequiredGroupRecipe.model_validate_json(
+            canonical_bytes(
+                {
+                    "segment_policy": segment.model_dump(mode="json"),
+                    "variants": [
+                        {
+                            "variant": v,
+                            "required": [
+                                {"dimension": d, "value": g} for d, g in sorted(common | owners[v])
+                            ],
+                        }
+                        for v in VARIANTS
+                    ],
+                }
+            )
+        )
     value["selection_policy_sha256"] = policy.content_sha256()
     value["segment_policy_sha256"] = segment.content_sha256()
     return CampaignPortfolioProtocol.model_validate_json(canonical_bytes(value)), policy

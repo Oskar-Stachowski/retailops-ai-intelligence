@@ -182,7 +182,10 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
             from test_campaign_required_groups import preregistration
 
             _, required_group_policy = preregistration(
-                root, base_document=document, segment_policy=segment_policy
+                root,
+                base_document=document,
+                segment_policy=segment_policy,
+                procedural="-recipe-" in mode,
             )
             document["selection_policy_sha256"] = required_group_policy.content_sha256()
     plans = {

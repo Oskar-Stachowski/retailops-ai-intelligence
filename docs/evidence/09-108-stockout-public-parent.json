@@ -1,0 +1,102 @@
+{
+  "recorded_at_utc": "2026-10-11T19:52:03.082611+00:00",
+  "scope": "Actual full public Source/snapshot/curated replay and complete physical stockout origins. Native AI08 features/PIT categories on already exposed repository fixtures. No Project/final or private label read.",
+  "source": {
+    "tests": 63,
+    "skipped": 0,
+    "pytest_seconds": 390.1,
+    "test_cases_by_module": {
+      "tests.test_campaign_stockout_parent": 27,
+      "tests.test_campaign_context_facts": 36
+    },
+    "junit_sha256": "a5605447964d835ce23e8df4418e83e92aab2f8f1e4ad297ae7f505450aefb49",
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 394.30591137497686,
+      "sampled_tree_peak_rss_bytes": 179044352,
+      "sampled_worker_cpu_seconds": 384.809803938,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 19660,
+      "sampled_peak_scratch_allocated_bytes": 32768,
+      "minimum_free_disk_bytes": 30297952256,
+      "minimum_available_memory_bytes": 1257308160,
+      "samples": 3524,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; reused existing U private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 402653184,
+      "code_pins_unchanged": true
+    },
+    "mypy_files": 792,
+    "ruff_format_files": 1376
+  },
+  "population": "All unique product/stock/snapshot UTC origins from verified full inventory snapshot table, retaining ineligible points and all feature status reasons",
+  "closed_AI08_modules_unchanged": 129,
+  "old_contract_files_unchanged": 404,
+  "new_v43_schemas": 2,
+  "guarantees": [
+    "complete_private_source_replay_and_curated_transform",
+    "native_inventory_source_metadata",
+    "same_native_feature_projection_at_each_origin",
+    "category_known_at_origin_only",
+    "complete_physical_population_no_sampling",
+    "receipt_only_after_full_stream_and_successful_source_context_exit",
+    "partial_repeated_stream_refused",
+    "mutated_unused_original_parent_and_deleted_private_origin_refused",
+    "budgets_and_runtime_checked_no_partial_acceptance"
+  ],
+  "installed_package": {
+    "acceptance": {
+      "same_test_case_inventory": true,
+      "tests_per_suite": 63,
+      "controlled_25_50_setups_per_suite": 0,
+      "source_pins_unchanged": true
+    },
+    "tests": 63,
+    "skipped": 0,
+    "pytest_seconds": 395.98,
+    "suite_seconds": 395.978,
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 396.50418308301596,
+      "sampled_tree_peak_rss_bytes": 133529600,
+      "sampled_worker_cpu_seconds": 386.87596544,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 10832,
+      "sampled_peak_scratch_allocated_bytes": 20480,
+      "minimum_free_disk_bytes": 30208094208,
+      "minimum_available_memory_bytes": 1255931904,
+      "samples": 3633,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+    },
+    "junit_sha256": "e7278ca90bfa1188e30a51ccf50113b3c2c161569d47ae8454fda9b49ace4c6b",
+    "wheel": {
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 2796142,
+      "sha256": "13be1e3d0596cd970a9a564318fc6442f2089531f5669c179870fd6ec3c760f6",
+      "python_modules_equal": 659,
+      "new_contract_files_equal": 37,
+      "private_files_absent": true
+    }
+  },
+  "remaining": [
+    "native_retrospective_upstream_at_all_origins",
+    "verified_private_ledger_labels_and_complete_mature_role_membership",
+    "reserved_model_calibration_selection_threshold_evaluation_operations",
+    "independent_development_then_fresh_final_three_seeds_critical_groups_uncertainty_MLflow_lifecycle",
+    "protected_PR_and_main_required_CI"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "canonical_tree_rss_budget_bytes": 12884901888
+}
