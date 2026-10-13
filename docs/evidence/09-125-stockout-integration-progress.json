@@ -201,5 +201,92 @@
     "new_project_operations": 0,
     "dispatched": false,
     "accepted": false
+  },
+  "composition_after_trial_merge": {
+    "head": "d9d1a8b5d99b2933d79fc10d1dd5e392a924b1dd",
+    "refs": {
+      "trials": "2d5c5b5771767979a15dc905ccada05ef25e66ee",
+      "seals": "126c364dcc9acacdb89df8ddf0b53f09a441455b",
+      "main": "e544c78b757be1524915184155a2ff1b098b4325",
+      "harness": "d9d1a8b5d99b2933d79fc10d1dd5e392a924b1dd"
+    },
+    "checked_files": 1619,
+    "all_exact_declared_component_bytes": true,
+    "manifest_sha256": "10e0cf487cbbf7f4ab299fa914c114c56eed48a36acb3cf160bbeae35eeae98a"
+  },
+  "integration_static_and_ci_configuration_control": {
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 20.34802437503822,
+      "sampled_tree_peak_rss_bytes": 169066496,
+      "sampled_worker_cpu_seconds": 17.885578183,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 29355,
+      "sampled_peak_scratch_allocated_bytes": 40960,
+      "minimum_free_disk_bytes": 17486438400,
+      "minimum_available_memory_bytes": 1264893952,
+      "samples": 181,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; own Mypy cache and pytest scratch excluded; global6GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 335544320,
+      "code_pins_unchanged": true
+    },
+    "pytest": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "156",
+      "time": "15.770",
+      "timestamp": "2026-10-13T07:49:13.524464+02:00",
+      "hostname": "Oskars-MacBook-Air.local"
+    },
+    "mypy_files": 820,
+    "source_trial_suite_on_integrated_head": "pending Linux execution",
+    "installed_trial_suite": "pending Linux execution"
+  },
+  "prior_integration_static_control": {
+    "monitor": {
+      "status": "failed",
+      "reason": "tree_rss_limit",
+      "exit_code": -9,
+      "wall_seconds": 2.297843624954112,
+      "sampled_tree_peak_rss_bytes": 271155200,
+      "sampled_worker_cpu_seconds": 1.7735612989999998,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 3531,
+      "sampled_peak_scratch_allocated_bytes": 16384,
+      "minimum_free_disk_bytes": 17577807872,
+      "minimum_available_memory_bytes": 1388953600,
+      "samples": 21,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; no Mypy or pytest in publication check; global6GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 268435456,
+      "code_pins_unchanged": true
+    },
+    "resolution": "Copy unchanged accepted Mypy cache into own worktree cache, preserve failed attempt, use320MiB own guard with unchanged1GiB host reserve. Complete Mypy and both entire selected test modules then passed."
+  },
+  "publication_check": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 69.91096870903857,
+    "sampled_tree_peak_rss_bytes": 188694528,
+    "sampled_worker_cpu_seconds": 70.85253071,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 3433,
+    "sampled_peak_scratch_allocated_bytes": 16384,
+    "minimum_free_disk_bytes": 17484283904,
+    "minimum_available_memory_bytes": 1278836736,
+    "samples": 624,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; no Mypy or pytest in publication check; global6GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
   }
 }
