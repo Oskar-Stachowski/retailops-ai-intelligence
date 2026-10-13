@@ -233,7 +233,8 @@ class CampaignAnomalyPublicParent:
     def __exit__(self, *args: Any) -> None:
         try:
             if args[0] is None and not self._failed:
-                self._replay.check_parents()
+                # The owned replay performs the final full-parent seal when
+                # the stack closes, before this receipt can become available.
                 self._budget()
                 if self._index_hashes() != (
                     self.native_events_sha256,

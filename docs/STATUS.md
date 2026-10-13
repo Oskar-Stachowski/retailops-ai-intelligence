@@ -1,5 +1,12 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: pojedynczy pełny końcowy odczyt rodziców publicznych.**
+[Czytniki anomaly i stockout](ai09-parent-final-seals.md) pozostawiają końcowe sprawdzenie właścicielowi Source. Liczba pełnych odczytów przy zamknięciu spadła z ośmiu do czterech; wszystkie oryginały i prywatne kopie nadal podlegają kontroli przed udostępnieniem odbioru. Sześć pomiarów odczytów i 24 próby uszkodzenia plików potwierdzają tę granicę.
+
+**481 testów kodu i te same 481 testów z paczki przeszły**, bez pominięć. Mypy **808 plików**, zgodne bajty **675 modułów i 55 schematów**. [09.121](evidence/09-121-parent-final-seals.json) zachowuje kontrolę sprzed poprawki i jej sześć oczekiwanych błędów. To redukcja jednego przebiegu walidacji; nie zmierzono przyspieszenia całego profilu.
+
+Pełne połączenie trzech zastosowań, kampania, final, MLflow, lifecycle oraz odbiór PR/main pozostają wymagane. Nie uruchomiono nowych danych ani modeli Project. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: poprawka podziału testów po pełnym wyniku PR 68.**
 [09.123](evidence/09-123-integration-ci-rebalance.json) zachowuje nieudany Required CI kodu `60b4a03`: **14 jobs success**, błąd RSS natywnego scoringu, anulowany po 90 minutach shard 2 i nieudany agregator. Żaden z tych wyników nie jest odbiorem. Wagi 266 w pełni zakończonych plików testowych zaktualizowano z oryginalnych pomiarów Linux; 20 niedokończonych lub nierozpoczętych plików zachowuje wcześniejsze wagi. Cztery shardy, pełna kolekcja, limit 90 minut i wszystkie 17 jobs pozostają wymagane.
 

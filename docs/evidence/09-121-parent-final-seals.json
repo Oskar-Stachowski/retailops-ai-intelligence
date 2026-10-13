@@ -1,0 +1,150 @@
+{
+  "version": "ai09-parent-final-seal-evidence-1.0.0",
+  "recorded_at_utc": "2026-10-12T09:12:28.008143+00:00",
+  "scope": "One owner-final full seal of all four original/private Source parents for both public readers. Existing fixtures only; no new Project execution or whole-profile speedup claim.",
+  "source": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 2671.719629291969,
+    "sampled_tree_peak_rss_bytes": 169656320,
+    "sampled_worker_cpu_seconds": 2577.138524858,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 219628,
+    "sampled_peak_scratch_allocated_bytes": 233472,
+    "minimum_free_disk_bytes": 21164351488,
+    "minimum_available_memory_bytes": 1149419520,
+    "samples": 24061,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  },
+  "source_pytest": {
+    "tests": "481",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "2666.467"
+  },
+  "installed": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 2700.4914280420053,
+    "sampled_tree_peak_rss_bytes": 154632192,
+    "sampled_worker_cpu_seconds": 2607.7561487360003,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 80455,
+    "sampled_peak_scratch_allocated_bytes": 90112,
+    "minimum_free_disk_bytes": 20662829056,
+    "minimum_available_memory_bytes": 1108213760,
+    "samples": 24306,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "source_and_control_pins_unchanged": true,
+    "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+  },
+  "installed_pytest": {
+    "tests": "481",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "2699.866"
+  },
+  "package": {
+    "same_test_case_inventory": true,
+    "tests_per_suite": 481,
+    "controlled_25_50_setups_per_suite": 0,
+    "source_pins_unchanged": true
+  },
+  "wheel": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 3092762,
+    "sha256": "376056e2a7fd58830a527c12635471882247273660355079fccd19ba3ca3eb00",
+    "python_modules_equal": 675,
+    "new_contract_files_equal": 55,
+    "private_files_absent": true
+  },
+  "compatibility": {
+    "base": "8e2efd798ce4e4ccb4d9b1aa299940254204f14c",
+    "closed_ai08_stockout_modules_unchanged": 129,
+    "earlier_contracts_unchanged": 424,
+    "method": "Exact Git blob byte identity."
+  },
+  "before_fix": {
+    "monitor": {
+      "status": "failed",
+      "reason": "worker_exit",
+      "exit_code": 1,
+      "wall_seconds": 77.71495533298003,
+      "sampled_tree_peak_rss_bytes": 154517504,
+      "sampled_worker_cpu_seconds": 74.96803520899999,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 163429,
+      "sampled_peak_scratch_allocated_bytes": 180224,
+      "minimum_free_disk_bytes": 22668906496,
+      "minimum_available_memory_bytes": 1266270208,
+      "samples": 694,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 268435456,
+      "code_pins_unchanged": true
+    },
+    "pytest": {
+      "tests": "6",
+      "failures": "6",
+      "errors": "0",
+      "skipped": "0",
+      "time": "77.129"
+    },
+    "result": "Six new read-count regressions failed as intended: actual8 full parent seals against required4. Both readers and all3 Source variants. No existing acceptance test weakened.",
+    "subsequent_test_fixture_correction": "Use original reader-specific receipt field name after the read-count check; the baseline failed earlier at8==4."
+  },
+  "verified": {
+    "new_final_read_count_cases": 6,
+    "new_corrupted_parent_cases": 24,
+    "before_full_parent_reads_per_successful_close": 8,
+    "after_full_parent_reads_per_successful_close": 4,
+    "both_public_readers_and_three_source_variants": true,
+    "all_original_and_private_snapshot_curated_files_remain_sealed": true,
+    "corruption_after_consumption_blocks_receipt_and_cleans_private_files": true,
+    "borrowed_internal_parent_checks_unchanged": true,
+    "existing_replay_days_gates_labels_maturity_role_artifact_regressions_pass": true,
+    "whole_profile_speedup_measured": false
+  },
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "stage_ready": false,
+  "full_ci_acceptance_claimed": false,
+  "remaining": [
+    "Integrate accepted components and verify exact PR/main full CI.",
+    "Finish whole three-use-case workflow and actual representative25/50 qualification before canonical.",
+    "Actual campaign/final, MLflow, cards and lifecycle."
+  ],
+  "publication_check": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 75.84913204197073,
+    "sampled_tree_peak_rss_bytes": 181551104,
+    "sampled_worker_cpu_seconds": 76.575781585,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 9316,
+    "sampled_peak_scratch_allocated_bytes": 28672,
+    "minimum_free_disk_bytes": 20574113792,
+    "minimum_available_memory_bytes": 1322647552,
+    "samples": 676,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; no Mypy or pytest in publication check; global6GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  }
+}
