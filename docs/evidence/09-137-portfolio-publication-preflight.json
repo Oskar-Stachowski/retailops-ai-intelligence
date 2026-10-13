@@ -1,0 +1,58 @@
+{
+  "version": "ai09-portfolio-publication-preflight-1.0",
+  "run_id": 38393053780,
+  "head": "1783533ccf52c6b54904f5518fffc8a7bce05b5f",
+  "failed_job": 115281323760,
+  "cause": "check_source_bundle_contract detects intentionally changed shared forecasting implementation; integration owner pin was stale",
+  "repair": {
+    "version": "ai09-portfolio-worker-resource-owner-1.0",
+    "implementation_commit": "1783533ccf52c6b54904f5518fffc8a7bce05b5f",
+    "previous_pin_file_sha256": "de3dacc9901dbaf6715e9fa163b5a55033b041ea917c7b9f3579e2d7e760fa62",
+    "previous_shared_campaign_implementation_commit": "e5ebd48aec9aadf2ba390eeec3334c94b9aa7641",
+    "previous_shared_campaign_implementation_pin_sha256": "008b9d6cbcbb73c50687299bf6b59c28991ed536f3f92d19c6646fe0f9b88fbc",
+    "current_shared_campaign_implementation_pin_sha256": "de15fc93f2551f43af7579c682dbe6cf70211bb4eda370deddf39f696d78e52c",
+    "changed_campaign_files": {
+      "forecasting/functional_models.py": {
+        "before": "0e199cbc174dbb88a902c678118ba758ac83b26c60f4a37caf2667fa91fa0290",
+        "after": "d77cd52b5cf37f9c4c6e773f8f0a1cdfb02468692986602cd8c856acc3d2f6fd"
+      },
+      "forecasting/model_worker.py": {
+        "before": "5662e8de5fb3d65c05a82e717144ab1064b3e447b00a1e96531488831085c859",
+        "after": "b3aad23ca4327a2d60bca2376695ead09c4cf2b560c2817786d2c32e2ef8ca0b"
+      },
+      "forecasting/models.py": {
+        "before": "16814cc2022f87a15e32ebfe4d2b474ac486ec84d58fad9838afe986556a57be",
+        "after": "d5b888d055eacf37c70cddb504325940b50343ae2791a6907ffd331eb30264a8"
+      },
+      "forecasting/functional_worker.py": {
+        "before": "46eff7c8a399b54305917a36dbc8e0d7710a81bfd5f973b6558636a88b30b16e",
+        "after": "192698f482bc25efc4a2fca5d507c07499cbc1bc123c5cf48e1236153d969e7e"
+      }
+    },
+    "change_scope": "worker RSS measurement, receipt diagnostics and implementation identity; no model recipes, numerical algorithms, split or policy changes",
+    "frozen_native_namespace_changed": false,
+    "historical_scientific_evidence_replaced": false,
+    "model_artifacts_or_calibrators_changed": false,
+    "first_required_ci": {
+      "run_id": 38393053780,
+      "head": "1783533ccf52c6b54904f5518fffc8a7bce05b5f",
+      "conclusion": "failure",
+      "reason": "shared_campaign_owner_pin_not_updated_for_reviewed_worker_measurement_changes"
+    }
+  },
+  "original_campaign_hash_recomputed_on_base": true,
+  "dependency_lock_and_versions_unchanged": true,
+  "contract_validator_unchanged": true,
+  "frozen_campaign_and_accepted_main_historical_pins_unchanged": true,
+  "new_project_experiment": false,
+  "stage_ready": false,
+  "verification": {
+    "source_bundle_regressions": {
+      "passed": 11,
+      "skipped": 0,
+      "seconds": 12.28
+    },
+    "all_contract_checks": "passed",
+    "frozen_calibration_code_files_unchanged": true
+  }
+}

@@ -46,6 +46,11 @@ Dokładne AI PR/main i wyniki CI zapisuje końcowy receipt w
 Source podlega własnemu Required CI dla zakresu dokumentacji; celowe pominięcia
 zadań spoza zakresu pozostają pominięciami. Receiptu nie dopisujemy do tego
 samego commitu, którego hash i późniejszy wynik main dopiero powstają.
+Pierwszy preflight publikacji wykrył nieaktualny pin współdzielonego kodu
+po poprawce pomiaru RSS. [09.137](evidence/09-137-portfolio-publication-preflight.json)
+zachowuje błąd, przegląd czterech plików oraz odbiór poprawionego wpisu
+przez 11 testów transferu i wszystkie kontrole kontraktów. Historycznych
+pinów kampanii, modeli i kalibracji nie zmieniono.
 **Ready obowiązuje dopiero po tych odbiorach**, bez ponownego eksperymentu.
 
 Liczba zaliczonych testów komponentów nie jest procentem gotowości kampanii.
