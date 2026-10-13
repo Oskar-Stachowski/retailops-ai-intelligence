@@ -36,7 +36,12 @@ a odbiór wymaga identycznego dowodu po treningu i po zimnym odtworzeniu.
 **191 kontroli kodu przeszło**, bez pominięć; Mypy sprawdził 819 plików.
 Zgodne są bajty 686 modułów i 59 schematów w kodzie, wheel i instalacji.
 Testy zainstalowanej paczki zatrzymał nadzorca po spadku wolnej pamięci
-poniżej niezmienionej rezerwy 1 GiB. Odbiór paczki pozostaje otwarty.
+poniżej niezmienionej rezerwy 1 GiB; ta próba pozostaje niezaliczona.
+Późniejsza [kontrola Linux](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38353774124)
+połączonego commitu `9591f38` zaliczyła **191 testów źródeł i te same 191
+testów z instalacji**, bez pominięć. [09.125](evidence/09-125-stockout-integration-progress.json)
+zapisuje zweryfikowany hash archiwum, identyczny zbiór przypadków
+oraz pełną zgodność 686 modułów i 59 schematów.
 [09.124](evidence/09-124-stockout-trial-execution.json) zachowuje wszystkie
 wcześniejsze błędy i pomiary. Nowe testy używają jawnie syntetycznych
 plików ról i zastępczych metadanych generacji/przygotowania oraz pomiaru

@@ -1,5 +1,10 @@
 # Aktualny status
 
+**2026-10-13 — AI 09: pełny odbiór kodu i paczki prób stockout na Linux.**
+[Kontrola 38353774124](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38353774124) commitu `9591f38` przeszła: **191 testów źródeł i te same 191 testów z instalacji**, bez pominięć. Zbiór przypadków jest identyczny także z wcześniejszą kontrolą lokalną. Zweryfikowano hash archiwum GitHub oraz zgodność bajtów **686 modułów i 59 schematów**. Dziewięć nowych plików testowych otrzymało jawne wagi harmonogramu: cztery z pomiarów Linux, pięć z oznaczonych szacunków na podstawie pełnych pomiarów macOS. Wcześniejsze wagi, wszystkie testy, cztery shardy, limit 90 minut i 17 wymaganych jobs pozostają zachowane. [09.125](evidence/09-125-stockout-integration-progress.json) zachowuje wszystkie pomiary i wcześniejszą nieudaną próbę lokalną.
+
+Próby używają rzeczywistych modeli i świeżych procesów na jawnie syntetycznych rolach. To odbiór komponentu po połączeniu; pełny Required CI PR/main, wybór oryginalnych artefaktów, oceny i wspólny workflow trzech zastosowań, reprezentatywne profile, kampania/final, MLflow oraz lifecycle pozostają wymagane. Znany timeout testu odczytu prognoz na main nadal wymaga rozstrzygnięcia. Nowe operacje Project: **0**. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-13 — AI 09: rzeczywiste próby stockout na kontrolowanych rolach.**
 [Wykonawca prób](ai09-stockout-trial-execution.md) rezerwuje sześć baz LR/HGB i 24 kalibratory, korzysta wyłącznie z przypisanej roli i odtwarza każdy model w świeżym procesie. **191 testów kodu przeszło**, bez pominięć; Mypy **819 plików**. Zgodne są bajty **686 modułów i 59 schematów** w źródłach, paczce i instalacji.
 

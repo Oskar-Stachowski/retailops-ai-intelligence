@@ -1,5 +1,5 @@
 {
-  "version": "ci-test-file-timings-1.3.0",
+  "version": "ci-test-file-timings-1.4.0",
   "previous_measured_runs": [
     37615123521,
     37609002350
@@ -359,23 +359,17 @@
     "tests/test_v12_scratch_tracking.py"
   ],
   "unmeasured_current_files_with_default_weight": [
-    "tests/test_campaign_worker_import_boundary.py",
+    "tests/test_campaign_stockout_assessment.py",
     "tests/test_v12_scratch_tracking.py"
   ],
   "projection": {
-    "scope": "Scheduling estimate only, measured completed files plus unchanged older weights/defaults. Not a promise or actual total duration.",
+    "scope": "Scheduling estimates including explicitly provisional macOS-derived weights; actual Required CI is required. Not measured wall time or capacity.",
+    "current_files": 296,
     "new_groups_at_updated_weights_seconds": [
-      4135.796000000008,
-      4135.793000000009,
-      4135.769000000007,
-      4135.764000000009
-    ],
-    "current_files": 287,
-    "original_run_groups_at_updated_weights_seconds": [
-      2564.405,
-      4777.729,
-      6029.346,
-      3170.642
+      4996.577,
+      4996.55,
+      4996.606,
+      4996.523
     ]
   },
   "seconds": {
@@ -451,6 +445,7 @@
     "tests/test_campaign_ordinary_truth_journal.py": 6.784,
     "tests/test_campaign_paired_truth.py": 11.371,
     "tests/test_campaign_paired_truth_worker.py": 3.869,
+    "tests/test_campaign_parent_final_seal.py": 663.628,
     "tests/test_campaign_planned_backend.py": 0.1,
     "tests/test_campaign_portfolio.py": 11.152,
     "tests/test_campaign_portfolio_evaluation.py": 52.448,
@@ -460,6 +455,7 @@
     "tests/test_campaign_required_group_recipe.py": 1.415,
     "tests/test_campaign_required_groups.py": 265.128,
     "tests/test_campaign_robust_forecast.py": 51.469,
+    "tests/test_campaign_role_protocol.py": 23.254,
     "tests/test_campaign_score.py": 8.609,
     "tests/test_campaign_score_data.py": 4.042,
     "tests/test_campaign_score_worker.py": 7.389,
@@ -467,14 +463,21 @@
     "tests/test_campaign_segments.py": 0.145,
     "tests/test_campaign_source_annotations.py": 5.627,
     "tests/test_campaign_stockout_calibration.py": 1.877,
+    "tests/test_campaign_stockout_labels.py": 990.252,
+    "tests/test_campaign_stockout_maturity.py": 851.798,
     "tests/test_campaign_stockout_parent.py": 390.285,
+    "tests/test_campaign_stockout_preparation.py": 14.799,
+    "tests/test_campaign_stockout_preparation_worker.py": 302.672,
     "tests/test_campaign_stockout_public.py": 276.195,
     "tests/test_campaign_stockout_qualification.py": 1.212,
+    "tests/test_campaign_stockout_role_artifact.py": 291.926,
     "tests/test_campaign_stockout_training.py": 4.326,
+    "tests/test_campaign_stockout_trial.py": 302.604,
     "tests/test_campaign_tune.py": 15.052,
     "tests/test_campaign_tune_data.py": 6.994,
     "tests/test_campaign_tune_worker.py": 4.613,
     "tests/test_campaign_uncertainty.py": 0.303,
+    "tests/test_campaign_worker_import_boundary.py": 2.201,
     "tests/test_campaign_worker_memory.py": 0.361,
     "tests/test_canonical_development_planning.py": 3.118,
     "tests/test_canonical_forecast.py": 832.399,
@@ -671,5 +674,124 @@
     "cases": 64,
     "seconds": 1592.8030000000003,
     "report_sha256": "cf8d081f153653529bca1ef29b3b75f49218ff275c5c3cec9dbde2c6df881947"
+  },
+  "added_component_scheduling_evidence": {
+    "previous_weights_sha256": "ef56680b2ae9103f0a1956ba239ac5caaad1495a0ef23c34b22e80f50eb05004",
+    "existing_weights_unchanged": true,
+    "whole_suite_or_capacity_acceptance": false,
+    "note": "Only nine previously default-weight files receive explicit estimates. Four use actual completed Linux source-control JUnit durations; five use 2x complete macOS file durations as clearly provisional scheduling estimates. The 2x factor is an engineering margin, not a measured cross-platform speed ratio. All current tests, four shards, 90-minute job limits and 17 required jobs remain unchanged.",
+    "files": [
+      {
+        "path": "tests/test_campaign_stockout_trial.py",
+        "scope": "complete_file_in_Linux_component_control",
+        "run": 38353774124,
+        "head": "9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+        "archive_sha256": "1061988011ec892e892ba6f89d6aa8c0fe0ce8edae75a5fbdf2117a53eccc254",
+        "tests": 13,
+        "observed_seconds": 302.604,
+        "scheduling_seconds": 302.604
+      },
+      {
+        "path": "tests/test_campaign_stockout_preparation.py",
+        "scope": "complete_file_in_Linux_component_control",
+        "run": 38353774124,
+        "head": "9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+        "archive_sha256": "1061988011ec892e892ba6f89d6aa8c0fe0ce8edae75a5fbdf2117a53eccc254",
+        "tests": 26,
+        "observed_seconds": 14.799,
+        "scheduling_seconds": 14.799
+      },
+      {
+        "path": "tests/test_campaign_role_protocol.py",
+        "scope": "complete_file_in_Linux_component_control",
+        "run": 38353774124,
+        "head": "9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+        "archive_sha256": "1061988011ec892e892ba6f89d6aa8c0fe0ce8edae75a5fbdf2117a53eccc254",
+        "tests": 26,
+        "observed_seconds": 23.254,
+        "scheduling_seconds": 23.254
+      },
+      {
+        "path": "tests/test_campaign_worker_import_boundary.py",
+        "scope": "complete_file_in_Linux_component_control",
+        "run": 38353774124,
+        "head": "9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+        "archive_sha256": "1061988011ec892e892ba6f89d6aa8c0fe0ce8edae75a5fbdf2117a53eccc254",
+        "tests": 2,
+        "observed_seconds": 2.201,
+        "scheduling_seconds": 2.201
+      },
+      {
+        "path": "tests/test_campaign_parent_final_seal.py",
+        "scope": "provisional_scheduling_estimate_from_complete_macOS_component_file_not_measured_Linux",
+        "component": "retailops-ai09-parent-final-seals",
+        "receipt": "docs/evidence/09-121-parent-final-seals.json",
+        "junit_sha256": "806c121c4e1cc4a306211922ee88572bc10ee58d875bc252a6d6ee2a04e5a22b",
+        "tests": 30,
+        "observed_macos_seconds": 331.814,
+        "estimate_multiplier": 2.0,
+        "scheduling_seconds": 663.628
+      },
+      {
+        "path": "tests/test_campaign_stockout_labels.py",
+        "scope": "provisional_scheduling_estimate_from_complete_macOS_component_file_not_measured_Linux",
+        "component": "retailops-ai09-parent-final-seals",
+        "receipt": "docs/evidence/09-121-parent-final-seals.json",
+        "junit_sha256": "806c121c4e1cc4a306211922ee88572bc10ee58d875bc252a6d6ee2a04e5a22b",
+        "tests": 55,
+        "observed_macos_seconds": 495.126,
+        "estimate_multiplier": 2.0,
+        "scheduling_seconds": 990.252
+      },
+      {
+        "path": "tests/test_campaign_stockout_maturity.py",
+        "scope": "provisional_scheduling_estimate_from_complete_macOS_component_file_not_measured_Linux",
+        "component": "retailops-ai09-parent-final-seals",
+        "receipt": "docs/evidence/09-121-parent-final-seals.json",
+        "junit_sha256": "806c121c4e1cc4a306211922ee88572bc10ee58d875bc252a6d6ee2a04e5a22b",
+        "tests": 63,
+        "observed_macos_seconds": 425.899,
+        "estimate_multiplier": 2.0,
+        "scheduling_seconds": 851.798
+      },
+      {
+        "path": "tests/test_campaign_stockout_role_artifact.py",
+        "scope": "provisional_scheduling_estimate_from_complete_macOS_component_file_not_measured_Linux",
+        "component": "retailops-ai09-parent-final-seals",
+        "receipt": "docs/evidence/09-121-parent-final-seals.json",
+        "junit_sha256": "806c121c4e1cc4a306211922ee88572bc10ee58d875bc252a6d6ee2a04e5a22b",
+        "tests": 58,
+        "observed_macos_seconds": 145.963,
+        "estimate_multiplier": 2.0,
+        "scheduling_seconds": 291.926
+      },
+      {
+        "path": "tests/test_campaign_stockout_preparation_worker.py",
+        "scope": "provisional_scheduling_estimate_from_complete_macOS_component_file_not_measured_Linux",
+        "component": "retailops-ai09-stockout-preparation-execution",
+        "receipt": "docs/evidence/09-122-stockout-preparation-execution.json",
+        "junit_sha256": "7a2ea3ebd89db60c11ff0959b5e8b641e30adfe6350b268adcf00fbea2861f99",
+        "tests": 6,
+        "observed_macos_seconds": 151.336,
+        "estimate_multiplier": 2.0,
+        "scheduling_seconds": 302.672
+      }
+    ]
+  },
+  "previous_projection": {
+    "scope": "Scheduling estimate only, measured completed files plus unchanged older weights/defaults. Not a promise or actual total duration.",
+    "new_groups_at_updated_weights_seconds": [
+      4135.796000000008,
+      4135.793000000009,
+      4135.769000000007,
+      4135.764000000009
+    ],
+    "current_files": 287,
+    "original_run_groups_at_updated_weights_seconds": [
+      2564.405,
+      4777.729,
+      6029.346,
+      3170.642
+    ]
   }
 }
