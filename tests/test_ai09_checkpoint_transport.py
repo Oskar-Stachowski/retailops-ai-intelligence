@@ -401,11 +401,7 @@ def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editab
     steps = workflow["jobs"]["control"]["steps"]
     source = next(s for s in steps if s.get("with", {}).get("path") == "source")
     producer = next(s for s in steps if s.get("name") == "Install pinned producer dependencies")
-    assert (
-        source["if"]
-        == producer["if"]
-        == "inputs.mode != 'census_memory'"
-    )
+    assert source["if"] == producer["if"] == "inputs.mode != 'census_memory'"
     consumer = next(s for s in steps if s.get("name") == "Install locked consumer dependencies")
     assert consumer["if"] == "inputs.mode != 'portfolio_development'"
     portfolio = next(
@@ -415,10 +411,7 @@ def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editab
     )
     assert portfolio["if"] == "inputs.mode == 'portfolio_development'"
     assert consumer["env"]["CONTROL_MODE"] == "${{ inputs.mode }}"
-    assert (
-        'if [[ "$CONTROL_MODE" == checkpoint_* ]]; then'
-        in consumer["run"]
-    )
+    assert 'if [[ "$CONTROL_MODE" == checkpoint_* ]]; then' in consumer["run"]
     assert "--locked --extra snapshot --extra forecast --no-install-project" in consumer["run"]
     # Execute the setup's branching without installation: each native mode keeps
     # its dependency selection; portfolio uses the separate locked TensorFlow environment.
