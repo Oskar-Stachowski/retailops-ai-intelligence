@@ -24,7 +24,10 @@ nie usuwa ich kosztów i nie oznacza wykonania pierwotnej pełnej kampanii.
 | R7 | Konsolidacja AI 07–08 | Przypięte dotychczasowe odbiory, karty, raporty, model IDs, polityki i ograniczenia; jawne oznaczenie historycznej oceny na jej własnych danych, bez deklaracji nowej wspólnej kampanii |
 | R8 | Decyzja i odbiór projektu | Raport RF/HGB/TF/baseline, aktualna karta forecastu oraz przypięte karty anomaly/stockout, decyzja retain/reject, istniejący odbiór lifecycle wskazany z zakresem; kontrole zmienionego kodu, pełne Required CI dokładnego PR i wynikowego main oraz zgodna dokumentacja planu |
 
-R1–R8 pozostają otwarte do wskazania i sprawdzenia oryginalnych dowodów.
+R1–R6 i R8 pozostają otwarte do wskazania i sprawdzenia oryginalnych dowodów.
+R7 ma [sprawdzone powiązania artefaktów](evidence/09-128-historical-portfolio.json)
+i [zestawienie portfolio](ai09-consolidated-portfolio.md); końcowy odbiór
+publikacji tej dokumentacji należy do R8.
 Liczba zaliczonych testów komponentów nie jest procentem gotowości kampanii.
 Ready etapu nie oznacza, że TensorFlow został championem lub dopuszczono nową
 promocję. Odrzucenie TF jest poprawnym wynikiem zakończonego porównania.
