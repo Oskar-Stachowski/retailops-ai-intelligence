@@ -1,0 +1,192 @@
+{
+  "aws_executed": false,
+  "candidate_family": "native-tools.v1",
+  "ci_checks": {
+    "compose_config_only": true,
+    "log_sha256": "0b06292fbb639675489cf00d64917b102201cfccda411485b60011cd6cfe4d61",
+    "mypy_files": 711,
+    "native_namespace_mypy_files": 10,
+    "ruff_formatted_files": 1241,
+    "status": "passed"
+  },
+  "ci_collection": {
+    "cases": 4721,
+    "collection_only": true,
+    "every_test_exactly_once": true,
+    "files": 209,
+    "sha256": "184b703a2cdafeb8d81b2dfee52094e92edcd00de8d836beb9e2e238b7b3fd59",
+    "shards": 4
+  },
+  "code_sha256": "56aabde1decca1b0217ffda4f72e43af3d2fabb129c96e1226a2501be93603e3",
+  "evaluation_release_id": "agent-evaluation-release-sha256-65af180b61429650cdd6441b2562b2d11d5a7520ab1162a9def7e724a608add4",
+  "failure_dispositions": [
+    "The earlier changing-configuration regression is excluded from acceptance.",
+    "Four pre-integration routing assertions were corrected and rerun in the complete affected suite.",
+    "The integrated broad run had 38 loopback bind denials from the macOS sandbox and two outdated delivery lock assertions. All affected files are rerun with owned loopback access and the separate integration guard."
+  ],
+  "graph_code_sha256": "2278dfc964dd82d9ed7a99f1f36bce09ab9eb7937cb0c8202ada37112d4c071e",
+  "implementation_commit": "f146adb",
+  "integrated_regression": {
+    "passing_final_cases": 797,
+    "reports": [
+      {
+        "cases": 664,
+        "failures": 40,
+        "name": "native-tools-main-regression",
+        "sha256": "6c6d9cc3fcff58a5391fa64b9d856fdd7b6426d67a76ff03a203fc44d53d58d4"
+      },
+      {
+        "cases": 180,
+        "failures": 0,
+        "name": "native-tools-main-corrected",
+        "sha256": "ef1083e84485d4f31bb4369ace7d34aa5ede05ac5dd8e5fb20b4cbc407284d9d"
+      },
+      {
+        "cases": 3,
+        "failures": 0,
+        "name": "native-tools-delivery-final",
+        "sha256": "08c03c862dac11c495f5ef4de63aabf64200dfd02c0c61b364b518371f580268"
+      }
+    ],
+    "unique_cases": 797
+  },
+  "limitations": [
+    "Native SQL and HTTP adapter tests use explicit fixture readers or a fake SQL engine; no real native PostgreSQL or Producer acceptance here.",
+    "Source REST/bundle compatibility uses owned loopback HTTP servers and the existing small source fixture, with no full export.",
+    "Operations consumer heartbeat and Kafka lag remain unobserved.",
+    "Model catalog covers canonical v12/anomaly; deployment and drift remain unattested.",
+    "Fake chat and capture store do not qualify real LLM quality or deployed Assistant bindings.",
+    "Question routes are proposed.",
+    "Native suggestion policy and AI10 delivery remain open."
+  ],
+  "main": "2dc0a5baa601704451d1c5f24d9cb43313cfa975",
+  "main_integration_commit": "8d6f89e",
+  "model_refits": 0,
+  "native_catalog_tools": 8,
+  "neighbor_worktrees_modified": false,
+  "new_head_remote_ci": "pending_new_published_head",
+  "new_native_adapter_cases": 99,
+  "pre_integration_regression": {
+    "passing_final_cases": 747,
+    "reports": [
+      {
+        "cases": 725,
+        "failures": 4,
+        "name": "native-tools-regression-final",
+        "sha256": "c3af807d37544dbfcbcfa055c8d0b2ed5739ccbe34fa3eef09c3555396d65ded"
+      },
+      {
+        "cases": 187,
+        "failures": 0,
+        "name": "native-tools-corrected",
+        "sha256": "3b494dc5e8b2e98e2dd72c4765780b500e59e26126b9df76ac2726e8302d9bff"
+      }
+    ],
+    "unique_cases": 747
+  },
+  "preserved": {
+    "canonical_golden_preserved": true,
+    "original_qualification_lock_preserved": true,
+    "published_base": "ec01837c507d722775a748845d551733cd64c616",
+    "published_candidate_files_preserved": 59,
+    "root_and_tensorflow_locks_preserved": true,
+    "source_owner_pin_preserved": true,
+    "status": "passed"
+  },
+  "prior_inventory_ci": {
+    "annotation": "The job was not started because it repeatedly failed to be acquired (5 attempts).",
+    "execution_jobs_not_started": 3,
+    "execution_jobs_success": 11,
+    "final_gate": "failure",
+    "head": "ec01837c507d722775a748845d551733cd64c616",
+    "not_started": [
+      "persistence",
+      "TensorFlow",
+      "ci-source-inputs"
+    ],
+    "run": 37639653939
+  },
+  "recorded_date": "2026-10-07",
+  "secrets": {
+    "history": "passed",
+    "tree": "passed"
+  },
+  "shared_services_started": false,
+  "source_integration": {
+    "additional_packages": [
+      "certifi",
+      "charset-normalizer",
+      "distro",
+      "httpcore",
+      "httpx",
+      "jsonpatch",
+      "jsonpointer",
+      "langchain-core",
+      "langchain-protocol",
+      "langgraph",
+      "langgraph-checkpoint",
+      "langgraph-prebuilt",
+      "langgraph-sdk",
+      "langsmith",
+      "orjson",
+      "ormsgpack",
+      "requests",
+      "requests-toolbelt",
+      "sniffio",
+      "tenacity",
+      "uuid-utils",
+      "websockets",
+      "xxhash",
+      "zstandard"
+    ],
+    "existing_dependency_versions_unchanged": true,
+    "integration_campaign_pin_sha256": "4663ffb3d3a59a60fe19ca949a4ce5841413bca2f1867b808c5a7d4795b94a52",
+    "integration_dependency_lock_sha256": "a9eed66c2fe18a55cdcb639e8c3dcd74d2e3f66f1a4d45e64ba84a364c3b1933",
+    "owner_dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "owner_main": "2dc0a5baa601704451d1c5f24d9cb43313cfa975",
+    "owner_model_code_unchanged": true,
+    "owner_pin_sha256": "7683e2712fe7f601af47631cd8ffdae69b44a02b96c65b831e0d9687dc0b7334",
+    "scope": "Current assistant integration guard only; original model quality and owner acceptance are unchanged.",
+    "version": "ai12-source-bundle-integration-1.0"
+  },
+  "stage": "AI12",
+  "stage_status": "in_progress",
+  "status": "passed_local_adapter_mechanics_and_offline_evaluation",
+  "version": "ai12-native-tools-acceptance-1.0",
+  "wheel_parity": {
+    "application_python_files": 584,
+    "both_runtime_locks_equal": true,
+    "code_sha256": "56aabde1decca1b0217ffda4f72e43af3d2fabb129c96e1226a2501be93603e3",
+    "status": "passed",
+    "wheel_checkout_equal": true,
+    "wheel_sha256": "26e1df3212df5c9d29e5a60c41bdfd2fb50d274a7cb7440e50a3610236cd122f"
+  },
+  "wheel_runtime": {
+    "aws_executed": false,
+    "case_pass": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "code_sha256": "56aabde1decca1b0217ffda4f72e43af3d2fabb129c96e1226a2501be93603e3",
+    "critical_cases": {
+      "passed": 36,
+      "total": 36,
+      "value": 1.0
+    },
+    "native_tool_module_files": [
+      "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_inventory_tool.py",
+      "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_read_tools.py",
+      "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_stockout_tool.py",
+      "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_anomaly_tool.py",
+      "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_operations_tool.py",
+      "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_model_status_tool.py",
+      "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_assistant_tools.py"
+    ],
+    "network_connections_disallowed": true,
+    "package_file": "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/__init__.py",
+    "producer_imports_available": false,
+    "provider": "fake",
+    "status": "passed"
+  }
+}

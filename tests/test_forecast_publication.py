@@ -1,5 +1,6 @@
 """Content, authorization and worker wiring; qualifications here are explicit test stubs."""
 
+import hashlib
 import json
 from datetime import UTC, datetime
 from pathlib import Path
@@ -220,7 +221,25 @@ class Queue:
         self.failed.append(kwargs)
 
 
-def test_qualified_worker_connects_subset_budget_heartbeat_and_pinned_result(monkeypatch, claim):
+@pytest.fixture
+def matching_fixture_runtime(monkeypatch, claim):
+    # These worker-wiring tests use a historical SQL-only release stub. Simulate
+    # its matching runtime explicitly; do not requalify it for the current lock.
+    frozen_lock = Path("environments/anomaly/qualification.uv.lock").read_bytes()
+    assert hashlib.sha256(frozen_lock).hexdigest() == (
+        claim.release.binding.qualification.dependency_lock_sha256
+    )
+
+    def resource(name):
+        assert name == "dependencies.lock"
+        return frozen_lock
+
+    monkeypatch.setattr(worker, "resource_bytes", resource)
+
+
+def test_qualified_worker_connects_subset_budget_heartbeat_and_pinned_result(
+    monkeypatch, claim, matching_fixture_runtime
+):
     queue = Queue()
     captured = []
 
@@ -243,7 +262,9 @@ def test_qualified_worker_connects_subset_budget_heartbeat_and_pinned_result(mon
     assert captured[0].release == claim.release
 
 
-def test_worker_lost_lease_never_writes_failure_or_result(monkeypatch, claim):
+def test_worker_lost_lease_never_writes_failure_or_result(
+    monkeypatch, claim, matching_fixture_runtime
+):
     queue = Queue()
 
     def lost(claim):
@@ -265,7 +286,9 @@ def test_worker_lost_lease_never_writes_failure_or_result(monkeypatch, claim):
 
 
 @pytest.mark.parametrize("wrong_pin", ["image", "dependencies"])
-def test_wrong_runtime_pin_publishes_nothing(monkeypatch, claim, wrong_pin):
+def test_wrong_runtime_pin_publishes_nothing(
+    monkeypatch, claim, matching_fixture_runtime, wrong_pin
+):
     queue = Queue()
 
     def compute(*args, **kwargs):
@@ -284,10 +307,14 @@ def test_wrong_runtime_pin_publishes_nothing(monkeypatch, claim, wrong_pin):
     assert not queue.completed and len(queue.failed) == 1
 
 
-def test_compute_failure_never_calls_publication_and_closes_attempt(monkeypatch, claim):
+def test_compute_failure_never_calls_publication_and_closes_attempt(
+    monkeypatch, claim, matching_fixture_runtime
+):
     queue = Queue()
+    entered = []
 
     def failed(*args, **kwargs):
+        entered.append(True)
         raise ValueError("runtime_execution_child_failed")
 
     monkeypatch.setattr(worker, "supervise", failed)
@@ -298,4 +325,26 @@ def test_compute_failure_never_calls_publication_and_closes_attempt(monkeypatch,
         == "failed"
     )
     assert not queue.completed
+    assert entered == [True]
+    assert queue.failed == [{"reason": "qualified_executor_failed", "retryable": True}]
+
+
+def test_changed_runtime_lock_refuses_historical_release_before_computation(monkeypatch, claim):
+    queue = Queue()
+    # Use the actual resumed runtime lock, without the matching fixture override.
+    assert hashlib.sha256(worker.resource_bytes("dependencies.lock")).hexdigest() != (
+        claim.release.binding.qualification.dependency_lock_sha256
+    )
+
+    def compute(*args, **kwargs):
+        pytest.fail("incompatible dependency lock entered computation")
+
+    monkeypatch.setattr(worker, "supervise", compute)
+    assert (
+        worker.run_forecast_attempt(
+            queue, claim, compose=False, image_digest=claim.run.image_digest
+        )
+        == "failed"
+    )
+    assert not queue.completed and queue.heartbeats == 0
     assert queue.failed == [{"reason": "qualified_executor_failed", "retryable": True}]

@@ -1,0 +1,24 @@
+{
+  "as_of": "2026-08-22T23:59:59Z",
+  "contract_type": "agent_tool_result",
+  "error": null,
+  "freshness_status": "current",
+  "items": [
+    {
+      "alias": "fixture-champion",
+      "approved": true,
+      "channel": "store",
+      "deployed_release_ref": "fixture-deployed-release-v1",
+      "deployment_environment": "test",
+      "evaluation_ref": "fixture-evaluation-v1",
+      "model_id": "model-sha256-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "product_id": "p-101",
+      "selling_location_id": "s-03"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_kind": "fixture",
+  "source_ref": "fixture-get_model_status",
+  "status": "ok",
+  "tool": "get_model_status"
+}

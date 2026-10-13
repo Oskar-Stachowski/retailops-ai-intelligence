@@ -15,11 +15,18 @@
               "anomaly:read",
               "anomaly:run",
               "stockout:read",
-              "stockout:run"
+              "stockout:run",
+              "assistant:query",
+              "assistant:audit",
+              "sales:read",
+              "inventory:read",
+              "anomalies:read",
+              "operations:read",
+              "model:read"
             ],
             "type": "string"
           },
-          "maxItems": 8,
+          "maxItems": 17,
           "minItems": 1,
           "title": "Capabilities",
           "type": "array"

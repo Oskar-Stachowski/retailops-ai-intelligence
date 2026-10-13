@@ -1,0 +1,143 @@
+{
+  "application_code_sha256": "f885fe5b8ff19997876c206c3818c770b43488354b2e868f67461d6163fc405f",
+  "aws_sdk_calls": 0,
+  "ci_checks": "passed",
+  "human_approval": false,
+  "independent_sql_cases_remove_only_their_own_test_runs": true,
+  "isolated_ci": "see draft PR32 checks and per-run artifacts",
+  "labels_state": "proposed",
+  "new_aws_cost_usd": "0",
+  "new_paid_calls": 0,
+  "original_checkouts_edited": false,
+  "proposed_real_document_coverage": {
+    "complete": 4,
+    "independent_review": false,
+    "questions": 6,
+    "ranking_requirements_and_statuses_unchanged": true
+  },
+  "read_transactions": "READ ONLY",
+  "schema_version": "1.0",
+  "scope": "unpaid_mechanics_not_LLM_quality_or_independent_label_acceptance",
+  "secret_scan": "passed",
+  "shared_docker_started": false,
+  "sonnet_proposals": {
+    "approved_for_paid_execution": false,
+    "batches": 5,
+    "natural_cases": 41,
+    "status": "not_run"
+  },
+  "sql_receipts": {
+    "prepaid-v3-native-postgres.json": {
+      "receipt": {
+        "application_code_sha256": "f885fe5b8ff19997876c206c3818c770b43488354b2e868f67461d6163fc405f",
+        "authorized_trace_restart": "passed",
+        "aws_executed": false,
+        "canonical_forecast_and_stockout_sql": "missing_outputs_preserved",
+        "chat_provider": "fake",
+        "curated_dataset_id": "curated-sha256-7253251d1a4666819b6f25dadfb10530cf8ce1b71d4091593721b2fbad02967e",
+        "deadline_seconds": 45.0,
+        "embedding_provider": "fake",
+        "http_rejected_expired_source_horizons": [
+          "forecast",
+          "risk"
+        ],
+        "http_succeeded_intents": [
+          "sales",
+          "inventory",
+          "anomalies",
+          "operations",
+          "model",
+          "documentation"
+        ],
+        "index_generation_drift_rejected": true,
+        "native_and_knowledge_trace_revocation": "passed_after_policy_restart",
+        "native_read_adapters": 7,
+        "persisted_answers": 6,
+        "persisted_operations_review_outbox_events": 1,
+        "persisted_operations_review_suggestions": 1,
+        "positive_model_publication": "not_qualified_by_this_run",
+        "producer_write_denied": true,
+        "query_duration_seconds": [
+          0.7054623749863822,
+          0.5813230420171749,
+          0.0017441659874748439,
+          0.0015402499993797392,
+          0.5281437920057215,
+          0.6260464170190971,
+          0.572883458022261,
+          0.7704414170002565
+        ],
+        "semantic_quality": "not_evaluated_fake_vectors",
+        "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09",
+        "source_fixture": "full-raw-dq-v2/physical + day-coverage-v1/physical",
+        "status": "passed",
+        "tools": [
+          "get_demand_forecast",
+          "get_detected_anomalies",
+          "get_inventory_status",
+          "get_live_operations",
+          "get_model_status",
+          "get_sales_summary",
+          "get_stockout_risk",
+          "search_knowledge"
+        ],
+        "utc_readiness_rejection": true
+      },
+      "sha256": "20e35168c83a7ddf2765eac35fa2d3a178c43171b9b7c2551d519271ee6617bc"
+    },
+    "prepaid-v3-suggestion-postgres.json": {
+      "receipt": {
+        "application_code_sha256": "f885fe5b8ff19997876c206c3818c770b43488354b2e868f67461d6163fc405f",
+        "atomic_completion": true,
+        "aws_executed": false,
+        "competing_workers_skip_locked": true,
+        "database_revision": "0028_ai12_suggestion_outbox",
+        "expired_send_withheld": true,
+        "identical_retry_bytes": true,
+        "policy": "read-only-review-v1",
+        "producer": "scripted_delivery_callback_no_broker",
+        "retry_after_ack_sql_crash": true,
+        "rollback_after_enqueue": true,
+        "source_projection_executed": false,
+        "status": "passed",
+        "stored_lifecycle_counts": {
+          "delivered": 42,
+          "expired": 8
+        }
+      },
+      "sha256": "e25d641ce93636133fc30947c17f4792cb2edeb3eac5a8a289280459473b54b3"
+    }
+  },
+  "status": "passed",
+  "tests": {
+    "assistant_runtime": {
+      "junit_sha256": "2835c173d1558a44734e0fed0bc85df05daa4dd8169ab2b7cfb4f05b55be8e9a",
+      "passed": 136,
+      "total": 136
+    },
+    "native_sql_and_outbox": {
+      "junit_sha256": "2dbb103b5392a0fed96cf4c1db8adcdf518317b4231be489326bbe2648738024",
+      "passed": 25,
+      "total": 25
+    }
+  },
+  "underlying_admission_limits_unchanged": true,
+  "wheel": {
+    "aws_executed": false,
+    "case_pass": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "code_sha256": "f885fe5b8ff19997876c206c3818c770b43488354b2e868f67461d6163fc405f",
+    "critical_cases": {
+      "passed": 36,
+      "total": 36,
+      "value": 1.0
+    },
+    "network_connections_disallowed": true,
+    "producer_imports_available": false,
+    "provider": "fake",
+    "status": "passed"
+  }
+}

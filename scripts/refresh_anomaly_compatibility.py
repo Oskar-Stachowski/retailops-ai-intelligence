@@ -7,6 +7,8 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from anomaly_lock_compatibility import lock_compatibility
+
 from retailops_ai.anomaly_evaluation.verification import verify_quality
 from retailops_ai.anomaly_portfolio.artifacts import immutable
 from retailops_ai.anomaly_portfolio.lifecycle_contract import Qualification
@@ -16,7 +18,7 @@ from retailops_ai.source_snapshot.files import canonical_json, decode_json, read
 from retailops_ai.source_snapshot.protocol import resource_bytes
 
 
-def refresh(source: Path, output: Path) -> dict[str, Any]:
+def refresh(source: Path, output: Path, *, training_lock: Path | None = None) -> dict[str, Any]:
     original = Qualification.model_validate_json(
         read_bytes(source, "qualification.json", 8 * 1024**2)
     )
@@ -32,11 +34,9 @@ def refresh(source: Path, output: Path) -> dict[str, Any]:
         if (len(raw), hashlib.sha256(raw).hexdigest()) != (receipt.size_bytes, receipt.sha256):
             raise ValueError("anomaly_compatibility_original_checksum")
         artifacts[name] = raw
-    if (
-        original.dependency_lock_sha256
-        != hashlib.sha256(resource_bytes("dependencies.lock")).hexdigest()
-    ):
-        raise ValueError("anomaly_compatibility_dependency_lock_changed")
+    compatibility = lock_compatibility(
+        original.dependency_lock_sha256, resource_bytes("dependencies.lock"), training_lock
+    )
     AnomalyRegistry.smoke(original, artifacts)
     final = decode_json(artifacts["gate_segments.json"])
     model = load(source / "model.json", original.model.sha256)
@@ -64,7 +64,8 @@ def refresh(source: Path, output: Path) -> dict[str, Any]:
             "schema_compatible": True,
             "model_load_predict": "verified",
             "six_frozen_case_saved_prediction_replay": "passed",
-            "dependency_lock": "unchanged",
+            "dependency_lock": compatibility["status"],
+            "dependency_compatibility": compatibility,
             "renewed_from_qualification_sha256": hashlib.sha256(
                 read_bytes(source, "qualification.json", 8 * 1024**2)
             ).hexdigest(),
@@ -90,6 +91,7 @@ def refresh(source: Path, output: Path) -> dict[str, Any]:
         "status": "passed",
         "qualification_sha256": hashlib.sha256(artifacts["qualification.json"]).hexdigest(),
         "model_sha256": original.model.sha256,
+        "dependency_compatibility": compatibility,
         "original_fit_times": "unchanged",
         "capsule": str(output),
     }
@@ -99,8 +101,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--capsule", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--training-lock", type=Path)
     args = parser.parse_args()
-    print(json.dumps(refresh(args.capsule, args.output)), flush=True)
+    print(
+        json.dumps(refresh(args.capsule, args.output, training_lock=args.training_lock)),
+        flush=True,
+    )
     return 0
 
 

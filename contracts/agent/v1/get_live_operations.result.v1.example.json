@@ -1,0 +1,20 @@
+{
+  "as_of": "2026-08-22T23:59:59Z",
+  "contract_type": "agent_tool_result",
+  "error": null,
+  "freshness_status": "current",
+  "items": [
+    {
+      "channel": "store",
+      "lag_seconds": 2.0,
+      "product_id": "p-101",
+      "selling_location_id": "s-03",
+      "stream_status": "healthy"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_kind": "fixture",
+  "source_ref": "fixture-get_live_operations",
+  "status": "ok",
+  "tool": "get_live_operations"
+}

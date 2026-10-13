@@ -1,0 +1,181 @@
+{
+  "anomaly_frozen_replay": {
+    "complete_six_frozen_inputs_and_quality_verified_per_family": true,
+    "deployment_attested": false,
+    "drift_attested": false,
+    "families": {
+      "primary": {
+        "dependency_compatibility": {
+          "added_packages": [
+            "certifi",
+            "charset-normalizer",
+            "distro",
+            "httpcore",
+            "httpx",
+            "jsonpatch",
+            "jsonpointer",
+            "langchain-core",
+            "langchain-protocol",
+            "langgraph",
+            "langgraph-checkpoint",
+            "langgraph-prebuilt",
+            "langgraph-sdk",
+            "langsmith",
+            "orjson",
+            "ormsgpack",
+            "requests",
+            "requests-toolbelt",
+            "sniffio",
+            "tenacity",
+            "uuid-utils",
+            "websockets",
+            "xxhash",
+            "zstandard"
+          ],
+          "original_packages_unchanged": 70,
+          "root_addition": {
+            "name": "langgraph",
+            "specifier": "==1.2.12"
+          },
+          "runtime_lock_sha256": "a9eed66c2fe18a55cdcb639e8c3dcd74d2e3f66f1a4d45e64ba84a364c3b1933",
+          "scope": "original_locked_packages_and_artifacts_plus_reviewed_langgraph",
+          "status": "additive_extension_verified",
+          "training_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587"
+        },
+        "model_sha256": "febb4393e3d93d6f47bd59d464c245a09315ba6ad18d96e1c186207d1d27af56",
+        "original_fit_times": "unchanged",
+        "qualification_sha256": "e25372a917d74e26caa207b4e5a7826c1fe4ab09b79a3ebbb38075e2cafeac48",
+        "status": "passed"
+      },
+      "reference": {
+        "dependency_compatibility": {
+          "added_packages": [
+            "certifi",
+            "charset-normalizer",
+            "distro",
+            "httpcore",
+            "httpx",
+            "jsonpatch",
+            "jsonpointer",
+            "langchain-core",
+            "langchain-protocol",
+            "langgraph",
+            "langgraph-checkpoint",
+            "langgraph-prebuilt",
+            "langgraph-sdk",
+            "langsmith",
+            "orjson",
+            "ormsgpack",
+            "requests",
+            "requests-toolbelt",
+            "sniffio",
+            "tenacity",
+            "uuid-utils",
+            "websockets",
+            "xxhash",
+            "zstandard"
+          ],
+          "original_packages_unchanged": 70,
+          "root_addition": {
+            "name": "langgraph",
+            "specifier": "==1.2.12"
+          },
+          "runtime_lock_sha256": "a9eed66c2fe18a55cdcb639e8c3dcd74d2e3f66f1a4d45e64ba84a364c3b1933",
+          "scope": "original_locked_packages_and_artifacts_plus_reviewed_langgraph",
+          "status": "additive_extension_verified",
+          "training_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587"
+        },
+        "model_sha256": "34b53975b815e24e34d117553fa1e7d148b7077d913ece13eaa41a0cc008888c",
+        "original_fit_times": "unchanged",
+        "qualification_sha256": "6775e7813da7b5d6c5f97290eb889ee1c782de1ffadb6e616f8cce7ec93ec9ee",
+        "status": "passed"
+      }
+    },
+    "model_and_config_bytes_unchanged": true,
+    "original_fit_times_and_training_lock_unchanged": true,
+    "original_signatures_and_prediction_oracles_unchanged": true,
+    "status": "passed"
+  },
+  "branch": "ai/12-resume",
+  "checked_at": "2026-10-07T11:33:04.705765+00:00",
+  "ci_checks": {
+    "application_python_files": 532,
+    "log_sha256": "f88b59ea8bbf15816ddc1be714de8f7a6a06dc76c6d959f6f9758921afc49f9f",
+    "mypy_source_and_script_files": 650,
+    "root_and_tensorflow_locks_packaged": true,
+    "status": "passed",
+    "wheel_checkout_code_equal": true
+  },
+  "code_sha256": "57b36cb2a5a41d735737b1114a5a8e947e8e329d939ec79c97777886b27b6668",
+  "dependency_lock_sha256": "a9eed66c2fe18a55cdcb639e8c3dcd74d2e3f66f1a4d45e64ba84a364c3b1933",
+  "failures_addressed": [
+    "ruff_format_four_files",
+    "tensorflow_lock_missing_langgraph",
+    "anomaly_compatibility_requires_explicit_training_lock",
+    "forecast_worker_test_stubs_require_matching_runtime_lock"
+  ],
+  "isolation": {
+    "neighbor_processes_stopped": false,
+    "neighbor_worktrees_edited": false,
+    "new_aws_calls": 0,
+    "shared_compose_or_databases_changed": false,
+    "training_or_source_exports_started_locally": false
+  },
+  "offline_evaluation": {
+    "aws_executed": false,
+    "cases_passed": 50,
+    "cases_total": 50,
+    "critical_passed": 36,
+    "critical_total": 36,
+    "fixture_only": true,
+    "labels_state": "proposed",
+    "release_file": "agent/evaluation-release.fake.resume.v2.json",
+    "release_id": "agent-evaluation-release-sha256-67ea6afedab1ab7535c65b2c68e3ece66e87f974c57923d3ff267a68ebcffb76"
+  },
+  "previous_ci_run": 37612363474,
+  "previous_ci_run_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37612363474",
+  "previous_head": "dfebf0de0667ee13a64f7cf1b7306f3e6135028c",
+  "pull_request": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/32",
+  "remaining": [
+    "required_remote_ci_on_published_head",
+    "native_business_ml_adapters_and_physical_scope_mapping",
+    "daily_forecast_freshness_and_suggestion_expiry",
+    "actual_agent_suggestion_through_ai10_outbox_v2_api_ui_retry_deduplication",
+    "reviewed_question_and_config_labels",
+    "bounded_real_sonnet_titan_on_accepted_ai11_index"
+  ],
+  "remote_ci": {
+    "full_oci_pg_mlflow_and_tensorflow_not_qualified_by_local_preflight": true,
+    "status": "pending_new_head_publication"
+  },
+  "schema_version": "1.0",
+  "security": {
+    "existing_ci_gates_unchanged": true,
+    "gitleaks_current_tree": "passed",
+    "runtime_lock_mismatch_rejected_before_forecast_computation": true
+  },
+  "stage": "AI12",
+  "status": "in_progress",
+  "tensorflow_lock_check": "passed; uv lock --check --offline; 129 packages",
+  "tensorflow_lock_sha256": "465fbcd9da834e250b9cb01daf4004538cd1577cd4c966117838854405689862",
+  "tensorflow_training": "delegated_to_required_remote_ci; not_executed_locally",
+  "tests": {
+    "forecast-publication-v2": {
+      "errors": "0",
+      "failures": "0",
+      "junit_sha256": "137dd25061870301a85192475695bf8fab5061629095e06cd0bdc61e3f1d1fd5",
+      "skipped": "0",
+      "tests": "24",
+      "time": "49.971"
+    },
+    "tests-ci-v2": {
+      "errors": "0",
+      "failures": "0",
+      "junit_sha256": "b2fb88f05e3851627fa536362c3aab6215b80036ce89a9d92d1c55ee4bb6a87b",
+      "skipped": "0",
+      "tests": "545",
+      "time": "105.859"
+    }
+  },
+  "unique_selected_tests_passed": 569
+}

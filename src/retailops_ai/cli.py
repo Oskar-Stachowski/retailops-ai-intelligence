@@ -10,6 +10,7 @@ from pydantic import ValidationError
 from pydantic_settings import SettingsError
 
 from retailops_ai.cli_bedrock import add_bedrock_command, run_bedrock_prepare
+from retailops_ai.cli_bedrock_chat import add_chat_smoke, run_chat_smoke
 from retailops_ai.cli_index_jobs import add_job_commands, run_job_command
 from retailops_ai.cli_knowledge import add_knowledge_commands, run_denial, run_evaluation
 from retailops_ai.cli_qualification import add_release_check, run_profile_prepare, run_release_check
@@ -22,6 +23,30 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="retailops-ai")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("version", help="Print package identity as JSON.")
+    commands.add_parser("agent-tools", help="Inspect the closed read-only agent tool catalogue.")
+    agent_config = commands.add_parser(
+        "agent-config-check", help="Check model, prompt and schema bindings offline."
+    )
+    agent_config.add_argument("path", type=Path)
+    graph_config = commands.add_parser(
+        "agent-graph-check", help="Check the bounded graph manifest offline."
+    )
+    graph_config.add_argument("path", type=Path)
+    evaluate = commands.add_parser(
+        "agent-evaluate", help="Evaluate the frozen canonical fixture profile; no AWS."
+    )
+    evaluate.add_argument("--provider", choices=["fake"], required=True)
+    evaluate.add_argument("--config", type=Path, required=True)
+    evaluate.add_argument("--golden", type=Path, required=True)
+    evaluate.add_argument("--release", type=Path, required=True)
+    evaluate.add_argument("--rag-golden", type=Path, required=True)
+    evaluate.add_argument("--lock", type=Path, required=True)
+    evaluate.add_argument("--output", type=Path)
+    agent_check = commands.add_parser(
+        "agent-tool-check", help="Validate an agent tool contract offline."
+    )
+    agent_check.add_argument("direction", choices=["request", "result", "policy"])
+    agent_check.add_argument("path", type=Path)
     check = commands.add_parser("config-check", help="Validate settings without network or writes.")
     check.add_argument("--env-file", type=Path, help="Explicit dotenv file; environment wins.")
     serve = commands.add_parser("serve", help="Run the local diagnostic HTTP service.")
@@ -83,9 +108,22 @@ def main(argv: list[str] | None = None) -> int:
     add_job_commands(commands)
     add_release_check(commands)
     add_bedrock_command(commands)
+    add_chat_smoke(commands)
     args = parser.parse_args(argv)
+    if args.command in {
+        "agent-tools",
+        "agent-tool-check",
+        "agent-config-check",
+        "agent-graph-check",
+        "agent-evaluate",
+    }:
+        from retailops_ai.cli_agent import run_agent_command
+
+        return run_agent_command(args)
     if args.command == "knowledge-bedrock-prepare":
         return run_bedrock_prepare(args)
+    if args.command == "bedrock-smoke":
+        return run_chat_smoke(args)
 
     if args.command == "version":
         info = ApplicationInfo(version=version("retailops-ai-intelligence"))

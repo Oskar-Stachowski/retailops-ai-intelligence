@@ -1,0 +1,152 @@
+{
+  "accounting_source": "12-bedrock-budget.json",
+  "approval_source": "user_message_2026-09-29",
+  "approved_campaign_cap_usd": "1.00",
+  "current_smoke_caps_usd": {
+    "haiku": "0.15",
+    "sonnet": "0.25"
+  },
+  "mode": "standard-eu-geographic-cross-region",
+  "products": {
+    "938SCU84GAS4HWYP": {
+      "attributes": {
+        "location": "Europe (Frankfurt)",
+        "locationType": "AWS Region",
+        "operation": "",
+        "regionCode": "eu-central-1",
+        "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+        "usagetype": "EUC1-MP:EUC1_InputTokenCount-Units"
+      },
+      "sku": "938SCU84GAS4HWYP"
+    },
+    "CEEQSWZNPS82QAK6": {
+      "attributes": {
+        "location": "Europe (Frankfurt)",
+        "locationType": "AWS Region",
+        "operation": "",
+        "regionCode": "eu-central-1",
+        "servicename": "Claude Haiku 4.5 (Amazon Bedrock Edition)",
+        "usagetype": "EUC1-MP:EUC1_InputTokenCount-Units"
+      },
+      "sku": "CEEQSWZNPS82QAK6"
+    },
+    "DUQ9EF8ZE8N4VCCE": {
+      "attributes": {
+        "location": "Europe (Frankfurt)",
+        "locationType": "AWS Region",
+        "operation": "",
+        "regionCode": "eu-central-1",
+        "servicename": "Claude Haiku 4.5 (Amazon Bedrock Edition)",
+        "usagetype": "EUC1-MP:EUC1_OutputTokenCount-Units"
+      },
+      "sku": "DUQ9EF8ZE8N4VCCE"
+    },
+    "VVEGW9W5UHCW9WKZ": {
+      "attributes": {
+        "location": "Europe (Frankfurt)",
+        "locationType": "AWS Region",
+        "operation": "",
+        "regionCode": "eu-central-1",
+        "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+        "usagetype": "EUC1-MP:EUC1_OutputTokenCount-Units"
+      },
+      "sku": "VVEGW9W5UHCW9WKZ"
+    }
+  },
+  "publication_date": "2026-09-28T18:09:29Z",
+  "region": "eu-central-1",
+  "reserved_attempt_caps_usd": {
+    "haiku-first": "0.15",
+    "sonnet-comparison": "0.45"
+  },
+  "source_sha256": "431559230b0a55db87ef0fb125469b497fe88a79aa55a68ffbf189dce3ba7d71",
+  "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrockFoundationModels/current/eu-central-1/index.json",
+  "terms": {
+    "938SCU84GAS4HWYP": {
+      "938SCU84GAS4HWYP.4799GE89SK": {
+        "effectiveDate": "2026-09-01T00:00:00Z",
+        "offerTermCode": "4799GE89SK",
+        "priceDimensions": {
+          "938SCU84GAS4HWYP.4799GE89SK.6YS6EN2CT7": {
+            "appliesTo": [],
+            "beginRange": "0",
+            "description": "AWS Marketplace software usage|eu-central-1|Million Input Tokens Regional CRIS",
+            "endRange": "Inf",
+            "pricePerUnit": {
+              "USD": "3.3000000000"
+            },
+            "rateCode": "938SCU84GAS4HWYP.4799GE89SK.6YS6EN2CT7",
+            "unit": "1M tokens"
+          }
+        },
+        "sku": "938SCU84GAS4HWYP",
+        "termAttributes": {}
+      }
+    },
+    "CEEQSWZNPS82QAK6": {
+      "CEEQSWZNPS82QAK6.4799GE89SK": {
+        "effectiveDate": "2026-09-01T00:00:00Z",
+        "offerTermCode": "4799GE89SK",
+        "priceDimensions": {
+          "CEEQSWZNPS82QAK6.4799GE89SK.6YS6EN2CT7": {
+            "appliesTo": [],
+            "beginRange": "0",
+            "description": "AWS Marketplace software usage|eu-central-1|Million Input Tokens Regional",
+            "endRange": "Inf",
+            "pricePerUnit": {
+              "USD": "1.1000000000"
+            },
+            "rateCode": "CEEQSWZNPS82QAK6.4799GE89SK.6YS6EN2CT7",
+            "unit": "1M tokens"
+          }
+        },
+        "sku": "CEEQSWZNPS82QAK6",
+        "termAttributes": {}
+      }
+    },
+    "DUQ9EF8ZE8N4VCCE": {
+      "DUQ9EF8ZE8N4VCCE.4799GE89SK": {
+        "effectiveDate": "2026-09-01T00:00:00Z",
+        "offerTermCode": "4799GE89SK",
+        "priceDimensions": {
+          "DUQ9EF8ZE8N4VCCE.4799GE89SK.6YS6EN2CT7": {
+            "appliesTo": [],
+            "beginRange": "0",
+            "description": "AWS Marketplace software usage|eu-central-1|Million Response Tokens Regional",
+            "endRange": "Inf",
+            "pricePerUnit": {
+              "USD": "5.5000000000"
+            },
+            "rateCode": "DUQ9EF8ZE8N4VCCE.4799GE89SK.6YS6EN2CT7",
+            "unit": "1M tokens"
+          }
+        },
+        "sku": "DUQ9EF8ZE8N4VCCE",
+        "termAttributes": {}
+      }
+    },
+    "VVEGW9W5UHCW9WKZ": {
+      "VVEGW9W5UHCW9WKZ.4799GE89SK": {
+        "effectiveDate": "2026-09-01T00:00:00Z",
+        "offerTermCode": "4799GE89SK",
+        "priceDimensions": {
+          "VVEGW9W5UHCW9WKZ.4799GE89SK.6YS6EN2CT7": {
+            "appliesTo": [],
+            "beginRange": "0",
+            "description": "AWS Marketplace software usage|eu-central-1|Million Response Tokens Regional CRIS",
+            "endRange": "Inf",
+            "pricePerUnit": {
+              "USD": "16.5000000000"
+            },
+            "rateCode": "VVEGW9W5UHCW9WKZ.4799GE89SK.6YS6EN2CT7",
+            "unit": "1M tokens"
+          }
+        },
+        "sku": "VVEGW9W5UHCW9WKZ",
+        "termAttributes": {}
+      }
+    }
+  },
+  "unallocated_usd": "0.40",
+  "version": "20260928180929"
+}

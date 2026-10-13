@@ -1,0 +1,218 @@
+{
+  "application_sha256": "221ebf171dbd1e987abb26ca6e2717ca55a8a44924fe35da050caeedea3b1526",
+  "branch": "ai/12-resume",
+  "candidate_release": "agent/evaluation-release.fake.native-sources.v1.json",
+  "checked_at": "2026-10-07T14:07:28.051961+00:00",
+  "ci_checks": {
+    "log_sha256": "2a6733d94a50b744be3dd805dcb560610f60624c33b72fa6633e0f54d0602902",
+    "mypy_files": 656,
+    "status": "passed"
+  },
+  "complete_collection_plan": {
+    "all_tests_executed_locally": false,
+    "collection_sha256": "b6e4c7f1d8fb1c53db41615733073abc47553cc690dabb433e281ad7354c9195",
+    "files": 186,
+    "native_forecast_cases_exactly_once": 41,
+    "sales_cases_exactly_once": 58,
+    "shards": 4,
+    "tests": 4163
+  },
+  "gitleaks": {
+    "history": "passed",
+    "history_commits": 272,
+    "tree": "passed"
+  },
+  "graph_code_sha256": "f79d04cfe6b990e84e75dc2f496758ffe48cef214a2f84ccf51f43dfa9d32d4c",
+  "historic_manifests_models_labels_and_receipts_preserved": true,
+  "implementation_checkpoint": "ee187cfec5b0a29f7808256413f3163d71bbeee2",
+  "isolation": {
+    "aws_calls": 0,
+    "local_model_training_or_new_full_source_exports": false,
+    "neighbor_processes_stopped": false,
+    "neighbor_worktrees_edited": false,
+    "shared_compose_or_databases_changed": false
+  },
+  "labels_state": "proposed",
+  "main_integrated": "89b64d23e509437d45cfc3362aba3fc8f7aeb673",
+  "main_merge_checkpoint": "ad8540c70e54dfb9bebed263601f801e4f28793d",
+  "main_merge_tree_unchanged": true,
+  "new_head_remote_ci": "pending_publication; does not inherit prior head acceptance",
+  "not_qualified_by_this_increment": [
+    "production_business_runtime",
+    "PostgreSQL/AI10 transport for new sales adapter",
+    "other business/ML adapters and physical mapping",
+    "native risk/model suggestion bindings",
+    "AI12 suggestions through AI10 outbox/v2 API/UI",
+    "reviewed question/configuration labels",
+    "real Sonnet/Titan within remaining budget"
+  ],
+  "offline_evaluation": {
+    "aws_executed": false,
+    "cases": 50,
+    "critical_cases": 36,
+    "historical_golden_normalization_preserved": true,
+    "provider": "fake",
+    "status": "passed"
+  },
+  "previous_checkpoint_required_ci": {
+    "conclusion": "success",
+    "head_sha": "35dae7e946628de8b09f80a2e281c65f40eb2a4f",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 112807971777,
+        "name": "checks",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112807971875,
+        "name": "secrets",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636564,
+        "name": "persistence-forecast",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636584,
+        "name": "persistence",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636618,
+        "name": "TensorFlow CPU training, artifact and reload",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636637,
+        "name": "tests (2)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636663,
+        "name": "acceptance (ci-source-inputs)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636691,
+        "name": "acceptance (ci-detectors)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636696,
+        "name": "tests (0)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636742,
+        "name": "anomaly-oci",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636768,
+        "name": "acceptance (ci-qualified-inputs)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636807,
+        "name": "tests (1)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636820,
+        "name": "tests (3)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112808636892,
+        "name": "acceptance (ci-forecast)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112831264852,
+        "name": "required-result",
+        "status": "completed"
+      }
+    ],
+    "run_id": 37626054864,
+    "status": "completed",
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37626054864"
+  },
+  "release_id": "agent-evaluation-release-sha256-3a52dd238262de4405941b1c46664a270592a3ed94af818a150d3d62fc05747f",
+  "schema_version": "1.0",
+  "stage": "AI12",
+  "stage_ready": false,
+  "status": "in_progress",
+  "tests": {
+    "accepted_unique_cases": 652,
+    "broad_failures": "two incorrect helper imports in new HTTP tests; corrected before implementation commit; application unchanged on retry",
+    "broad_regression": {
+      "errors": "0",
+      "failures": "2",
+      "hostname": "Oskars-MacBook-Air.local",
+      "junit_sha256": "0e4fb56de146a0a33e43e6bfd648291f46010e24d096be9d68e2981bc132c5e7",
+      "name": "pytest",
+      "skipped": "0",
+      "tests": "652",
+      "time": "377.839",
+      "timestamp": "2026-10-07T15:41:57.307316+02:00"
+    },
+    "corrected_complete_sales_file": {
+      "errors": "0",
+      "failures": "0",
+      "hostname": "Oskars-MacBook-Air.local",
+      "junit_sha256": "276553cf6dbed655be10482958ca61886fbdc488fbfb97019db773736d5ebb7e",
+      "name": "pytest",
+      "skipped": "0",
+      "tests": "58",
+      "time": "336.289",
+      "timestamp": "2026-10-07T15:49:29.982774+02:00"
+    },
+    "fake_chat_and_fixture_store_explicit": true,
+    "latest_outcomes_all_passed": true,
+    "verified_source_fixture_cases": 14
+  },
+  "wheel": {
+    "application_python_files": 537,
+    "both_runtime_locks_equal": true,
+    "code_sha256": "221ebf171dbd1e987abb26ca6e2717ca55a8a44924fe35da050caeedea3b1526",
+    "status": "passed",
+    "wheel_checkout_equal": true,
+    "wheel_sha256": "abcaa0436b9b9d83fc9dd26036622ccea811d8626312b09799552b7c3fac63a2"
+  },
+  "wheel_runtime": {
+    "aws_executed": false,
+    "case_pass": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "code_sha256": "221ebf171dbd1e987abb26ca6e2717ca55a8a44924fe35da050caeedea3b1526",
+    "critical_cases": {
+      "passed": 36,
+      "total": 36,
+      "value": 1.0
+    },
+    "network_connections_disallowed": true,
+    "package_file": "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/__init__.py",
+    "producer_imports_available": false,
+    "provider": "fake",
+    "qualified_sales_module_file": "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/qualified_sales_tool.py",
+    "status": "passed"
+  }
+}

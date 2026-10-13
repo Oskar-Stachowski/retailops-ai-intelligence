@@ -1,0 +1,72 @@
+{
+  "fixture_kind": "Synthetic data and metadata; no trained model, business serving, AWS invocation or semantic acceptance",
+  "required_capability": "assistant:query",
+  "required_role": "operator",
+  "schema_version": "1.0",
+  "tools": [
+    {
+      "capability": "forecast:read",
+      "read_only": true,
+      "request_schema": "get_demand_forecast.request.v1.schema.json",
+      "result_schema": "get_demand_forecast.result.v1.schema.json",
+      "runtime_adapter": "native_v12_forecast_reader",
+      "tool": "get_demand_forecast"
+    },
+    {
+      "capability": "anomalies:read",
+      "read_only": true,
+      "request_schema": "get_detected_anomalies.request.v1.schema.json",
+      "result_schema": "get_detected_anomalies.result.v1.schema.json",
+      "runtime_adapter": "verified_native_anomaly_batches",
+      "tool": "get_detected_anomalies"
+    },
+    {
+      "capability": "inventory:read",
+      "read_only": true,
+      "request_schema": "get_inventory_status.request.v1.schema.json",
+      "result_schema": "get_inventory_status.result.v1.schema.json",
+      "runtime_adapter": "verified_source_curated_physical_inventory",
+      "tool": "get_inventory_status"
+    },
+    {
+      "capability": "operations:read",
+      "read_only": true,
+      "request_schema": "get_live_operations.request.v1.schema.json",
+      "result_schema": "get_live_operations.result.v1.schema.json",
+      "runtime_adapter": "scoped_producer_persisted_event_processing",
+      "tool": "get_live_operations"
+    },
+    {
+      "capability": "model:read",
+      "read_only": true,
+      "request_schema": "get_model_status.request.v1.schema.json",
+      "result_schema": "get_model_status.result.v1.schema.json",
+      "runtime_adapter": "scoped_v12_and_anomaly_catalog_not_attested",
+      "tool": "get_model_status"
+    },
+    {
+      "capability": "sales:read",
+      "read_only": true,
+      "request_schema": "get_sales_summary.request.v1.schema.json",
+      "result_schema": "get_sales_summary.result.v1.schema.json",
+      "runtime_adapter": "verified_source_curated_raw_dq_day_sales",
+      "tool": "get_sales_summary"
+    },
+    {
+      "capability": "stockout:read",
+      "read_only": true,
+      "request_schema": "get_stockout_risk.request.v1.schema.json",
+      "result_schema": "get_stockout_risk.result.v1.schema.json",
+      "runtime_adapter": "verified_native_physical_stockout_and_routes",
+      "tool": "get_stockout_risk"
+    },
+    {
+      "capability": "knowledge:read",
+      "read_only": true,
+      "request_schema": "search_knowledge.request.v1.schema.json",
+      "result_schema": "search_knowledge.result.v1.schema.json",
+      "runtime_adapter": "pinned_postgres_knowledge",
+      "tool": "search_knowledge"
+    }
+  ]
+}

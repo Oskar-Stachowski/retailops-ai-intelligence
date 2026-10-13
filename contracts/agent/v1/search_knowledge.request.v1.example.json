@@ -1,0 +1,10 @@
+{
+  "contract_type": "tool_request",
+  "retrieval": {
+    "purpose": "verified_state",
+    "question": "What is verified?",
+    "schema_version": "1.0"
+  },
+  "schema_version": "1.0",
+  "tool": "search_knowledge"
+}

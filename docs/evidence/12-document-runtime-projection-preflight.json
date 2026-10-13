@@ -1,0 +1,48 @@
+{
+  "http_guards": {
+    "caller_intent": 422,
+    "missing_auth": 401,
+    "unknown_question": 422,
+    "viewer": 403
+  },
+  "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+  "kind": "real_postgres_cached_titan_vectors_no_aws",
+  "migration": "0010_assistant_token_budget",
+  "provider_calls": 0,
+  "retrieval": [
+    {
+      "covered_requirements": [
+        "identity-and-scope"
+      ],
+      "question": "Które endpointy zwracają zweryfikowaną tożsamość i scope?",
+      "retrieved_chunk_ids": [
+        "chunk-sha256-27880e58319696bcbff8748e29b1f365e98c71f8d755448e91dd78026c519825",
+        "chunk-sha256-88e8bbe4569a6de7fe7d2bcc64de13e53d514843c2ed19cb5ba542bb7f32d414",
+        "chunk-sha256-6377d9051da87743025f8edd164da6504d5c05087c2997ab1c4ac3bc2423a296",
+        "chunk-sha256-1efe85d9aab8217e7e530f0fec899ab245b2c7eb246db2deb3907e75a9941c1b",
+        "chunk-sha256-fe8a3a1709c6c62bee8cc5f9b5590e6b05c5adf091208819e0abde894b10ea9e"
+      ],
+      "status": "ok"
+    },
+    {
+      "covered_requirements": [
+        "restart-on-policy-change"
+      ],
+      "question": "Kiedy zmiana grantów lub revoke wymaga restartu procesu?",
+      "retrieved_chunk_ids": [
+        "chunk-sha256-34a3a28ea784e6e2740cea2c7be5b73c604d29840d0c74c0691c77e24d58d2c4",
+        "chunk-sha256-15545f713595f13fff0dc7c2eb984244318ca19afbd25c5356f34818acab41d0",
+        "chunk-sha256-7879e2529104638a02408588c6d29f3e9efb630e84bebef3250e0ea5040d9842",
+        "chunk-sha256-d4e98373a17a25781a6366462c5e7f05621b0c1b4e58d9345ffb6c61837fa3b9",
+        "chunk-sha256-fe8a3a1709c6c62bee8cc5f9b5590e6b05c5adf091208819e0abde894b10ea9e"
+      ],
+      "status": "ok"
+    }
+  ],
+  "runtime_id": "assistant-runtime-sha256-70d5265ef0be6431fcf2d3822e10ff37b6a8630adba7ab57331a1d66ec39847b",
+  "schema_version": "1.0",
+  "source_catalog_sha256": "b220592bb82014ca40d83faf2e56bdc1c0bcb499ccd6cae214a6d2f362c817af",
+  "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+  "sql_token_constraint": "CHECK (((reserved_tokens >= 1) AND (reserved_tokens <= 19000)))",
+  "status": "passed"
+}

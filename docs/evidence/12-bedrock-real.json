@@ -1,0 +1,108 @@
+{
+  "ai12_closed": false,
+  "base_commit": "748c52e119ed3c171bdb378af115d44c541aecc6",
+  "budget_ledger": "12-bedrock-budget.json",
+  "candidate_qualified": false,
+  "files": [
+    {
+      "path": "agent/graph.bedrock-smoke.v1.json",
+      "sha256": "f38919c16b3c1d443d9a252548816b341a74604d0bb93bb85d8f15197b380743"
+    },
+    {
+      "path": "agent/graph.sonnet-smoke.v1.json",
+      "sha256": "d3e494987990299875e869272a884c3334537939ac012f10440fe1fdd749c0ee"
+    },
+    {
+      "path": "agent/bedrock-smoke.v1.json",
+      "sha256": "7dcdf0a78f5811bedf3a5a43d4995cd53de799d651560694d610ebb985fd4cbc"
+    },
+    {
+      "path": "agent/sonnet-smoke.v1.json",
+      "sha256": "8414de9f1a9fdf9b9fe3920e3dbea9844b97727912ab20971d0828ff26ec3b25"
+    },
+    {
+      "path": "agent/evaluation-release.fake.v1.json",
+      "sha256": "1d86be5bf780c3d5ea615677b66deb9e027bdd68d18418c2811678eeb5c7d80c"
+    },
+    {
+      "path": "agent/golden.canonical.v1.json",
+      "sha256": "5a011ee7f5a8180ff32b40e163be16d8748b07651f5a88f688c329d6676d5ef1"
+    },
+    {
+      "path": "knowledge/golden.semantic.v1.json",
+      "sha256": "b422025778e87931d02ef724b815c273dc5e2dbd0c3828b6741f0ef8367bbe41"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "b00e58676e3ff07d7af9de4eaa4fe426574bc2a6c90439977a70f2831378f84a"
+    },
+    {
+      "path": "src/retailops_ai/adapters/bedrock_chat.py",
+      "sha256": "249fb750f511324b5a55ddb59b6b26d9c05fd8fecdfb62c906fc2f52cac64c13"
+    },
+    {
+      "path": "src/retailops_ai/adapters/bedrock_access.py",
+      "sha256": "2124a2b99c1327bd286363af1f6b963fb23f5235e6381ca91e217a3dd9b09e1c"
+    },
+    {
+      "path": "src/retailops_ai/cli_bedrock_chat.py",
+      "sha256": "1ac4acb3b28a661fc532caec10c678457005ce65789da5f8595a8cc923c72162"
+    },
+    {
+      "path": "src/retailops_ai/agent/bedrock_smoke.py",
+      "sha256": "e4cd3a0bf8d2e5d127bf3a3b5acca6596b86c2fc97575117b2231b3e0ddeb589"
+    }
+  ],
+  "golden_oracles_changed": false,
+  "haiku_current_profile_executed": false,
+  "invalidated_attempt": {
+    "reason": "Source/config binding changed during diagnostic execution; terminal report absent. Full 0.45 USD attempt cap is retained, and no quality result is claimed.",
+    "receipt": "12-bedrock-runs/sonnet-2.json"
+  },
+  "latest_receipt": "12-bedrock-runs/sonnet-3.json",
+  "latest_smoke_passed": 5,
+  "latest_smoke_status": "failed",
+  "latest_smoke_total": 6,
+  "offline_release_id": "agent-evaluation-release-sha256-8243143ec9d6cc5a4d324f1c4a55c44971d46c1d8f86894111b9283a29c35981",
+  "open_findings": [
+    {
+      "case": "document-1",
+      "id": "AI12-DOC-FIXTURE",
+      "reason": "Question asks how to start local AI development, but fixture only states it proves no deployment. Model returns insufficient_evidence, while frozen oracle/catalogue expects answered; current semantic fixture does not qualify useful document QA."
+    }
+  ],
+  "real_chat": true,
+  "real_retrieval_measured": false,
+  "runtime_graph_config_id": "agent-graph-config-sha256-22b062e5e995c0f12a3e6ea356feb51b876d3a94e84aab3d9c9be7ab5e7add6e",
+  "schema_version": "1.0",
+  "scope": "real_chat_over_fixture_evidence_only",
+  "selected_candidate": "anthropic.claude-sonnet-4-6",
+  "validation": {
+    "compose_config": "passed",
+    "contract_snapshot_checks": 8,
+    "documentation_links": "passed",
+    "full_compose_persistence_rerun": false,
+    "gitleaks_directory": "passed",
+    "gitleaks_history": "passed",
+    "mypy_source_files": 134,
+    "offline_golden": {
+      "critical_passed": 36,
+      "critical_total": 36,
+      "fixture_only": true,
+      "passed": 50,
+      "receipt": "12-bedrock-real-golden.json",
+      "total": 50
+    },
+    "package": "hatchling_sdist_and_wheel_passed",
+    "pytest": {
+      "passed": 1003,
+      "seconds": 299.79
+    },
+    "remote_ci_run": false,
+    "required_ci_contract": "passed",
+    "ruff_check": "passed",
+    "ruff_format": "passed",
+    "targeted_chat_access_tests": 126,
+    "wheel_outside_checkout": "12-bedrock-real-wheel.json"
+  }
+}

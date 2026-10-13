@@ -1,0 +1,13 @@
+{
+  "freshness_seconds": 300,
+  "max_calls": 6,
+  "max_locations": 5,
+  "max_period_days": 90,
+  "max_products": 20,
+  "max_result_bytes": 131072,
+  "max_rows": 50,
+  "profile": "agent-tools-bounded-v1",
+  "request_deadline_seconds": 45.0,
+  "schema_version": "1.0",
+  "tool_timeout_seconds": 5.0
+}

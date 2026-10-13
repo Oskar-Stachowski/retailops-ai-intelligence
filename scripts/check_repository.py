@@ -11,7 +11,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 CI_GROUPS = {
-    "ci-checks": "lint type-check docs-check forecast-runtime-check contracts-check package compose-config",
+    "ci-checks": "lint type-check docs-check forecast-runtime-check contracts-check agent-evaluate package compose-config",
     "ci-source-inputs": "handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check observation-replay-check",
     "ci-qualified-inputs": "qualified-anomaly-inputs-check",
     "ci-detectors": "anomaly-detectors-check day-qualification-check",
@@ -80,6 +80,7 @@ def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None
             "make lifecycle-store-smoke": "combined lifecycle backup/restore",
             "make forecast-queue-smoke": "forecast queue",
             "make v12-backup-smoke": "v12 coherent backup/restore and recovery",
+            "make native-offline-smoke": "native Assistant and suggestion SQL",
         },
         "persistence-forecast": {
             "make forecast-input-store-smoke": "forecast input store",

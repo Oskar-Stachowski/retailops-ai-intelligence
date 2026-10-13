@@ -97,27 +97,32 @@ class PostgresAnomalyCatalog:
             if value is not None:
                 clauses.append("r." + key + "=:" + key)
                 params[key] = value
-        with self.engine.connect() as connection:
-            records = (
-                connection.execute(
-                    text(
-                        "SELECT v.model_version,v.binding,max(b.created_at) published FROM ai.anomaly_results r "  # noqa: S608 - fixed clauses, bound parameters
-                        "JOIN ai.anomaly_batches b USING(batch_id) JOIN ai.anomaly_model_releases l USING(release_id) "
-                        "JOIN ai.anomaly_model_versions v ON v.model_name=l.model_name AND v.model_version=l.model_version WHERE "
-                        + " AND ".join(clauses)
-                        + " GROUP BY v.model_version,v.binding ORDER BY length(v.model_version),v.model_version LIMIT 1001"  # noqa: S608 - fixed clauses, bound parameters
-                    ),
-                    params,
+        with self.engine.connect().execution_options(
+            isolation_level="REPEATABLE READ"
+        ) as connection:
+            with connection.begin():
+                connection.execute(text("SET TRANSACTION READ ONLY"))
+                connection.execute(text("SET LOCAL statement_timeout='3s'"))
+                records = (
+                    connection.execute(
+                        text(
+                            "SELECT v.model_version,CASE WHEN octet_length(v.binding::text)<=65536 THEN v.binding END binding,max(b.created_at) published FROM ai.anomaly_results r "  # noqa: S608 - fixed clauses, bound parameters
+                            "JOIN ai.anomaly_batches b USING(batch_id) JOIN ai.anomaly_model_releases l USING(release_id) "
+                            "JOIN ai.anomaly_model_versions v ON v.model_name=l.model_name AND v.model_version=l.model_version WHERE "
+                            + " AND ".join(clauses)
+                            + " GROUP BY v.model_version,v.binding ORDER BY length(v.model_version),v.model_version LIMIT 1001"  # noqa: S608 - fixed clauses, bound parameters
+                        ),
+                        params,
+                    )
+                    .mappings()
+                    .all()
                 )
-                .mappings()
-                .all()
-            )
-            active = connection.execute(
-                text(
-                    "SELECT l.release FROM ai.anomaly_model_heads h JOIN ai.anomaly_model_releases l USING(release_id) WHERE h.model_name=:model"
-                ),
-                {"model": MODEL},
-            ).scalar_one_or_none()
+                active = connection.execute(
+                    text(
+                        "SELECT CASE WHEN octet_length(l.release::text)<=65536 THEN l.release END FROM ai.anomaly_model_heads h JOIN ai.anomaly_model_releases l USING(release_id) WHERE h.model_name=:model"
+                    ),
+                    {"model": MODEL},
+                ).scalar_one_or_none()
         if len(records) > 1000:
             raise CatalogError(429, "model-read-budget")
         approved = Release.model_validate_json(json.dumps(active)) if active else None

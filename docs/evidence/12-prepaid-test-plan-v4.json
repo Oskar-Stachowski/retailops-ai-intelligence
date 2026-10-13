@@ -1,0 +1,880 @@
+{
+  "approved_for_this_campaign": false,
+  "batches": [
+    {
+      "cap_usd": "1.00",
+      "cases": 9,
+      "profile": "agent/sonnet-qualification-1.prepaid.v4.json",
+      "proposal": "docs/evidence/12-prepaid-qualification-1-v4.proposal.json",
+      "status": "not_run"
+    },
+    {
+      "cap_usd": "1.00",
+      "cases": 8,
+      "profile": "agent/sonnet-qualification-2.prepaid.v4.json",
+      "proposal": "docs/evidence/12-prepaid-qualification-2-v4.proposal.json",
+      "status": "not_run"
+    },
+    {
+      "cap_usd": "1.00",
+      "cases": 8,
+      "profile": "agent/sonnet-qualification-3.prepaid.v4.json",
+      "proposal": "docs/evidence/12-prepaid-qualification-3-v4.proposal.json",
+      "status": "not_run"
+    },
+    {
+      "cap_usd": "1.00",
+      "cases": 8,
+      "profile": "agent/sonnet-qualification-4.prepaid.v4.json",
+      "proposal": "docs/evidence/12-prepaid-qualification-4-v4.proposal.json",
+      "status": "not_run"
+    },
+    {
+      "cap_usd": "1.00",
+      "cases": 8,
+      "profile": "agent/sonnet-qualification-5.prepaid.v4.json",
+      "proposal": "docs/evidence/12-prepaid-qualification-5-v4.proposal.json",
+      "status": "not_run"
+    }
+  ],
+  "controlplane_receipt": "docs/evidence/12-prepaid-controlplane.json",
+  "exclusion_reason": "These nine oracles deliberately depend on a scripted provider fault or malicious output; retain their server/injection tests without asking a natural LLM to reproduce that fault.",
+  "golden_cases": 50,
+  "historical_budget_receipt_sha256": "9252e9fadb009cbf19fc8bfdd6bbabfc2a2e431e60e88bc22c814f0438013df0",
+  "historical_budget_remaining_usd": "0.0982790",
+  "human_approval": false,
+  "labels_state": "proposed",
+  "live_llm_eligible_cases": 41,
+  "native_preflight": "docs/evidence/12-prepaid-native-preflight-v4.json",
+  "native_runtime_candidate": "agent/native-bedrock-runtime.prepaid.proposed.v4.json",
+  "native_runtime_labels_approved": false,
+  "native_runtime_routes": 26,
+  "native_runtime_stage": "separate_SQL_HTTP_RAG_campaign_after_route_review_and_current_Source_pin_preflight",
+  "native_v2_accepted_by_source": false,
+  "paid_calls": 0,
+  "preparation_aws_controlplane_operations": 6,
+  "pricing": {
+    "aws_sdk_calls": 0,
+    "checked_at": "2026-10-08T06:22:06.023012+00:00",
+    "paid_calls": 0,
+    "sources": [
+      {
+        "kind": "sonnet",
+        "matches": [
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_Reserved_3Month_OutputTPM_Geo-Units"
+            },
+            "sku": "AYUTXVVSTUUMBP5W",
+            "terms": {
+              "AYUTXVVSTUUMBP5W.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "AYUTXVVSTUUMBP5W.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Per Hour per 1K Output TPM Reserved 3 Month Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.8910000000"
+                    },
+                    "rateCode": "AYUTXVVSTUUMBP5W.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M TPM Hour"
+                  }
+                },
+                "sku": "AYUTXVVSTUUMBP5W",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_Reserved_3Month_OutputTPM_Global-Units"
+            },
+            "sku": "EUDCK6RKYGKQVT2H",
+            "terms": {
+              "EUDCK6RKYGKQVT2H.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "EUDCK6RKYGKQVT2H.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Per Hour per 1K Output TPM Reserved 3 Month Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.8100000000"
+                    },
+                    "rateCode": "EUDCK6RKYGKQVT2H.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M TPM Hour"
+                  }
+                },
+                "sku": "EUDCK6RKYGKQVT2H",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_CacheReadInputTokenCount_Global-Units"
+            },
+            "sku": "WGJ7QKFJCH8SBU7R",
+            "terms": {
+              "WGJ7QKFJCH8SBU7R.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "WGJ7QKFJCH8SBU7R.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Cache Read Input Tokens Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.3000000000"
+                    },
+                    "rateCode": "WGJ7QKFJCH8SBU7R.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "WGJ7QKFJCH8SBU7R",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_InputTokenCount_Global-Units"
+            },
+            "sku": "MWF6NM48AFSN9BB2",
+            "terms": {
+              "MWF6NM48AFSN9BB2.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "MWF6NM48AFSN9BB2.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Input Tokens Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "3.0000000000"
+                    },
+                    "rateCode": "MWF6NM48AFSN9BB2.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "MWF6NM48AFSN9BB2",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_InputTokenCount_Global_Batch-Units"
+            },
+            "sku": "48DRNEH7HW53GPWF",
+            "terms": {
+              "48DRNEH7HW53GPWF.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "48DRNEH7HW53GPWF.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Batch Input Tokens Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "1.5000000000"
+                    },
+                    "rateCode": "48DRNEH7HW53GPWF.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "48DRNEH7HW53GPWF",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_Reserved_3Month_InputTPM_Global-Units"
+            },
+            "sku": "YVYCM6ACMYDG4UV4",
+            "terms": {
+              "YVYCM6ACMYDG4UV4.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "YVYCM6ACMYDG4UV4.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Per Hour per 1K Input TPM Reserved 3 Month Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.1620000000"
+                    },
+                    "rateCode": "YVYCM6ACMYDG4UV4.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M TPM Hour"
+                  }
+                },
+                "sku": "YVYCM6ACMYDG4UV4",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_InputTokenCount_Batch-Units"
+            },
+            "sku": "M5AHN6WK9VTUXG5Y",
+            "terms": {
+              "M5AHN6WK9VTUXG5Y.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "M5AHN6WK9VTUXG5Y.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Batch Input Tokens Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "1.6500000000"
+                    },
+                    "rateCode": "M5AHN6WK9VTUXG5Y.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "M5AHN6WK9VTUXG5Y",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_Reserved_1Month_InputTPM_Global-Units"
+            },
+            "sku": "RMCDEHWYZUZXKFT4",
+            "terms": {
+              "RMCDEHWYZUZXKFT4.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "RMCDEHWYZUZXKFT4.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Per Hour per 1K Input TPM Reserved 1 Month Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.1800000000"
+                    },
+                    "rateCode": "RMCDEHWYZUZXKFT4.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M TPM Hour"
+                  }
+                },
+                "sku": "RMCDEHWYZUZXKFT4",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_OutputTokenCount_Global-Units"
+            },
+            "sku": "KFQQQUUBCURHRJS6",
+            "terms": {
+              "KFQQQUUBCURHRJS6.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "KFQQQUUBCURHRJS6.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Response Tokens Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "15.0000000000"
+                    },
+                    "rateCode": "KFQQQUUBCURHRJS6.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "KFQQQUUBCURHRJS6",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_CacheWriteInputTokenCount-Units"
+            },
+            "sku": "TYN2XGZDW3CQVU67",
+            "terms": {
+              "TYN2XGZDW3CQVU67.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "TYN2XGZDW3CQVU67.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Cache Write Input Tokens Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "4.1250000000"
+                    },
+                    "rateCode": "TYN2XGZDW3CQVU67.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "TYN2XGZDW3CQVU67",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_Reserved_1Month_OutputTPM_Global-Units"
+            },
+            "sku": "8HMYKSDZTUH5WVJG",
+            "terms": {
+              "8HMYKSDZTUH5WVJG.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "8HMYKSDZTUH5WVJG.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Per Hour per 1K Output TPM Reserved 1 Month Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.9000000000"
+                    },
+                    "rateCode": "8HMYKSDZTUH5WVJG.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M TPM Hour"
+                  }
+                },
+                "sku": "8HMYKSDZTUH5WVJG",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_CacheWrite1hInputTokenCount_Global-Units"
+            },
+            "sku": "JY9DBTRH3BUB64E3",
+            "terms": {
+              "JY9DBTRH3BUB64E3.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "JY9DBTRH3BUB64E3.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million 1 hour Cache Write Input Tokens Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "6.0000000000"
+                    },
+                    "rateCode": "JY9DBTRH3BUB64E3.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "JY9DBTRH3BUB64E3",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_Reserved_3Month_InputTPM_Geo-Units"
+            },
+            "sku": "KE59HAPQYUZMRTEY",
+            "terms": {
+              "KE59HAPQYUZMRTEY.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "KE59HAPQYUZMRTEY.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Per Hour per 1K Input TPM Reserved 3 Month Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.1782000000"
+                    },
+                    "rateCode": "KE59HAPQYUZMRTEY.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M TPM Hour"
+                  }
+                },
+                "sku": "KE59HAPQYUZMRTEY",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_CacheReadInputTokenCount-Units"
+            },
+            "sku": "5DBEXTE3DVF75UJT",
+            "terms": {
+              "5DBEXTE3DVF75UJT.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "5DBEXTE3DVF75UJT.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Cache Read Input Tokens Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.3300000000"
+                    },
+                    "rateCode": "5DBEXTE3DVF75UJT.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "5DBEXTE3DVF75UJT",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_Reserved_1Month_OutputTPM_Geo-Units"
+            },
+            "sku": "6A7UV9ZSSTQ887D2",
+            "terms": {
+              "6A7UV9ZSSTQ887D2.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "6A7UV9ZSSTQ887D2.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Per Hour per 1K Output TPM Reserved 1 Month Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.9900000000"
+                    },
+                    "rateCode": "6A7UV9ZSSTQ887D2.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M TPM Hour"
+                  }
+                },
+                "sku": "6A7UV9ZSSTQ887D2",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_OutputTokenCount_Global_Batch-Units"
+            },
+            "sku": "SXV8NDYY4Y4RDX4Y",
+            "terms": {
+              "SXV8NDYY4Y4RDX4Y.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "SXV8NDYY4Y4RDX4Y.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Batch Response Tokens Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "7.5000000000"
+                    },
+                    "rateCode": "SXV8NDYY4Y4RDX4Y.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "SXV8NDYY4Y4RDX4Y",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_Reserved_1Month_InputTPM_Geo-Units"
+            },
+            "sku": "4AEMXWBV63XT3UZ2",
+            "terms": {
+              "4AEMXWBV63XT3UZ2.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "4AEMXWBV63XT3UZ2.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Per Hour per 1K Input TPM Reserved 1 Month Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.1980000000"
+                    },
+                    "rateCode": "4AEMXWBV63XT3UZ2.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M TPM Hour"
+                  }
+                },
+                "sku": "4AEMXWBV63XT3UZ2",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_CacheWriteInputTokenCount_Global-Units"
+            },
+            "sku": "HQSHBKXVENATXGDB",
+            "terms": {
+              "HQSHBKXVENATXGDB.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "HQSHBKXVENATXGDB.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Cache Write Input Tokens Global",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "3.7500000000"
+                    },
+                    "rateCode": "HQSHBKXVENATXGDB.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "HQSHBKXVENATXGDB",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_OutputTokenCount-Units"
+            },
+            "sku": "VVEGW9W5UHCW9WKZ",
+            "terms": {
+              "VVEGW9W5UHCW9WKZ.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "VVEGW9W5UHCW9WKZ.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Response Tokens Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "16.5000000000"
+                    },
+                    "rateCode": "VVEGW9W5UHCW9WKZ.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "VVEGW9W5UHCW9WKZ",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_InputTokenCount-Units"
+            },
+            "sku": "938SCU84GAS4HWYP",
+            "terms": {
+              "938SCU84GAS4HWYP.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "938SCU84GAS4HWYP.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Input Tokens Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "3.3000000000"
+                    },
+                    "rateCode": "938SCU84GAS4HWYP.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "938SCU84GAS4HWYP",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_OutputTokenCount_Batch-Units"
+            },
+            "sku": "SNZYG8JQ5F2A9QH9",
+            "terms": {
+              "SNZYG8JQ5F2A9QH9.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "SNZYG8JQ5F2A9QH9.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million Batch Response Tokens Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "8.2500000000"
+                    },
+                    "rateCode": "SNZYG8JQ5F2A9QH9.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "SNZYG8JQ5F2A9QH9",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "location": "Europe (Frankfurt)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-central-1",
+              "servicename": "Claude Sonnet 4.6 (Amazon Bedrock Edition)",
+              "usagetype": "EUC1-MP:EUC1_CacheWrite1hInputTokenCount-Units"
+            },
+            "sku": "4C6KPW5WG73364QT",
+            "terms": {
+              "4C6KPW5WG73364QT.4799GE89SK": {
+                "effectiveDate": "2026-09-01T00:00:00Z",
+                "offerTermCode": "4799GE89SK",
+                "priceDimensions": {
+                  "4C6KPW5WG73364QT.4799GE89SK.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "AWS Marketplace software usage|eu-central-1|Million 1 hour Cache Write Input Tokens Regional CRIS",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "6.6000000000"
+                    },
+                    "rateCode": "4C6KPW5WG73364QT.4799GE89SK.6YS6EN2CT7",
+                    "unit": "1M tokens"
+                  }
+                },
+                "sku": "4C6KPW5WG73364QT",
+                "termAttributes": {}
+              }
+            }
+          }
+        ],
+        "publication_date": "2026-10-07T18:37:33Z",
+        "sha256": "d0de985ccc2d5cd28df798bf0a6daaa8991e0800bf9e467d822c81bb47f59390",
+        "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrockFoundationModels/current/eu-central-1/index.json",
+        "version": "20261007183733"
+      },
+      {
+        "kind": "titan",
+        "matches": [
+          {
+            "attributes": {
+              "feature": "BatchInference",
+              "inferenceType": "Input tokens",
+              "location": "EU (Stockholm)",
+              "locationType": "AWS Region",
+              "operation": "",
+              "regionCode": "eu-north-1",
+              "servicecode": "AmazonBedrock",
+              "servicename": "Amazon Bedrock",
+              "titanModel": "TitanEmbeddingsV2-Text-input",
+              "usagetype": "EUN1-TitanEmbeddingV2-Text-input-tokens-batch"
+            },
+            "sku": "AM9Z4T4QAMM4AGG7",
+            "terms": {
+              "AM9Z4T4QAMM4AGG7.JRTCKXETXF": {
+                "effectiveDate": "2026-10-01T00:00:00Z",
+                "offerTermCode": "JRTCKXETXF",
+                "priceDimensions": {
+                  "AM9Z4T4QAMM4AGG7.JRTCKXETXF.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "$0.0000105 per 1K tokens for TitanEmbeddingV2-Text-input-tokens-batch in EU (Stockholm)",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.0000105000"
+                    },
+                    "rateCode": "AM9Z4T4QAMM4AGG7.JRTCKXETXF.6YS6EN2CT7",
+                    "unit": "1K tokens"
+                  }
+                },
+                "sku": "AM9Z4T4QAMM4AGG7",
+                "termAttributes": {}
+              }
+            }
+          },
+          {
+            "attributes": {
+              "feature": "On-demand Inference",
+              "inferenceType": "Input tokens",
+              "location": "EU (Stockholm)",
+              "locationType": "AWS Region",
+              "operation": "InvokeModelInference",
+              "regionCode": "eu-north-1",
+              "servicecode": "AmazonBedrock",
+              "servicename": "Amazon Bedrock",
+              "titanModel": "TitanEmbeddingsV2-Text-input",
+              "usagetype": "EUN1-TitanEmbeddingV2-Text-input-tokens"
+            },
+            "sku": "HC2YM8KHUY5YBC8H",
+            "terms": {
+              "HC2YM8KHUY5YBC8H.JRTCKXETXF": {
+                "effectiveDate": "2026-10-01T00:00:00Z",
+                "offerTermCode": "JRTCKXETXF",
+                "priceDimensions": {
+                  "HC2YM8KHUY5YBC8H.JRTCKXETXF.6YS6EN2CT7": {
+                    "appliesTo": [],
+                    "beginRange": "0",
+                    "description": "$0.000021 per 1K tokens for TitanEmbeddingV2-Text-input-tokens in EU (Stockholm)",
+                    "endRange": "Inf",
+                    "pricePerUnit": {
+                      "USD": "0.0000210000"
+                    },
+                    "rateCode": "HC2YM8KHUY5YBC8H.JRTCKXETXF.6YS6EN2CT7",
+                    "unit": "1K tokens"
+                  }
+                },
+                "sku": "HC2YM8KHUY5YBC8H",
+                "termAttributes": {}
+              }
+            }
+          }
+        ],
+        "publication_date": "2026-10-06T14:47:26Z",
+        "sha256": "152a94ea11161dfcfeabbf0d553351d0bd748f5f6c36ab3788f306fc17e66f16",
+        "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/eu-north-1/index.json",
+        "version": "20261006144726"
+      }
+    ]
+  },
+  "proposal_aws_sdk_calls": 0,
+  "proposed_campaign_cap_usd": "5.00",
+  "rebound_from": "docs/evidence/12-prepaid-test-plan-v3.json",
+  "schema_version": "1.0",
+  "scripted_fault_cases_excluded_from_natural_llm_test": [
+    "false-meaning",
+    "false-number",
+    "false-summary",
+    "forged-citation",
+    "model-changed-scope",
+    "one-extra-evidence",
+    "one-schema-repair",
+    "provider-auth-failure",
+    "unauthorized-action"
+  ],
+  "source_transport_policy": "read-only-review-v1",
+  "status": "prepared_not_run",
+  "stop_before": [
+    "Converse",
+    "InvokeModel",
+    "new_query_embeddings",
+    "corpus_reembedding"
+  ]
+}

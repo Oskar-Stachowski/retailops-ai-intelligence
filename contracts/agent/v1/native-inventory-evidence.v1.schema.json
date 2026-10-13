@@ -1,0 +1,462 @@
+{
+  "$defs": {
+    "DataScope": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "product_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Product Ids",
+          "type": "array"
+        },
+        "selling_location_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Selling Location Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "product_ids",
+        "selling_location_ids",
+        "channel"
+      ],
+      "title": "DataScope",
+      "type": "object"
+    },
+    "InventoryRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_inventory_status",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool"
+      ],
+      "title": "InventoryRequest",
+      "type": "object"
+    },
+    "NativeInventoryPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "route": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NativeInventoryRoute"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "snapshot": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NativeInventorySnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "known",
+            "missing_route",
+            "missing_snapshot",
+            "not_available",
+            "stale"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "route",
+        "snapshot",
+        "status"
+      ],
+      "title": "NativeInventoryPoint",
+      "type": "object"
+    },
+    "NativeInventoryRoute": {
+      "additionalProperties": false,
+      "properties": {
+        "available_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Available At",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "curated_available_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Curated Available At",
+          "type": "string"
+        },
+        "effective_from": {
+          "format": "date",
+          "title": "Effective From",
+          "type": "string"
+        },
+        "effective_to": {
+          "format": "date",
+          "title": "Effective To",
+          "type": "string"
+        },
+        "route_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Route Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "source_record_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Record Sha256",
+          "type": "string"
+        },
+        "stock_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Stock Location Id",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "route_id",
+        "version",
+        "selling_location_id",
+        "stock_location_id",
+        "channel",
+        "effective_from",
+        "effective_to",
+        "available_at",
+        "curated_available_at",
+        "source_record_sha256"
+      ],
+      "title": "NativeInventoryRoute",
+      "type": "object"
+    },
+    "NativeInventorySnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of_time": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of Time",
+          "type": "string"
+        },
+        "available_qty": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Available Qty"
+        },
+        "business_date": {
+          "format": "date",
+          "title": "Business Date",
+          "type": "string"
+        },
+        "curated_available_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curated Available At"
+        },
+        "is_full_business_day": {
+          "title": "Is Full Business Day",
+          "type": "boolean"
+        },
+        "on_hand": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "On Hand"
+        },
+        "period_from_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Period From At",
+          "type": "string"
+        },
+        "period_to_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Period To At",
+          "type": "string"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "reserved_qty": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reserved Qty"
+        },
+        "snapshot_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Snapshot At",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_available_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Available At"
+        },
+        "source_record_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Record Sha256",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "known",
+            "not_available"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "stock_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Stock Location Id",
+          "type": "string"
+        },
+        "unit_of_measure": {
+          "const": "pcs",
+          "title": "Unit Of Measure",
+          "type": "string"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "product_id",
+        "stock_location_id",
+        "business_date",
+        "period_from_at",
+        "period_to_at",
+        "is_full_business_day",
+        "snapshot_at",
+        "as_of_time",
+        "unit_of_measure",
+        "on_hand",
+        "reserved_qty",
+        "available_qty",
+        "status",
+        "source_available_at",
+        "curated_available_at",
+        "source_record_sha256"
+      ],
+      "title": "NativeInventorySnapshot",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:agent:native-inventory-evidence:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "curated_dataset_id": {
+      "pattern": "^curated-sha256-[0-9a-f]{64}$",
+      "title": "Curated Dataset Id",
+      "type": "string"
+    },
+    "curated_descriptor_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Curated Descriptor Sha256",
+      "type": "string"
+    },
+    "environment": {
+      "enum": [
+        "local",
+        "test"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "evidence_version": {
+      "const": "verified-inventory-snapshots-v1",
+      "default": "verified-inventory-snapshots-v1",
+      "title": "Evidence Version",
+      "type": "string"
+    },
+    "max_snapshot_age_seconds": {
+      "const": 300,
+      "default": 300,
+      "title": "Max Snapshot Age Seconds",
+      "type": "integer"
+    },
+    "points": {
+      "items": {
+        "$ref": "#/$defs/NativeInventoryPoint"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Points",
+      "type": "array"
+    },
+    "qualification_runtime_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Qualification Runtime Sha256",
+      "type": "string"
+    },
+    "request": {
+      "$ref": "#/$defs/InventoryRequest"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_descriptor_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Descriptor Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "environment",
+    "request",
+    "source_dataset_id",
+    "source_descriptor_sha256",
+    "curated_dataset_id",
+    "curated_descriptor_sha256",
+    "qualification_runtime_sha256",
+    "points"
+  ],
+  "title": "NativeInventoryEvidence",
+  "type": "object"
+}

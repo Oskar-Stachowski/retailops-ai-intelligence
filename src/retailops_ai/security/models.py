@@ -5,7 +5,7 @@ from typing import Literal, Self
 from pydantic import Field, model_validator
 
 from retailops_ai.data_contracts.common import Contract, Sha256, Symbol, UtcTime, Versioned
-from retailops_ai.domain.access import Capability, Channel, Role
+from retailops_ai.domain.access import DATA_CAPABILITIES, Capability, Channel, Role
 from retailops_ai.knowledge.contracts import AccessClass, DocumentStatus, Repository
 
 
@@ -53,7 +53,7 @@ class StockoutResourceScope(Contract):
 class AccessGrant(Contract):
     principal_id: Symbol
     roles: list[Role] = Field(min_length=1, max_length=5)
-    capabilities: list[Capability] = Field(min_length=1, max_length=8)
+    capabilities: list[Capability] = Field(min_length=1, max_length=17)
     scope: ResourceScope | None
     knowledge_scope: KnowledgeResourceScope | None = None
     stockout_scope: StockoutResourceScope | None = Field(
@@ -66,7 +66,7 @@ class AccessGrant(Contract):
             self.capabilities
         ):
             raise ValueError("duplicate_role_or_capability")
-        if {"access:admin", "knowledge:index"} & set(
+        if {"access:admin", "knowledge:index", "assistant:audit"} & set(
             self.capabilities
         ) and "admin" not in self.roles:
             raise ValueError("administrative_capability_requires_admin_role")
@@ -78,11 +78,16 @@ class AccessGrant(Contract):
             raise ValueError("stockout_run_capability_requires_pipeline_role")
         if "anomaly:run" in self.capabilities and "pipeline" not in self.roles:
             raise ValueError("anomaly_run_capability_requires_pipeline_role")
-        if bool(
-            {"forecast:read", "forecast:run", "anomaly:read", "anomaly:run"}
-            & set(self.capabilities)
-        ) != (self.scope is not None):
-            raise ValueError("forecast_capability_requires_explicit_scope")
+        if bool(DATA_CAPABILITIES & set(self.capabilities)) != (self.scope is not None):
+            legacy = {"forecast:read", "forecast:run", "anomaly:read", "anomaly:run"}
+            code = (
+                "forecast_capability_requires_explicit_scope"
+                if legacy & set(self.capabilities)
+                else "data_capability_requires_explicit_scope"
+            )
+            raise ValueError(code)
+        if "assistant:query" in self.capabilities and "operator" not in self.roles:
+            raise ValueError("assistant_capability_requires_operator_role")
         if ("knowledge:read" in self.capabilities) != (self.knowledge_scope is not None):
             raise ValueError("knowledge_capability_requires_explicit_scope")
         if bool({"stockout:read", "stockout:run"} & set(self.capabilities)) != (

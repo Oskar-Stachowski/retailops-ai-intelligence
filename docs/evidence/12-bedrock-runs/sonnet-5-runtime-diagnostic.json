@@ -1,0 +1,77 @@
+{
+  "kind": "persisted_failure_trace",
+  "runs": [
+    {
+      "agent_config_version": "assistant-runtime-sha256-911d41ea458765aa9878f8b49d93ffbc331605b84e692ef92e651c2559471b7a",
+      "answer_id": null,
+      "completed_at": "2026-09-29T10:46:55.204472Z",
+      "error_code": "budget_exceeded",
+      "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+      "nodes": [
+        {
+          "duration_ms": 44.26079199765809,
+          "error_code": null,
+          "name": "validate_auth",
+          "status": "ok"
+        },
+        {
+          "duration_ms": 3444.5943330065347,
+          "error_code": null,
+          "name": "plan",
+          "status": "ok"
+        },
+        {
+          "duration_ms": 361.9112500018673,
+          "error_code": null,
+          "name": "tools",
+          "status": "ok"
+        },
+        {
+          "duration_ms": 31.17391699925065,
+          "error_code": null,
+          "name": "check_evidence",
+          "status": "ok"
+        },
+        {
+          "duration_ms": 13167.790792009328,
+          "error_code": null,
+          "name": "synthesize",
+          "status": "ok"
+        },
+        {
+          "duration_ms": 136.54950000636745,
+          "error_code": "budget_exceeded",
+          "name": "repair_answer",
+          "status": "error"
+        },
+        {
+          "duration_ms": 0.0,
+          "error_code": null,
+          "name": "persist_trace",
+          "status": "ok"
+        }
+      ],
+      "outcome": null,
+      "requested_at": "2026-09-29T10:46:37.781662Z",
+      "status": "failed",
+      "tools": [
+        {
+          "freshness_status": "not_requested",
+          "name": "search_knowledge",
+          "source_refs": [
+            "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46"
+          ],
+          "status": "ok"
+        }
+      ],
+      "trace_id": "07d39211-619c-4b15-b892-1d9c5235cb30",
+      "usage": {
+        "currency": "USD",
+        "duration_ms": 17408.34479199839,
+        "estimated_cost": "0.0656832",
+        "input_tokens": 14294,
+        "output_tokens": 1122
+      }
+    }
+  ]
+}

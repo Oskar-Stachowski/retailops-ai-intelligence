@@ -1,0 +1,29 @@
+{
+  "as_of": "2026-08-22T23:59:59Z",
+  "contract_type": "agent_tool_result",
+  "error": null,
+  "freshness_status": "current",
+  "items": [
+    {
+      "calibrated": true,
+      "channel": "store",
+      "inventory_as_of": "2026-08-22T23:59:59Z",
+      "inventory_source_ref": "fixture-inventory-v1",
+      "model_id": "model-sha256-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "model_release_ref": "fixture-calibrated-risk-release-v1",
+      "probability": 0.6,
+      "product_id": "p-101",
+      "selling_location_id": "s-03",
+      "threshold": 0.7,
+      "window": {
+        "end": "2026-08-29",
+        "start": "2026-08-23"
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "source_kind": "fixture",
+  "source_ref": "fixture-get_stockout_risk",
+  "status": "ok",
+  "tool": "get_stockout_risk"
+}

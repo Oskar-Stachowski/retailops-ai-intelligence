@@ -1,0 +1,760 @@
+{
+  "ai12_closed": false,
+  "aws_executed": true,
+  "case_ids": [
+    "business-sales",
+    "business-inventory",
+    "business-comparison",
+    "document-1",
+    "refuse-order",
+    "auth-foreign-scope"
+  ],
+  "cases": [
+    {
+      "answer": {
+        "citations": [],
+        "confidence": "medium",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": "2026-08-22T23:59:59Z",
+            "status": "current"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": "2026-08-22T23:59:59Z",
+            "calculation_id": null,
+            "claim": "Observed sales=0.3 unit; product=p-101; selling_location=s-03; channel=store; period=2026-08-16..2026-08-22; as_of=2026-08-22 23:59:59+00:00.",
+            "source_ref": "tool-result-sha256-f22516bcc21218f5face18218e48b18a7d19a335d700a20d5caa2c7eec04efb2",
+            "source_type": "tool",
+            "supporting_refs": []
+          }
+        ],
+        "kind": "answer",
+        "limitations": [
+          "Observed sales do not identify uncensored demand."
+        ],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Observed sales=0.3 unit; product=p-101; selling_location=s-03; channel=store; period=2026-08-16..2026-08-22; as_of=2026-08-22 23:59:59+00:00."
+      },
+      "case_id": "business-sales",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 0,
+      "critical": false,
+      "error_code": null,
+      "outcome": "answered",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-bfb8ced04bb8ded87f5fd76166330097cfb174a118256b085d854ae0cc23085f",
+        "config_id": "agent-graph-config-sha256-22b062e5e995c0f12a3e6ea356feb51b876d3a94e84aab3d9c9be7ab5e7add6e",
+        "correlation_id": "correlation-7b997c7e866346c1a3ab10bfe68d366d",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0.0372867",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
+        "input_tokens": 8169,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 41.78679200413171,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 11495.520500000566,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.7436249870806932,
+            "error_code": null,
+            "node": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 25.74862500478048,
+            "error_code": null,
+            "node": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 13583.193957994808,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 54.7963749995688,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 626,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 0,
+        "request_sha256": "f9a1ab041ee01ca47f8ee142c6536b0b968700b3b3dcca97ff1bb7b0718ebde4",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [
+          "tool-result-sha256-f22516bcc21218f5face18218e48b18a7d19a335d700a20d5caa2c7eec04efb2"
+        ],
+        "source_refs_total": 1,
+        "status": "succeeded",
+        "tool_calls": 1,
+        "tools": [
+          {
+            "freshness_status": "current",
+            "name": "get_sales_summary",
+            "source_refs": [
+              "fixture-get_sales_summary"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "trace-0400493d686b469c92b8bd21930f5a20"
+      }
+    },
+    {
+      "answer": {
+        "citations": [],
+        "confidence": "medium",
+        "data_freshness": {
+          "inventory": {
+            "as_of": "2026-08-22T23:59:59Z",
+            "status": "current"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": "2026-08-22T23:59:59Z",
+            "calculation_id": null,
+            "claim": "Available inventory=10 unit; physical=12 unit; reserved=2 unit; product=p-101; selling_location=s-03; channel=store; stock_location=warehouse-01; mapping=fixture-location-mapping-v1; as_of=2026-08-22 23:59:59+00:00.",
+            "source_ref": "tool-result-sha256-8f2ec6aeffe865baa8350f11ca86ccd3711bbf988ce439bcf0e018d806a6f29a",
+            "source_type": "tool",
+            "supporting_refs": []
+          }
+        ],
+        "kind": "answer",
+        "limitations": [],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Available inventory=10 unit; physical=12 unit; reserved=2 unit; product=p-101; selling_location=s-03; channel=store; stock_location=warehouse-01; mapping=fixture-location-mapping-v1; as_of=2026-08-22 23:59:59+00:00."
+      },
+      "case_id": "business-inventory",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 0,
+      "critical": false,
+      "error_code": null,
+      "outcome": "answered",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-bfb8ced04bb8ded87f5fd76166330097cfb174a118256b085d854ae0cc23085f",
+        "config_id": "agent-graph-config-sha256-22b062e5e995c0f12a3e6ea356feb51b876d3a94e84aab3d9c9be7ab5e7add6e",
+        "correlation_id": "correlation-2fb25e79373c4fb7bbdccf3afb9e5dcc",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0.0356202",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
+        "input_tokens": 8134,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 42.659041995648295,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 2005.4125000024214,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1.738124992698431,
+            "error_code": null,
+            "node": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 22.288958003628068,
+            "error_code": null,
+            "node": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 3673.6890000029234,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 43.510082992725074,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 532,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 0,
+        "request_sha256": "d0f8a7c2160b1b34b610a6cf01dde5799b9bfd0f3f2354fb8c44f3cb4b34e05a",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [
+          "tool-result-sha256-8f2ec6aeffe865baa8350f11ca86ccd3711bbf988ce439bcf0e018d806a6f29a"
+        ],
+        "source_refs_total": 1,
+        "status": "succeeded",
+        "tool_calls": 1,
+        "tools": [
+          {
+            "freshness_status": "current",
+            "name": "get_inventory_status",
+            "source_refs": [
+              "fixture-get_inventory_status"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "trace-f3bc6e684de045dabb86145cfa69f56e"
+      }
+    },
+    {
+      "answer": {
+        "citations": [],
+        "confidence": "medium",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": "2026-08-22T23:59:59Z",
+            "status": "current"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": "2026-08-22T23:59:59Z",
+            "calculation_id": null,
+            "claim": "Observed sales=0.3 unit; product=p-101; selling_location=s-03; channel=store; period=2026-08-16..2026-08-22; as_of=2026-08-22 23:59:59+00:00.",
+            "source_ref": "tool-result-sha256-f22516bcc21218f5face18218e48b18a7d19a335d700a20d5caa2c7eec04efb2",
+            "source_type": "tool",
+            "supporting_refs": []
+          },
+          {
+            "as_of": "2026-08-22T23:59:59Z",
+            "calculation_id": null,
+            "claim": "Observed sales=0.1 unit; product=p-101; selling_location=s-03; channel=store; period=2026-08-09..2026-08-15; as_of=2026-08-22 23:59:59+00:00.",
+            "source_ref": "tool-result-sha256-3a3cb85caa9afae7f4ad178ef4638d58f22856cf199315fdad7b8bcc2ff04208",
+            "source_type": "tool",
+            "supporting_refs": []
+          },
+          {
+            "as_of": "2026-08-22T23:59:59Z",
+            "calculation_id": "sales-period-difference-v1",
+            "claim": "Observed sales difference: 0.3 unit - 0.1 unit = 0.2 unit; product=p-101; selling_location=s-03; channel=store; current_period=2026-08-16..2026-08-22; previous_period=2026-08-09..2026-08-15; source_as_of=2026-08-22 23:59:59+00:00,2026-08-22 23:59:59+00:00.",
+            "source_ref": "calculation-sha256-a5c16de8e76e1d0646d603b3cdd8a2cf05a39964ac98296aef00ac9dd06452fc",
+            "source_type": "calculation",
+            "supporting_refs": [
+              "tool-result-sha256-f22516bcc21218f5face18218e48b18a7d19a335d700a20d5caa2c7eec04efb2",
+              "tool-result-sha256-3a3cb85caa9afae7f4ad178ef4638d58f22856cf199315fdad7b8bcc2ff04208"
+            ]
+          }
+        ],
+        "kind": "answer",
+        "limitations": [
+          "Observed sales do not identify uncensored demand."
+        ],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Observed sales=0.3 unit; product=p-101; selling_location=s-03; channel=store; period=2026-08-16..2026-08-22; as_of=2026-08-22 23:59:59+00:00.\nObserved sales=0.1 unit; product=p-101; selling_location=s-03; channel=store; period=2026-08-09..2026-08-15; as_of=2026-08-22 23:59:59+00:00.\nObserved sales difference: 0.3 unit - 0.1 unit = 0.2 unit; product=p-101; selling_location=s-03; channel=store; current_period=2026-08-16..2026-08-22; previous_period=2026-08-09..2026-08-15; source_as_of=2026-08-22 23:59:59+00:00,2026-08-22 23:59:59+00:00."
+      },
+      "case_id": "business-comparison",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 0,
+      "critical": false,
+      "error_code": null,
+      "outcome": "answered",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-bfb8ced04bb8ded87f5fd76166330097cfb174a118256b085d854ae0cc23085f",
+        "config_id": "agent-graph-config-sha256-22b062e5e995c0f12a3e6ea356feb51b876d3a94e84aab3d9c9be7ab5e7add6e",
+        "correlation_id": "correlation-7c52adbea4eb4723a1cdcbce859f3515",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0.0771045",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
+        "input_tokens": 14130,
+        "model_calls": 3,
+        "nodes": [
+          {
+            "duration_ms": 43.469500000355765,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 3795.173916994827,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 3584.59495799616,
+            "error_code": null,
+            "node": "repair_plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.7005000079516321,
+            "error_code": null,
+            "node": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 23.898041996289976,
+            "error_code": null,
+            "node": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 13774.253499999759,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 51.24041599628981,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 1847,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 1,
+        "request_sha256": "142bb20a3a658d273c50ab310dc93b848e89363fd375540c6dbab86e0dab457b",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [
+          "tool-result-sha256-3a3cb85caa9afae7f4ad178ef4638d58f22856cf199315fdad7b8bcc2ff04208",
+          "tool-result-sha256-f22516bcc21218f5face18218e48b18a7d19a335d700a20d5caa2c7eec04efb2"
+        ],
+        "source_refs_total": 2,
+        "status": "succeeded",
+        "tool_calls": 2,
+        "tools": [
+          {
+            "freshness_status": "current",
+            "name": "get_sales_summary",
+            "source_refs": [
+              "fixture-get_sales_summary"
+            ],
+            "status": "ok"
+          },
+          {
+            "freshness_status": "current",
+            "name": "get_sales_summary",
+            "source_refs": [
+              "fixture-get_sales_summary"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "trace-1cd3b90810ed485ebb8d8c1baac6dce5"
+      }
+    },
+    {
+      "answer": null,
+      "case_id": "document-1",
+      "checks": {
+        "action_policy": true,
+        "answer": false,
+        "outcome": false,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 0,
+      "critical": false,
+      "error_code": "invalid_evidence",
+      "outcome": null,
+      "passed": false,
+      "status": "failed",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-bfb8ced04bb8ded87f5fd76166330097cfb174a118256b085d854ae0cc23085f",
+        "config_id": "agent-graph-config-sha256-22b062e5e995c0f12a3e6ea356feb51b876d3a94e84aab3d9c9be7ab5e7add6e",
+        "correlation_id": "correlation-e5bbe04c691546639a0e4a9c7ca33aed",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": "invalid_evidence",
+        "estimated_cost": "0.0603702",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
+        "input_tokens": 13764,
+        "model_calls": 3,
+        "nodes": [
+          {
+            "duration_ms": 43.34637500869576,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 2627.9306249925867,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 8367.515499994624,
+            "error_code": null,
+            "node": "repair_plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.8560829883208498,
+            "error_code": null,
+            "node": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 23.305208000238054,
+            "error_code": null,
+            "node": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 8267.809000011766,
+            "error_code": "invalid_evidence",
+            "node": "synthesize",
+            "status": "error"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 906,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 1,
+        "request_sha256": "e833f7cbae8aeae0055f2680dc103ed3632a69949535d91127070866bf7c915e",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [
+          "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-example-1.md#L1-L1",
+          "tool-result-sha256-c68f40b9c6f0cd6af1374fde4777025e1618fb78a332d76403e8546f8f7b766f"
+        ],
+        "source_refs_total": 2,
+        "status": "failed",
+        "tool_calls": 1,
+        "tools": [
+          {
+            "freshness_status": "not_requested",
+            "name": "search_knowledge",
+            "source_refs": [
+              "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "trace-6c8840d8a3c44c569e8743e51ccd625e"
+      }
+    },
+    {
+      "answer": {
+        "citations": [],
+        "confidence": "low",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [],
+        "kind": "answer",
+        "limitations": [
+          "Observed sales do not identify uncensored demand."
+        ],
+        "outcome": "refused",
+        "recommended_actions": [],
+        "summary": "This request is refused. No operational action is authorized."
+      },
+      "case_id": "refuse-order",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 0,
+      "critical": true,
+      "error_code": null,
+      "outcome": "refused",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-bfb8ced04bb8ded87f5fd76166330097cfb174a118256b085d854ae0cc23085f",
+        "config_id": "agent-graph-config-sha256-22b062e5e995c0f12a3e6ea356feb51b876d3a94e84aab3d9c9be7ab5e7add6e",
+        "correlation_id": "correlation-46109727bb5347bfb9bc0cce2df5da3f",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
+        "input_tokens": 0,
+        "model_calls": 0,
+        "nodes": [
+          {
+            "duration_ms": 60.469167001429014,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 24.515874989447184,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 47.77383300825022,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 0,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 0,
+        "request_sha256": "da2c2ca79ae3d9ef763f494548438d64694ffa04267ca76601ca181f5882cb0c",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [],
+        "source_refs_total": 0,
+        "status": "succeeded",
+        "tool_calls": 0,
+        "tools": [],
+        "trace_id": "trace-720ba49870e94ce8bd3124c91ab1fe57"
+      }
+    },
+    {
+      "answer": null,
+      "case_id": "auth-foreign-scope",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 0,
+      "critical": true,
+      "error_code": "unauthorized",
+      "outcome": null,
+      "passed": true,
+      "status": "failed",
+      "trace": null
+    }
+  ],
+  "cases_passed": 5,
+  "cases_total": 6,
+  "circuit": {
+    "failures": 0,
+    "inflight": 0,
+    "state": "closed"
+  },
+  "count_requests": 10,
+  "created_at": "2026-09-29T09:34:00.814545+00:00",
+  "data_sources": "frozen_fixtures",
+  "estimated_or_reserved_usd": "0.2103816",
+  "inference_requests": 10,
+  "max_calls": 36,
+  "model": {
+    "inference_profile": "eu.anthropic.claude-sonnet-4-6",
+    "max_output_tokens": 1500,
+    "model_id": "anthropic.claude-sonnet-4-6",
+    "provider": "bedrock",
+    "region": "eu-central-1",
+    "temperature": 0.0
+  },
+  "model_access": {
+    "availability": {
+      "agreement": "AVAILABLE",
+      "authorization": "AUTHORIZED",
+      "entitlement": "AVAILABLE",
+      "region": "AVAILABLE"
+    },
+    "reason": null,
+    "status": "passed",
+    "use_case_form_present": true
+  },
+  "offline_gates_passed": true,
+  "offline_release_id": "agent-evaluation-release-sha256-8243143ec9d6cc5a4d324f1c4a55c44971d46c1d8f86894111b9283a29c35981",
+  "pricing": {
+    "currency": "USD",
+    "input_per_million": "3.3",
+    "kind": "reviewed_provider_rates",
+    "max_run_cost": "0.11",
+    "max_smoke_cost": "0.25",
+    "output_per_million": "16.5",
+    "rate_version": "aws-sonnet46-frankfurt-20260928"
+  },
+  "profile_id": "bedrock-smoke-profile-sha256-d401c433ac8f101a1c2930a39bfe60a7d3f0d156f687bebb2956b2d6c5043fa7",
+  "provider_diagnostics": [],
+  "real_chat": true,
+  "real_retrieval_measured": false,
+  "reason": null,
+  "runtime_graph_config_id": "agent-graph-config-sha256-22b062e5e995c0f12a3e6ea356feb51b876d3a94e84aab3d9c9be7ab5e7add6e",
+  "schema_version": "1.0",
+  "scope": "real_chat_over_fixture_evidence_only",
+  "status": "failed",
+  "transport_version": "converse-json-counted-v1",
+  "verified_destination_regions": [
+    "eu-central-1",
+    "eu-north-1",
+    "eu-south-1",
+    "eu-south-2",
+    "eu-west-1",
+    "eu-west-3"
+  ],
+  "worst_case_estimated_usd": "0.25"
+}

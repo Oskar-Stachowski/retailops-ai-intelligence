@@ -1,0 +1,218 @@
+{
+  "all_quotes_match_pinned_real_chunks": true,
+  "application_code_sha256": "cd8be5dcbd2faec52f20c320f706ab015bf3c04ce92126a4c122bfb7fb210bc1",
+  "approved_for_paid_execution": false,
+  "aws_calls": 0,
+  "aws_sdk_calls": 0,
+  "change_reason": "Own ML recommendation reads plus proposed equivalent startup supports in the unchanged qualified AI11 corpus",
+  "chat_cap_proposed_usd": "3.00",
+  "configuration_sha256": "6f79ae328b903329538d2a77808b240f75e35181ad8877171d804aa1346d14fd",
+  "current_source_fixture": true,
+  "embedding_aggregate_utf8_bytes": 208000,
+  "embedding_input_per_million_usd": "0.021",
+  "embedding_reserve_usd": "0.005",
+  "embedding_worst_case_usd": "0.004368",
+  "human_approval": false,
+  "independent_support_review": false,
+  "labels_state": "proposed",
+  "new_equivalent_supports": [
+    {
+      "chunk_id": "chunk-sha256-ae9675849a75549b6720a3af198e123b753a6996aaf0b8518b2b4517ab8e649e",
+      "chunk_sha256": "7863e50235ec449b0884821276bf223f74021524d858af617a3b16f618c32146",
+      "question": "Jak rozpocząć pracę lokalną nad pakietem AI?",
+      "quote": "```bash\nmake bootstrap\nmkdir -p .local\nuv run --locked retailops-ai access-init \\\n  --grants-file contracts/access/v1/grant-template.v1.example.json \\\n  --output-dir .local/access --ttl-hours 8\nexport API_AUTH_FILE=.local/access/api-access-policy.json\nuv run --locked retailops-ai config-check --env-file .env.example\nmake serve ENV_FILE=.env.example\n```",
+      "requirement_id": "local-dependencies",
+      "source": {
+        "access_class": "public_project",
+        "byte_sha256": "3fb9f599f989248f9497243998eae4fef5e8934f9cc2638c1a840c83717b6a0f",
+        "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+        "content_id": "markdown-sha256-3fb9f599f989248f9497243998eae4fef5e8934f9cc2638c1a840c83717b6a0f",
+        "document_id": "document-sha256-ef25ce0d2d518952715515e5570c2da2a3a9fbc953b30d3d26830f431c2861a8",
+        "document_status": "implemented",
+        "document_type": "guide",
+        "fact_scope": "Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body.",
+        "implementation_refs": [
+          {
+            "byte_sha256": "d359f5124e29d53d60dd0c1cff42b180d773402242ff1d2448326e3cd7738c48",
+            "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+            "path": "src/retailops_ai/security/local.py",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence"
+          }
+        ],
+        "path": "docs/access-control.md",
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/access-control.md",
+        "title": "Lokalna tożsamość i uprawnienia API",
+        "verification": null
+      }
+    },
+    {
+      "chunk_id": "chunk-sha256-bb9fde377a97ea22c381d4c669570c6bd9c93d74037f498eccd6298e46bf7179",
+      "chunk_sha256": "e5785b55ca94474f3920476bb48e4de709fa7d85427e8d6f1de6069ac24cf960",
+      "question": "Jak rozpocząć pracę lokalną nad pakietem AI?",
+      "quote": "Przy uv dostępnym w PATH można użyć `make bootstrap` i `make check` bez override.\nWszystkie polecenia projektu korzystają z tego samego pakietu, także\n`uv run --locked python -m retailops_ai`. `config-check` niczego nie tworzy,\nnie sprawdza DB, nie wykonuje zapytań sieciowych i nie potwierdza readiness usług.",
+      "requirement_id": "local-dependencies",
+      "source": {
+        "access_class": "public_project",
+        "byte_sha256": "c4ddd9a7e563d8d3d6a8f4c10d9a638ea47e622f24a66dc73717064fe82f4f73",
+        "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+        "content_id": "markdown-sha256-c4ddd9a7e563d8d3d6a8f4c10d9a638ea47e622f24a66dc73717064fe82f4f73",
+        "document_id": "document-sha256-69b2938182616251fb1d04cf07d477941f9808a2bcbac41869cd0e72867f5f73",
+        "document_status": "specified",
+        "document_type": "guide",
+        "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji.",
+        "implementation_refs": [],
+        "path": "docs/development.md",
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/development.md",
+        "title": "Praca lokalna",
+        "verification": null
+      }
+    },
+    {
+      "chunk_id": "chunk-sha256-ae9675849a75549b6720a3af198e123b753a6996aaf0b8518b2b4517ab8e649e",
+      "chunk_sha256": "7863e50235ec449b0884821276bf223f74021524d858af617a3b16f618c32146",
+      "question": "Jak rozpocząć pracę lokalną nad pakietem AI?",
+      "quote": "```bash\nmake bootstrap\nmkdir -p .local\nuv run --locked retailops-ai access-init \\\n  --grants-file contracts/access/v1/grant-template.v1.example.json \\\n  --output-dir .local/access --ttl-hours 8\nexport API_AUTH_FILE=.local/access/api-access-policy.json\nuv run --locked retailops-ai config-check --env-file .env.example\nmake serve ENV_FILE=.env.example\n```",
+      "requirement_id": "local-server",
+      "source": {
+        "access_class": "public_project",
+        "byte_sha256": "3fb9f599f989248f9497243998eae4fef5e8934f9cc2638c1a840c83717b6a0f",
+        "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+        "content_id": "markdown-sha256-3fb9f599f989248f9497243998eae4fef5e8934f9cc2638c1a840c83717b6a0f",
+        "document_id": "document-sha256-ef25ce0d2d518952715515e5570c2da2a3a9fbc953b30d3d26830f431c2861a8",
+        "document_status": "implemented",
+        "document_type": "guide",
+        "fact_scope": "Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body.",
+        "implementation_refs": [
+          {
+            "byte_sha256": "d359f5124e29d53d60dd0c1cff42b180d773402242ff1d2448326e3cd7738c48",
+            "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+            "path": "src/retailops_ai/security/local.py",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence"
+          }
+        ],
+        "path": "docs/access-control.md",
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/access-control.md",
+        "title": "Lokalna tożsamość i uprawnienia API",
+        "verification": null
+      }
+    }
+  ],
+  "new_sql_retrieval_executed_for_this_rebinding": false,
+  "observations_receipt": "docs/evidence/12-prepaid-native-preflight-v3.json",
+  "proposed_runtime_rejected": true,
+  "real_titan_cache_retrieval": [
+    {
+      "covered_requirements": [
+        "local-dependencies",
+        "local-server"
+      ],
+      "question": "Jak rozpocząć pracę lokalną nad pakietem AI?",
+      "required_requirements": [
+        "local-dependencies",
+        "local-server"
+      ],
+      "retrieved": [
+        "chunk-sha256-2b747a3c330d3aaf53cf2ef9a52899d2237dee37bf2beb89aacdbf7062b6260d",
+        "chunk-sha256-e44086704757cd69530cce5140301f1ecf437b81167123abffb612140ae093fa",
+        "chunk-sha256-bb9fde377a97ea22c381d4c669570c6bd9c93d74037f498eccd6298e46bf7179",
+        "chunk-sha256-ae9675849a75549b6720a3af198e123b753a6996aaf0b8518b2b4517ab8e649e",
+        "chunk-sha256-d4e98373a17a25781a6366462c5e7f05621b0c1b4e58d9345ffb6c61837fa3b9"
+      ],
+      "status": "ok"
+    },
+    {
+      "covered_requirements": [],
+      "question": "Jakie kontrole należy uruchomić przed commitem AI?",
+      "required_requirements": [
+        "precommit-checks"
+      ],
+      "retrieved": [
+        "chunk-sha256-12bdaa8273dcb07df6896e335bd3cd75194f7a86e7af1383d4a6354f1126afbc",
+        "chunk-sha256-45c0987a3591ba6a014667e4f15da30ab4e2df8393050528508a4efc98746b72",
+        "chunk-sha256-f7ec78278e30de49a5a07b493893e037c95e1ffd07a40226cda16ae7c14d492a",
+        "chunk-sha256-e44086704757cd69530cce5140301f1ecf437b81167123abffb612140ae093fa",
+        "chunk-sha256-e0e95caef502aed5db27d461593905fbba898a702c7c1a1d407f4445c8dee73a"
+      ],
+      "status": "ok"
+    },
+    {
+      "covered_requirements": [
+        "identity-and-scope"
+      ],
+      "question": "Które endpointy zwracają zweryfikowaną tożsamość i scope?",
+      "required_requirements": [
+        "identity-and-scope"
+      ],
+      "retrieved": [
+        "chunk-sha256-27880e58319696bcbff8748e29b1f365e98c71f8d755448e91dd78026c519825",
+        "chunk-sha256-88e8bbe4569a6de7fe7d2bcc64de13e53d514843c2ed19cb5ba542bb7f32d414",
+        "chunk-sha256-6377d9051da87743025f8edd164da6504d5c05087c2997ab1c4ac3bc2423a296",
+        "chunk-sha256-d83f4bafb9187ed8505c353350e509a3de4d832c521db7bd8368344bc89e791d",
+        "chunk-sha256-1efe85d9aab8217e7e530f0fec899ab245b2c7eb246db2deb3907e75a9941c1b"
+      ],
+      "status": "ok"
+    },
+    {
+      "covered_requirements": [
+        "restart-on-policy-change"
+      ],
+      "question": "Kiedy zmiana grantów lub revoke wymaga restartu procesu?",
+      "required_requirements": [
+        "restart-on-policy-change"
+      ],
+      "retrieved": [
+        "chunk-sha256-34a3a28ea784e6e2740cea2c7be5b73c604d29840d0c74c0691c77e24d58d2c4",
+        "chunk-sha256-15545f713595f13fff0dc7c2eb984244318ca19afbd25c5356f34818acab41d0",
+        "chunk-sha256-82d89185cb18717497226cd5703eeddecbe771e1534995ce6e91f641209cd20a",
+        "chunk-sha256-7879e2529104638a02408588c6d29f3e9efb630e84bebef3250e0ea5040d9842",
+        "chunk-sha256-d4e98373a17a25781a6366462c5e7f05621b0c1b4e58d9345ffb6c61837fa3b9"
+      ],
+      "status": "ok"
+    },
+    {
+      "covered_requirements": [],
+      "question": "Jak zabezpieczono odczyt metryk diagnostycznych?",
+      "required_requirements": [
+        "verified-metrics-controls"
+      ],
+      "retrieved": [
+        "chunk-sha256-f78b3dbb686a783cb1725de3363aa5a43a80da3e82d70826a77b72305baddcf4",
+        "chunk-sha256-6cdfa6b64db6da6f6d49b4be4383448ed23f77e378f5f067a3459a448357461d",
+        "chunk-sha256-340c37da1bb8564c6b91f70fd664062d5b7c173a345b8ee6b1bffbce3fdb8661",
+        "chunk-sha256-25e09b87d017489c351ea738f515f68121ba23eea2cb0f922b90a349e3b0c89e",
+        "chunk-sha256-400425c1381d3603c645c876c2c67e676f8056c81792a748b35445e88b35d2ae"
+      ],
+      "status": "ok"
+    },
+    {
+      "covered_requirements": [
+        "health-meaning",
+        "ready-meaning"
+      ],
+      "question": "Co sprawdzają health i ready serwisu AI?",
+      "required_requirements": [
+        "health-meaning",
+        "ready-meaning"
+      ],
+      "retrieved": [
+        "chunk-sha256-1efe85d9aab8217e7e530f0fec899ab245b2c7eb246db2deb3907e75a9941c1b",
+        "chunk-sha256-3bf427c95c40837f948ffa4d7953a6adfcd6b0f980b6ad935eb94717ea247725",
+        "chunk-sha256-08eaf92d0ae4ea7a0a5db3751ed1491d8493bf18d62b554d0cb646a38db0198b",
+        "chunk-sha256-f451ce4190044b70a1ca1c1022c6a7f03594ecf55952e0f70648a4f5828dec2c",
+        "chunk-sha256-b90f7e70a7235db43755db32b39b4e98b2daa7a44ec00f5a404e6eed97e279bd"
+      ],
+      "status": "ok"
+    }
+  ],
+  "rebind_reason": "Published main ab77bb1 changes only campaign_generation_worker; graph, retrieval, tools, recommendation readers and observed rankings are unchanged",
+  "rebound_from": "docs/evidence/12-prepaid-native-preflight-v3.json",
+  "requirements_and_statuses_unchanged": true,
+  "retrieval_ranking_unchanged": true,
+  "runtime_schema_passed": true,
+  "source_channel_validity_guard": "historical_fixture_does_not_authorize_current_business_windows",
+  "source_fixture": "reverified_full_Raw_DQ_physical_source_not_live_production",
+  "status": "prepared_blocked_by_independent_route_review"
+}

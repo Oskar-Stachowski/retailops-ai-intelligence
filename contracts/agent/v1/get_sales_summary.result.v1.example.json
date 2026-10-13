@@ -1,0 +1,24 @@
+{
+  "as_of": "2026-08-22T23:59:59Z",
+  "contract_type": "agent_tool_result",
+  "error": null,
+  "freshness_status": "current",
+  "items": [
+    {
+      "channel": "store",
+      "observed_sales_units": 8.0,
+      "product_id": "p-101",
+      "selling_location_id": "s-03",
+      "unit_of_measure": "unit",
+      "window": {
+        "end": "2026-08-22",
+        "start": "2026-08-16"
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "source_kind": "fixture",
+  "source_ref": "fixture-get_sales_summary",
+  "status": "ok",
+  "tool": "get_sales_summary"
+}

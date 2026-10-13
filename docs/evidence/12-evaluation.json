@@ -1,0 +1,363 @@
+{
+  "ai10_required_for_this_scope": false,
+  "aws_chat_executed": false,
+  "branch": "ai/12-tools",
+  "business_rule_approval": false,
+  "business_source_acceptance": false,
+  "candidate_backend": "unpersisted_local_candidates",
+  "checksums": [
+    {
+      "path": "Makefile",
+      "sha256": "eb09c48d4b2dde9118e23ff7ccfb16ae4075ced1da8a99e509d60594d477d3dc"
+    },
+    {
+      "path": "README.md",
+      "sha256": "77194adb1f7ca20ab4f7eff06c0bc436320db772c9afc0a96e6fdb6c4d8d066b"
+    },
+    {
+      "path": "agent/evaluation-release.fake.v1.json",
+      "sha256": "ec93f60b39a97b1c1df53744d5784883f2f0c18da95d6fc934d6ba0da00987a0"
+    },
+    {
+      "path": "agent/golden.canonical.v1.json",
+      "sha256": "5a011ee7f5a8180ff32b40e163be16d8748b07651f5a88f688c329d6676d5ef1"
+    },
+    {
+      "path": "agent/graph.evaluate.fake.v1.json",
+      "sha256": "2714b6dd32da472a675611c6d120f9d5e6978c0e7066dc1a1fcb1d77ffe5649c"
+    },
+    {
+      "path": "agent/graph.fake.v1.json",
+      "sha256": "6d82447bbb891810291d09fbb16198f8ed02e3dbc527a098d1b569976f6a9584"
+    },
+    {
+      "path": "contracts/agent/v1/agent-evaluation-release.v1.schema.json",
+      "sha256": "9bc1f89f7a09d6bd84051a5bd696295650affd638945cfa67d02e74c2f23c7ec"
+    },
+    {
+      "path": "contracts/agent/v1/agent-evaluation-report.v1.schema.json",
+      "sha256": "4f704643cc09caa10cebdf4ebb1717df228538a16e9625682d27ea968d4763d9"
+    },
+    {
+      "path": "contracts/agent/v1/agent-golden-set.v1.schema.json",
+      "sha256": "bcbed712f5dc8d5108453d24d422d67ffadb32e7176dca589aa08c618f0c79ca"
+    },
+    {
+      "path": "contracts/agent/v1/chat-config.v1.schema.json",
+      "sha256": "dceb54d36b52ced4a93805822f6d08a885b021f4038dd3485f0ead578baea405"
+    },
+    {
+      "path": "contracts/agent/v1/graph-bindings.v1.json",
+      "sha256": "bff8acaa8911461c2b0ab09a5f8715300a4c95bdc148d281d1d5077bce43fec5"
+    },
+    {
+      "path": "contracts/agent/v1/graph-config.v1.example.json",
+      "sha256": "6d82447bbb891810291d09fbb16198f8ed02e3dbc527a098d1b569976f6a9584"
+    },
+    {
+      "path": "contracts/agent/v1/graph-config.v1.schema.json",
+      "sha256": "bf45a7e2aa1e67d2fee47e9c2ad9e66aeecc592e1578d83e99fd5dec9ab1aed9"
+    },
+    {
+      "path": "contracts/agent/v1/graph-policy.v1.example.json",
+      "sha256": "30a63bf823530e6a323b06ef28c0730c7b829f590bbc73eeb61264432032c1b6"
+    },
+    {
+      "path": "contracts/agent/v1/graph-policy.v1.schema.json",
+      "sha256": "c732194daa09c1b83a8b2695e3bda5903d035b792feb1a60529c864b0ff5c396"
+    },
+    {
+      "path": "contracts/agent/v1/graph-request.v1.schema.json",
+      "sha256": "429786e96d4a0f5a1cf9a515eb19956d679ae2fe0c44aa92e05a7e0d9253f636"
+    },
+    {
+      "path": "contracts/agent/v1/graph-result.v1.example.json",
+      "sha256": "8819acebdf0be5a1d81a938e311046ede2abdd82bb8710496086a88f668aaddc"
+    },
+    {
+      "path": "contracts/agent/v1/graph-result.v1.schema.json",
+      "sha256": "cdd2d6fdde4a9487680027d025b2c4b6b2713da49d4c626db7f29d0787bf58fb"
+    },
+    {
+      "path": "contracts/agent/v1/safe-trace.v1.example.json",
+      "sha256": "253041644f051c249223c8eff9f664384ff2cf4429214b11588ccc5dfa48f6a9"
+    },
+    {
+      "path": "contracts/agent/v1/suggestion-candidate.v1.schema.json",
+      "sha256": "401b3bb30cf959fc7b8f3b1cb89d60076825d31563bc4a04a464ba199eac638d"
+    },
+    {
+      "path": "contracts/agent/v1/suggestion-policy.v1.schema.json",
+      "sha256": "ba4a2da199067b235d4be8bc4b42b12341bf9440d78d1b7508aee2fe53bd65be"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "17cc02bbcd4bb5cbfe350f63c6543b238c290cd1631a1d6e1b03d6e01fbe6d4d"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "sha256": "d344d2c6c65ba7ad8f5dfa9ca4e4150a733d68704bf4c5ac514b8398f25e0552"
+    },
+    {
+      "path": "docs/agent-chat.md",
+      "sha256": "51b118cf998e04496d23d70d5e96b90905f21ccbc347d368911c03eea1af1a22"
+    },
+    {
+      "path": "docs/agent-evaluation.md",
+      "sha256": "98bf44ed33874c68c3b2fa26acbfa27163b1bb5a14692f8beb854dd20f947511"
+    },
+    {
+      "path": "docs/agent-graph.md",
+      "sha256": "25c36e51a57209314aa998393cb19c92e5d386ce094159898c9c401913d8b60b"
+    },
+    {
+      "path": "docs/agent-tools.md",
+      "sha256": "872ecfe586d393509abf7714b230f7667f12a4808031a8859fe7f8e7df118a4e"
+    },
+    {
+      "path": "docs/architecture/decisions.md",
+      "sha256": "cdfcfec5f7fd44c9bc2578640259e3a97a76588a5dbeb92c18e08d4de2b0f580"
+    },
+    {
+      "path": "docs/development.md",
+      "sha256": "c31cd948e10e1897956128f7dae0a6e13ee99a51824a9bc834e0ae5a75c893b7"
+    },
+    {
+      "path": "docs/evidence/12-answer-golden.json",
+      "sha256": "49acb621ff6ae3468fd044ce8a069778bcf272ca133e8caf3e97b9d223987596"
+    },
+    {
+      "path": "docs/evidence/12-graph.json",
+      "sha256": "f04894d04fd1caa5b20dfe0b604962544ad45b06440faff72e2c35d6afbda926"
+    },
+    {
+      "path": "docs/evidence/12-graph.md",
+      "sha256": "f1973458d7a2b76fc319b74ea6575e5875f961bb01bf75eb27c5254472108796"
+    },
+    {
+      "path": "scripts/update_agent_graph_contracts.py",
+      "sha256": "4b9709e14339736fc7ea1ca29b8800971050f9bd3fd4c6bd276f6fbe26d0d27e"
+    },
+    {
+      "path": "src/retailops_ai/agent/chat_config.py",
+      "sha256": "e0cc2d7e6f286454d94023b783da98137e8b6464f4d592f2c62e706702f43cd3"
+    },
+    {
+      "path": "src/retailops_ai/agent/chat_context.py",
+      "sha256": "79bdb70bc9f7a3c204f4b5da43dbe358567009421bcbaa9432ada0f9d30183c6"
+    },
+    {
+      "path": "src/retailops_ai/agent/evaluation.py",
+      "sha256": "06bccab07430f19a6ea9a8d34a93ea13a8000c8dc71e2e39afaf560b7145be5d"
+    },
+    {
+      "path": "src/retailops_ai/agent/evaluation_contracts.py",
+      "sha256": "5285b3385c60113c79908204b1b76677acead570c50ef0ad59a0da906a583de3"
+    },
+    {
+      "path": "src/retailops_ai/agent/evidence.py",
+      "sha256": "a838412c75ad145ed34fcb98ece0e4cdefb5502f8e4be378f814269bc40420fd"
+    },
+    {
+      "path": "src/retailops_ai/agent/graph.py",
+      "sha256": "749bff35d7d84dc08a3c9064d5aecf530beab45a59741dd3753e6446bacf0198"
+    },
+    {
+      "path": "src/retailops_ai/agent/graph_config.py",
+      "sha256": "15d509f68934e6d30c3af12a96afaa1cdf5ed51391d2d1863a87022ceb04c33b"
+    },
+    {
+      "path": "src/retailops_ai/agent/graph_contracts.py",
+      "sha256": "4c9f18612bab307dcd672afb48dce22ef1c7b888ff35bffa0873569fa042c8f2"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/evidence.v3.md",
+      "sha256": "8d2c217b30ddc9f648e78de388008b08c2b0e1a2e2babbfc991e52f1612922c9"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/examples.v3.md",
+      "sha256": "cc13ebe587e1f26b0263eae818f276a6ec8f7c5d050aa4552e32c60782d57a4e"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/policy.v3.md",
+      "sha256": "4f71cd6be32ed612e6750ef977648669f133a494a110b5857db42009dfb6bef8"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/refusal.v3.md",
+      "sha256": "4c5b42d42f62bf3609773b2c834d305300f99d8bd7280503af86526b6c09481b"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/response.v3.md",
+      "sha256": "d6b04ce627d0c7fcb5a4aa589a60f046d38475957803b8c45f84339395ce998c"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/tool_selection.v3.md",
+      "sha256": "572f1b6bc660aef3714738c249cd913a698cef3f88903b6699c9f79eb17b07c7"
+    },
+    {
+      "path": "src/retailops_ai/agent/suggestions.py",
+      "sha256": "d860194545a508de65f3317ca4a637eec8ee892f4724e737cbb72e6e1f1bd732"
+    },
+    {
+      "path": "src/retailops_ai/cli.py",
+      "sha256": "2939859ab6d593ac2d1bad9e4f0dfe81745f1adfe6356946ab5d67e425f9ad24"
+    },
+    {
+      "path": "src/retailops_ai/cli_agent.py",
+      "sha256": "414ec3f4afd8b24cc555f3c430ce5a9a08f4bd439f952e58b28c877f576c66f1"
+    },
+    {
+      "path": "tests/test_agent_evaluation.py",
+      "sha256": "705d4d50d242ae9b34cf20af34cbeaca50f92b530226444c79b751f49974acd3"
+    },
+    {
+      "path": "tests/test_agent_graph.py",
+      "sha256": "50e6c2d4e0d1d52356415f8d072dae8cdcf54f5967a0a3018708e9796da24ded"
+    },
+    {
+      "path": "tests/test_agent_suggestions.py",
+      "sha256": "a4774c813566c2a08165ea04913ee0329a13675021d92682cfe8a9732a65c77f"
+    }
+  ],
+  "current_status_document": "docs/STATUS.md",
+  "dependency_lock_sha256": "b00e58676e3ff07d7af9de4eaa4fe426574bc2a6c90439977a70f2831378f84a",
+  "evaluation_graph_config_id": "agent-graph-config-sha256-b66fbda5ebc934e6b49b6c11b769f71b4f58a49764ff66c9c0f86c7ee71f4290",
+  "evaluation_release_id": "agent-evaluation-release-sha256-8ebb5547c253168954ac2c0ad4b91d371343c78fae16f437a78bd011d278817e",
+  "evaluator_package_code_sha256": "8e4984c07a00d3f23246df7034a617bc3f3bac5feed2fc4a628cb9e53ca40592",
+  "golden": {
+    "acceptance_scope": "canonical_fixture_invariants_only",
+    "ai11_questions_reused_without_changes": 6,
+    "cases": 50,
+    "critical_cases": 36,
+    "estimated_cost_usd": "0",
+    "input_tokens": 8000,
+    "labels_state": "proposed",
+    "latency_p95_ms": 652.9995829914697,
+    "metrics": {
+      "action_policy": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "answer_exact": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "call_budget": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "case_pass": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "citation_correctness": {
+        "passed": 6,
+        "total": 6,
+        "value": 1.0
+      },
+      "citation_coverage": {
+        "passed": 6,
+        "total": 6,
+        "value": 1.0
+      },
+      "critical_cases": {
+        "passed": 36,
+        "total": 36,
+        "value": 1.0
+      },
+      "groundedness": {
+        "passed": 46,
+        "total": 46,
+        "value": 1.0
+      },
+      "numeric_faithfulness": {
+        "passed": 40,
+        "total": 40,
+        "value": 1.0
+      },
+      "outcome": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "refusal_correctness": {
+        "passed": 4,
+        "total": 4,
+        "value": 1.0
+      },
+      "safety_outcome": {
+        "passed": 15,
+        "total": 15,
+        "value": 1.0
+      },
+      "schema_pass": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "tool_selection_arguments": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      }
+    },
+    "output_tokens": 1980,
+    "unnecessary_tool_calls": 0
+  },
+  "golden_report": "docs/evidence/12-answer-golden.json",
+  "golden_sha256": "a6c6b154852ca1863af54a2e0c4f8e0b2a63dfb0cad0f1ad1f5c63d1e9800703",
+  "graph_config_id": "agent-graph-config-sha256-1e300f4b074d22a10ecd56dd1fe59c867509461db935b9a1c755f511190964bd",
+  "human_review_required": true,
+  "knowledge_evaluation_backend": "explicit_synthetic_document_and_index_pin_fixtures_not_real_ranking",
+  "new_embedding_quality_measurement": false,
+  "operational_actions_executed": false,
+  "parent_commit": "abc6103e36166a95bc483217bdbb58b8c6c6bfd9",
+  "published_to_main": false,
+  "remote_ci": "not_run",
+  "schema_version": "1.0",
+  "scope": "deterministic_review_candidates_and_versioned_canonical_fixture_evaluation",
+  "stage": "12",
+  "status": "in_progress",
+  "suggestion_policy": {
+    "lifetime_seconds": 300,
+    "max_candidates": 5,
+    "minimum_stockout_probability": 0.8,
+    "operations_lag_seconds": 60.0,
+    "policy_version": "read-only-review-v1",
+    "schema_version": "1.0"
+  },
+  "trace_durable_after_restart": false,
+  "verification": {
+    "agent_cases_in_full_regression": 268,
+    "compose_config": "passed",
+    "contracts": "passed",
+    "docs": "passed",
+    "full_regression": {
+      "duration_seconds": 253.36,
+      "passed": 911
+    },
+    "gitleaks": "passed",
+    "make_agent_evaluate": "passed",
+    "mypy": {
+      "files": 121,
+      "status": "passed"
+    },
+    "new_pytest_cases": 32,
+    "ruff_format": {
+      "files": 213,
+      "status": "passed"
+    },
+    "wheel_evaluation_outside_source": {
+      "cases": 50,
+      "critical_cases": 36,
+      "provider": "fake",
+      "status": "passed"
+    },
+    "wheel_sdist": "passed"
+  },
+  "verified_at": "2026-09-29T07:13:58.749332+00:00"
+}

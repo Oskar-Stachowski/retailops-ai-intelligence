@@ -1,0 +1,323 @@
+{
+  "ai12_closed": false,
+  "cases": [
+    {
+      "answer": {
+        "agent_config_version": "assistant-runtime-sha256-70d5265ef0be6431fcf2d3822e10ff37b6a8630adba7ab57331a1d66ec39847b",
+        "answer_id": "74ddb2ef-df62-5e87-b9a0-d025c5cd9a4a",
+        "citations": [
+          {
+            "chunk_id": "chunk-sha256-88e8bbe4569a6de7fe7d2bcc64de13e53d514843c2ed19cb5ba542bb7f32d414",
+            "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+            "document_status": "implemented",
+            "heading": "Lokalna tożsamość i uprawnienia API / Endpointy",
+            "path": "docs/access-control.md",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/access-control.md#L10-L18"
+          }
+        ],
+        "confidence": "medium",
+        "created_at": "2026-09-29T10:51:54.778850Z",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": null,
+            "calculation_id": null,
+            "claim": "Implementation documentation; scope=Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body.; revision=082bed47e1e6344e3ec148807f2decd1ef47a605; literal quote=\"| `GET /api/v1/identity` | Zweryfikowany token; własny principal, role, capabilities i skonfigurowany scope |\\n| `POST /api/v1/access/forecast-check` | Jawne forecast:read i cały dozwolony scope; 200 z decyzją dla tego żądania |\"",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/access-control.md#L10-L18",
+            "source_type": "document",
+            "supporting_refs": []
+          }
+        ],
+        "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+        "limitations": [],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Implementation documentation; scope=Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body.; revision=082bed47e1e6344e3ec148807f2decd1ef47a605; literal quote=\"| `GET /api/v1/identity` | Zweryfikowany token; własny principal, role, capabilities i skonfigurowany scope |\\n| `POST /api/v1/access/forecast-check` | Jawne forecast:read i cały dozwolony scope; 200 z decyzją dla tego żądania |\"",
+        "trace_id": "cead2ed8-a362-4bd4-820a-ae17d050254c"
+      },
+      "case_id": "rag-03",
+      "checks": {
+        "exact_reviewed_quote": true,
+        "expected_outcome": true,
+        "no_business_actions": true,
+        "one_required_citation": true,
+        "only_knowledge_tool": true,
+        "persisted": true,
+        "runtime_binding": true,
+        "trace_authorization": true,
+        "trace_succeeded": true
+      },
+      "http_status": 200,
+      "passed": true,
+      "trace": {
+        "agent_config_version": "assistant-runtime-sha256-70d5265ef0be6431fcf2d3822e10ff37b6a8630adba7ab57331a1d66ec39847b",
+        "answer_id": "74ddb2ef-df62-5e87-b9a0-d025c5cd9a4a",
+        "completed_at": "2026-09-29T10:51:54.797649Z",
+        "error_code": null,
+        "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+        "nodes": [
+          {
+            "duration_ms": 118.37850000301842,
+            "error_code": null,
+            "name": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 3946.950042009121,
+            "error_code": null,
+            "name": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 648.3212909952272,
+            "error_code": null,
+            "name": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 30.53258299769368,
+            "error_code": null,
+            "name": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 15516.605249998975,
+            "error_code": null,
+            "name": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 56.23541699605994,
+            "error_code": null,
+            "name": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "name": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "outcome": "answered",
+        "requested_at": "2026-09-29T10:51:34.336955Z",
+        "status": "succeeded",
+        "tools": [
+          {
+            "freshness_status": "not_requested",
+            "name": "search_knowledge",
+            "source_refs": [
+              "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "cead2ed8-a362-4bd4-820a-ae17d050254c",
+        "usage": {
+          "currency": "USD",
+          "duration_ms": 20508.731666996027,
+          "estimated_cost": "0.0432564",
+          "input_tokens": 8473,
+          "output_tokens": 927
+        }
+      }
+    },
+    {
+      "answer": {
+        "agent_config_version": "assistant-runtime-sha256-70d5265ef0be6431fcf2d3822e10ff37b6a8630adba7ab57331a1d66ec39847b",
+        "answer_id": "393fcd42-37a0-595d-89c6-236b56e81aa8",
+        "citations": [
+          {
+            "chunk_id": "chunk-sha256-34a3a28ea784e6e2740cea2c7be5b73c604d29840d0c74c0691c77e24d58d2c4",
+            "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+            "document_status": "implemented",
+            "heading": "Lokalna tożsamość i uprawnienia API / Zmiana uprawnień i granice",
+            "path": "docs/access-control.md",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/access-control.md#L108-L114"
+          }
+        ],
+        "confidence": "medium",
+        "created_at": "2026-09-29T10:52:11.002830Z",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": null,
+            "calculation_id": null,
+            "claim": "Implementation documentation; scope=Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body.; revision=082bed47e1e6344e3ec148807f2decd1ef47a605; literal quote=\"Polityka jest snapshotem w pamięci procesu, ładowanym przy starcie.\\nPo zmianie grants, revoked albo rotation **zrestartuj każdy proces API**.\\nWygaśnięcie jest sprawdzane dla każdego żądania, bez restartu; dokładna granica\\nexpires_at jest niedostępna. Nadanie nowych tokenów wymaga nowego prywatnego\\nkatalogu i jawnego przełączenia API_AUTH_FILE. Nie ma HTTP edycji polityki ani\\nautomatycznej rotacji/hot reload. Nie usuwaj starych plików jako sposobu odwołania\\njuż działającego snapshotu.\"",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/access-control.md#L108-L114",
+            "source_type": "document",
+            "supporting_refs": []
+          }
+        ],
+        "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+        "limitations": [],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Implementation documentation; scope=Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body.; revision=082bed47e1e6344e3ec148807f2decd1ef47a605; literal quote=\"Polityka jest snapshotem w pamięci procesu, ładowanym przy starcie.\\nPo zmianie grants, revoked albo rotation **zrestartuj każdy proces API**.\\nWygaśnięcie jest sprawdzane dla każdego żądania, bez restartu; dokładna granica\\nexpires_at jest niedostępna. Nadanie nowych tokenów wymaga nowego prywatnego\\nkatalogu i jawnego przełączenia API_AUTH_FILE. Nie ma HTTP edycji polityki ani\\nautomatycznej rotacji/hot reload. Nie usuwaj starych plików jako sposobu odwołania\\njuż działającego snapshotu.\"",
+        "trace_id": "a295b8e5-77f1-4dd9-af9d-a73b05eeb0d1"
+      },
+      "case_id": "rag-04",
+      "checks": {
+        "exact_reviewed_quote": true,
+        "expected_outcome": true,
+        "no_business_actions": true,
+        "one_required_citation": true,
+        "only_knowledge_tool": true,
+        "persisted": true,
+        "runtime_binding": true,
+        "trace_authorization": true,
+        "trace_succeeded": true
+      },
+      "http_status": 200,
+      "passed": true,
+      "trace": {
+        "agent_config_version": "assistant-runtime-sha256-70d5265ef0be6431fcf2d3822e10ff37b6a8630adba7ab57331a1d66ec39847b",
+        "answer_id": "393fcd42-37a0-595d-89c6-236b56e81aa8",
+        "completed_at": "2026-09-29T10:52:11.025613Z",
+        "error_code": null,
+        "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+        "nodes": [
+          {
+            "duration_ms": 50.969832998816855,
+            "error_code": null,
+            "name": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 2256.2724579911446,
+            "error_code": null,
+            "name": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 283.26475000358187,
+            "error_code": null,
+            "name": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 27.675958001054823,
+            "error_code": null,
+            "name": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 13267.597875004867,
+            "error_code": null,
+            "name": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 57.069583010161296,
+            "error_code": null,
+            "name": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "name": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "outcome": "answered",
+        "requested_at": "2026-09-29T10:51:54.847726Z",
+        "status": "succeeded",
+        "tools": [
+          {
+            "freshness_status": "not_requested",
+            "name": "search_knowledge",
+            "source_refs": [
+              "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "a295b8e5-77f1-4dd9-af9d-a73b05eeb0d1",
+        "usage": {
+          "currency": "USD",
+          "duration_ms": 16159.558166997158,
+          "estimated_cost": "0.0479787",
+          "input_tokens": 8574,
+          "output_tokens": 1193
+        }
+      }
+    }
+  ],
+  "chat_cap_usd": "0.18",
+  "chat_estimated_or_reserved_usd": "0.0912351",
+  "completed_at": "2026-09-29T10:52:11.065433+00:00",
+  "count_requests": 4,
+  "created_at": "2026-09-29T10:51:34.231110+00:00",
+  "embedding_input_tokens": 41,
+  "embedding_max_input_bytes": 4000,
+  "embedding_max_requests": 4,
+  "embedding_requests": 2,
+  "full_golden_qualified": false,
+  "golden_sha256": "1551bd576991595e9151eea6251bd75b5daefadbf052cccff7719081858990e2",
+  "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+  "inference_requests": 4,
+  "kind": "configured_http_real_postgres_titan_converse",
+  "model": {
+    "inference_profile": "eu.anthropic.claude-sonnet-4-6",
+    "max_output_tokens": 1500,
+    "model_id": "anthropic.claude-sonnet-4-6",
+    "provider": "bedrock",
+    "region": "eu-central-1",
+    "temperature": 0.0
+  },
+  "runtime_code_sha256": "d5db661cdd9cdff236c5e9da266542842cb85b35b0df14413884a4c9c9650992",
+  "runtime_config_id": "assistant-runtime-sha256-70d5265ef0be6431fcf2d3822e10ff37b6a8630adba7ab57331a1d66ec39847b",
+  "schema_version": "1.0",
+  "snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+  "source_catalog_sha256": "b220592bb82014ca40d83faf2e56bdc1c0bcb499ccd6cae214a6d2f362c817af",
+  "source_data_kind": "accepted_ai03_synthetic_source_fixture",
+  "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+  "source_scope": {
+    "from": "2026-07-05",
+    "product_ids": [
+      "163da9b8-d3e0-5f9e-9dd3-954c345c7684"
+    ],
+    "store_ids": [
+      "a2bf632d-148c-5158-9315-23eb98ca2f26"
+    ],
+    "to": "2026-07-06"
+  },
+  "status": "passed",
+  "verified_destination_regions": [
+    "eu-central-1",
+    "eu-north-1",
+    "eu-south-1",
+    "eu-south-2",
+    "eu-west-1",
+    "eu-west-3"
+  ]
+}

@@ -1,0 +1,113 @@
+[
+  {
+    "region": "eu-north-1",
+    "model_id": "amazon.nova-lite-v1:0",
+    "inference_requests": 0,
+    "inference_types": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+    ],
+    "lifecycle": {
+      "status": "ACTIVE",
+      "startOfLifeTime": "2024-12-03 08:00:00+00:00"
+    },
+    "count_error": {
+      "code": "ValidationException",
+      "unsupported": false,
+      "message_has_authorization_hint": false
+    }
+  },
+  {
+    "region": "eu-central-1",
+    "model_id": "anthropic.claude-haiku-4-5-20251001-v1:0",
+    "inference_requests": 0,
+    "inference_types": [
+      "INFERENCE_PROFILE"
+    ],
+    "lifecycle": {
+      "status": "ACTIVE",
+      "startOfLifeTime": "2025-10-15 17:00:00+00:00"
+    },
+    "count_tokens_supported": true,
+    "input_tokens": 29
+  },
+  {
+    "region": "eu-central-1",
+    "model_id": "anthropic.claude-sonnet-4-6",
+    "inference_requests": 0,
+    "inference_types": [
+      "INFERENCE_PROFILE"
+    ],
+    "lifecycle": {
+      "status": "ACTIVE",
+      "startOfLifeTime": "2026-02-17 18:00:00+00:00"
+    },
+    "count_tokens_supported": true,
+    "input_tokens": 30
+  },
+  {
+    "region": "eu-central-1",
+    "model_id": "anthropic.claude-3-haiku-20240307-v1:0",
+    "inference_requests": 0,
+    "metadata_error": {
+      "code": "ResourceNotFoundException",
+      "unsupported": false,
+      "message_has_authorization_hint": false
+    },
+    "count_error": {
+      "code": "ResourceNotFoundException",
+      "unsupported": false,
+      "message_has_authorization_hint": false
+    }
+  },
+  {
+    "profile_id": "eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+    "status": "ACTIVE",
+    "type": "SYSTEM_DEFINED",
+    "models": [
+      {
+        "modelArn": "arn:aws:bedrock:eu-north-1::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+      },
+      {
+        "modelArn": "arn:aws:bedrock:eu-west-3::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+      },
+      {
+        "modelArn": "arn:aws:bedrock:eu-south-1::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+      },
+      {
+        "modelArn": "arn:aws:bedrock:eu-south-2::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+      },
+      {
+        "modelArn": "arn:aws:bedrock:eu-west-1::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+      },
+      {
+        "modelArn": "arn:aws:bedrock:eu-central-1::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+      }
+    ]
+  },
+  {
+    "profile_id": "eu.anthropic.claude-sonnet-4-6",
+    "status": "ACTIVE",
+    "type": "SYSTEM_DEFINED",
+    "models": [
+      {
+        "modelArn": "arn:aws:bedrock:eu-north-1::foundation-model/anthropic.claude-sonnet-4-6"
+      },
+      {
+        "modelArn": "arn:aws:bedrock:eu-west-3::foundation-model/anthropic.claude-sonnet-4-6"
+      },
+      {
+        "modelArn": "arn:aws:bedrock:eu-south-1::foundation-model/anthropic.claude-sonnet-4-6"
+      },
+      {
+        "modelArn": "arn:aws:bedrock:eu-south-2::foundation-model/anthropic.claude-sonnet-4-6"
+      },
+      {
+        "modelArn": "arn:aws:bedrock:eu-west-1::foundation-model/anthropic.claude-sonnet-4-6"
+      },
+      {
+        "modelArn": "arn:aws:bedrock:eu-central-1::foundation-model/anthropic.claude-sonnet-4-6"
+      }
+    ]
+  }
+]

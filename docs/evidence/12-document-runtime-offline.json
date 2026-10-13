@@ -1,0 +1,1 @@
+{"aws_executed": false, "case_pass": {"passed": 50, "total": 50, "value": 1.0}, "critical_cases": {"passed": 36, "total": 36, "value": 1.0}, "failed_gates": [], "fixture_only": true, "release_id": "agent-evaluation-release-sha256-fe9e8c77fb1097d88dc04566139a01f2b4254cf6aee75cea606328ac0095a631", "status": "passed"}

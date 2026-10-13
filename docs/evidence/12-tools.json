@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0",
+  "stage": "12",
+  "status": "in_progress",
+  "scope": "typed_read_only_tools_and_pinned_knowledge_adapter",
+  "verified_at": "2026-09-29T05:12:41.162398+00:00",
+  "base_commit": "abf3f69a6a78c444b5a8a910fef8b3b43ba047a9",
+  "branch": "ai/12-tools",
+  "tool_count": 8,
+  "policy_id": "agent-tool-policy-sha256-e51dc9e205561cf368459ff4adf42279c5b2be87fca70a42c98537f25ced11a2",
+  "verification": {
+    "full_regression": {
+      "passed": 751,
+      "duration_seconds": 132.87,
+      "followup": "Final scope copy guard covered by focused_final"
+    },
+    "focused_final": {
+      "passed": 109,
+      "duration_seconds": 1.82
+    },
+    "ruff": "passed",
+    "mypy": {
+      "status": "passed",
+      "files": 106
+    },
+    "contracts": "passed",
+    "docs": "passed",
+    "wheel_sdist": "passed",
+    "compose_config": "passed",
+    "gitleaks": "passed",
+    "wheel_cli_outside_source": "passed"
+  },
+  "aws_executed": false,
+  "business_source_acceptance": false,
+  "knowledge_test_backend": "Synthetic vectors and pinned backend spy; runtime adapter uses previously accepted PostgresKnowledge from stage 11",
+  "remote_ci": "not_run",
+  "published_to_main": false,
+  "checksums": [
+    {
+      "path": "contracts/agent/v1/catalogue.json",
+      "sha256": "37d2c6bc989678842dd12a0c0726aee82d216957c6ed073b54d239325189fd8d"
+    },
+    {
+      "path": "contracts/agent/v1/get_demand_forecast.request.v1.example.json",
+      "sha256": "2ad1a9a14f6fe7c5a04e94b571b484d5e565036d3d024ddf7893aee86641eab3"
+    },
+    {
+      "path": "contracts/agent/v1/get_demand_forecast.request.v1.schema.json",
+      "sha256": "fed03cb4a8131acb5e2cfe84ab3d9e7ad8165d11c528616240346c0789936f57"
+    },
+    {
+      "path": "contracts/agent/v1/get_demand_forecast.result.v1.example.json",
+      "sha256": "91446588dc6838c0d181510c7f72588cc29a0aaa62e854ecac5007e8664c233e"
+    },
+    {
+      "path": "contracts/agent/v1/get_demand_forecast.result.v1.schema.json",
+      "sha256": "4eadf723f4916b3948c7373b5f5e24a35451a7e9c3dad4e949b41d0155071041"
+    },
+    {
+      "path": "contracts/agent/v1/get_detected_anomalies.request.v1.example.json",
+      "sha256": "4fc386d93289ab5bd59b5c727fdea5368d8535260e1f9eeedca275bee4a46e96"
+    },
+    {
+      "path": "contracts/agent/v1/get_detected_anomalies.request.v1.schema.json",
+      "sha256": "181bde33a1d9bc71ae6972186fb149f063dd22697e93f737b0c76313df0fe7b1"
+    },
+    {
+      "path": "contracts/agent/v1/get_detected_anomalies.result.v1.example.json",
+      "sha256": "cc5e0730c337222048187fe2af7b566b1c099fc239c8329ddfc67558ac888c38"
+    },
+    {
+      "path": "contracts/agent/v1/get_detected_anomalies.result.v1.schema.json",
+      "sha256": "0988aa7fa77b717f38c323dc94e1b8c8b740b9fa30a04d0c1be5317f25d78251"
+    },
+    {
+      "path": "contracts/agent/v1/get_inventory_status.request.v1.example.json",
+      "sha256": "e54325908e63929254dc60313d26b1d82241dd175d8636edc4e15099b371ff94"
+    },
+    {
+      "path": "contracts/agent/v1/get_inventory_status.request.v1.schema.json",
+      "sha256": "f259369e4235f760c50866c2468caa7379041d15f9f796745271b3d7749bb643"
+    },
+    {
+      "path": "contracts/agent/v1/get_inventory_status.result.v1.example.json",
+      "sha256": "3d987dcc5bbb161d286975cee5420886665f01606a44aeb772a58992425b1ef5"
+    },
+    {
+      "path": "contracts/agent/v1/get_inventory_status.result.v1.schema.json",
+      "sha256": "51ae0088448ec28cd757919cbde53af63fbf53aca7b8574cf0d3f1faecc3bc25"
+    },
+    {
+      "path": "contracts/agent/v1/get_live_operations.request.v1.example.json",
+      "sha256": "9f84d9fb99f36a4832bae745d0d8b4ca7d5aef1e58d55545c011b912079dcf0c"
+    },
+    {
+      "path": "contracts/agent/v1/get_live_operations.request.v1.schema.json",
+      "sha256": "d57c53b82d3db78a9f9bba963dac46996cc4e467a7f2584c521717f8989d79eb"
+    },
+    {
+      "path": "contracts/agent/v1/get_live_operations.result.v1.example.json",
+      "sha256": "c2ed3aac8b3be31741e99b7effcd87e9b03d3f8079b2f5a6657bb9311c4336a8"
+    },
+    {
+      "path": "contracts/agent/v1/get_live_operations.result.v1.schema.json",
+      "sha256": "5ce8c1030351b340bb4559b8ee2eaf7b8ac557140d621694e46388e05383f2ba"
+    },
+    {
+      "path": "contracts/agent/v1/get_model_status.request.v1.example.json",
+      "sha256": "137468e8174b3244fc37cd9a578398f34f14dfc50c4b7557abe1fc45d659443b"
+    },
+    {
+      "path": "contracts/agent/v1/get_model_status.request.v1.schema.json",
+      "sha256": "fc2735e22371f8b4018ed20d9a59d10133219738a0b4beaba8144cfb21dfc048"
+    },
+    {
+      "path": "contracts/agent/v1/get_model_status.result.v1.example.json",
+      "sha256": "38d6eb497f8f4ae9c36cc9ef6996ffe6140d605157afd7c831eaf9a1ed8c1106"
+    },
+    {
+      "path": "contracts/agent/v1/get_model_status.result.v1.schema.json",
+      "sha256": "20d1292759908781c64d52906ced02d8f36d1ce8f684d3db47355fe27b726f9a"
+    },
+    {
+      "path": "contracts/agent/v1/get_sales_summary.request.v1.example.json",
+      "sha256": "327049e9c283922bb8998fc1660d52b0fa36be3574955a9d7a5b56fbb7c76a0c"
+    },
+    {
+      "path": "contracts/agent/v1/get_sales_summary.request.v1.schema.json",
+      "sha256": "a7875c1824f2758d300d4a73ca982316fb358333e510cb6adc025fd056df7d52"
+    },
+    {
+      "path": "contracts/agent/v1/get_sales_summary.result.v1.example.json",
+      "sha256": "e6025821592c68dda903fa0d61da171e4bb431210c1ec64edcb58e0d0109c90d"
+    },
+    {
+      "path": "contracts/agent/v1/get_sales_summary.result.v1.schema.json",
+      "sha256": "9a3447138993c148cd9bd5c725fd684646363b8e1b9a999b8af548ddf9d79fcb"
+    },
+    {
+      "path": "contracts/agent/v1/get_stockout_risk.request.v1.example.json",
+      "sha256": "12541e7fb7caab6d88fbcbcb745ec9c9b1e62481beca80dba1955dcf3676b004"
+    },
+    {
+      "path": "contracts/agent/v1/get_stockout_risk.request.v1.schema.json",
+      "sha256": "5d94ef5c388587b79eec9fc0f55ee1e59a6166c1248adecd3cd5038657cfd2b4"
+    },
+    {
+      "path": "contracts/agent/v1/get_stockout_risk.result.v1.example.json",
+      "sha256": "66cc654db47d5fd9411979d34f3d789c49ef15f85af85ada8e7663b53aed8a73"
+    },
+    {
+      "path": "contracts/agent/v1/get_stockout_risk.result.v1.schema.json",
+      "sha256": "a7a47d40a055dadd98d5edb598017eedd2339187da3aff1e79f0962085763782"
+    },
+    {
+      "path": "contracts/agent/v1/search_knowledge.request.v1.example.json",
+      "sha256": "8e5a4933cec5c5ff0da1ef9400b85b143aaa1ce8493c6e3903b4add3622644f3"
+    },
+    {
+      "path": "contracts/agent/v1/search_knowledge.request.v1.schema.json",
+      "sha256": "a2149cf2f974d6608d91547794aec2d2a16b59f7e8135aaf9e5d791626e8beda"
+    },
+    {
+      "path": "contracts/agent/v1/search_knowledge.result.v1.example.json",
+      "sha256": "00c38c3cfdd85d2719a33e47b77f931519c22c3647b592ba8700028226b6426b"
+    },
+    {
+      "path": "contracts/agent/v1/search_knowledge.result.v1.schema.json",
+      "sha256": "e4188611e5db36882b74c990cb11478477e3d17bd1d8cd42dc260d52e17a4631"
+    },
+    {
+      "path": "contracts/agent/v1/tool-policy.v1.example.json",
+      "sha256": "d9ee3a2621e77636585cb84ed44183f7dce5df1a79ae7a7b97595da502f4aa9b"
+    },
+    {
+      "path": "contracts/agent/v1/tool-policy.v1.schema.json",
+      "sha256": "c42b182b0cc75480bb563bfce94cb954d0ba21854e282eabd563fbe629f1999e"
+    },
+    {
+      "path": "src/retailops_ai/agent/__init__.py",
+      "sha256": "c217050bdb775762270065a7bf1872527bb737bd23407cb1892fddbacd3c3912"
+    },
+    {
+      "path": "src/retailops_ai/agent/execution.py",
+      "sha256": "bc972be13f0e74c0499eeb568ef20850d79e645a0be65f261abd7a363c6831f9"
+    },
+    {
+      "path": "src/retailops_ai/agent/tools.py",
+      "sha256": "5cc425bba0727b352f731e56cd1fd0d1d0a7aad2d43de693368676036dfad00d"
+    },
+    {
+      "path": "src/retailops_ai/adapters/agent_tools.py",
+      "sha256": "f569d0c080c5aeb5e469c707d0d9006cd337f2cd0a42c5f76a837dce8937822a"
+    },
+    {
+      "path": "src/retailops_ai/cli_agent.py",
+      "sha256": "59dab4fa82cef24cc94cf2dd6fb109f87c9d20d03233632fc84e420731004c75"
+    },
+    {
+      "path": "tests/test_agent_tools.py",
+      "sha256": "2bd8ce8dc12bec7bf2088b90c8184fdfc7a7d28164b281d7f97f1faeb122f9ef"
+    }
+  ],
+  "current_status_document": "docs/STATUS.md"
+}

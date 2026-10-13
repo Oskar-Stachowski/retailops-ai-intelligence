@@ -1,0 +1,26 @@
+{
+  "as_of": "2026-08-22T23:59:59Z",
+  "contract_type": "agent_tool_result",
+  "error": null,
+  "freshness_status": "current",
+  "items": [
+    {
+      "channel": "store",
+      "detector_version": "fixture-detector-v1",
+      "expected_units": 10.0,
+      "model_release_ref": "fixture-detector-release-v1",
+      "observed_units": 8.0,
+      "product_id": "p-101",
+      "selling_location_id": "s-03",
+      "window": {
+        "end": "2026-08-22",
+        "start": "2026-08-16"
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "source_kind": "fixture",
+  "source_ref": "fixture-get_detected_anomalies",
+  "status": "ok",
+  "tool": "get_detected_anomalies"
+}

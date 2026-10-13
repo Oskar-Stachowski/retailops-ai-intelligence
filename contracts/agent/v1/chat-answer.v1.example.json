@@ -1,0 +1,26 @@
+{
+  "citations": [],
+  "confidence": "low",
+  "data_freshness": {
+    "inventory": {
+      "as_of": null,
+      "status": "not_requested"
+    },
+    "predictions": {
+      "as_of": null,
+      "status": "not_requested"
+    },
+    "sales": {
+      "as_of": null,
+      "status": "not_requested"
+    }
+  },
+  "evidence": [],
+  "kind": "answer",
+  "limitations": [
+    "Synthetic response; no business source acceptance."
+  ],
+  "outcome": "insufficient_evidence",
+  "recommended_actions": [],
+  "summary": "No authorized business data was retrieved for this fixture."
+}

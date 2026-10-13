@@ -1,0 +1,40 @@
+{
+  "api_health": 200,
+  "api_ready_after_recovery": 200,
+  "assistant": {
+    "checks": [
+      "two_replicas_parallel_limit_owner_scope_fenced_completion",
+      "policy_binding_expired_crash_lease_not_resumable",
+      "tokens_cost_window_debit_survives_failed_run"
+    ],
+    "http": {
+      "answer_id": "1c8b803c-78b3-5b5c-9b92-f355665cf3e5",
+      "checks": [
+        "real_http_postgres_answer_trace_suggestion_atomic_binding",
+        "sigkill_api_restart_identical_safe_trace",
+        "unique_recommendation_identity_human_review_only",
+        "storage_failure_rolls_back_answer_and_suggestions"
+      ],
+      "fixture_only": true,
+      "recommendation_id": "dfd101e0-7e7c-5efd-92f0-b8dd88cc563f",
+      "result": "passed",
+      "trace_id": "3925bf74-c06e-47bf-b799-6bd6145849e1"
+    },
+    "result": "passed"
+  },
+  "checked_at": "2026-09-29T08:02:44.671007+00:00",
+  "checks": [
+    "separate_databases_roles_and_vector",
+    "explicit_idempotent_migration_and_revision_readiness",
+    "real_pgvector_candidate_constraints_cache_atomicity_and_replay",
+    "sigkill_restart_retains_ai_and_mlflow_artifact",
+    "real_db_outage_health_200_ready_503_then_recovered_200",
+    "down_up_retains_ai_mlflow_metadata_and_artifact",
+    "loopback_ports_internal_network_no_secrets_in_service_logs"
+  ],
+  "kind": "real_local_compose",
+  "migration_revision": "0009_assistant",
+  "postgres_vector_version": "0.8.6",
+  "raw_report_sha256": "5e07bac6737892cad7f462d969aebf1e425abbb366747dc05a40bb2db85d08a8",
+  "result": "passed"
+}

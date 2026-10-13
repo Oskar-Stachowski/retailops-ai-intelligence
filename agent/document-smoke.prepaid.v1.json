@@ -1,0 +1,19 @@
+{
+  "case_ids": [
+    "document-1",
+    "document-2",
+    "document-3",
+    "document-4",
+    "document-5",
+    "document-6"
+  ],
+  "circuit": {
+    "failure_threshold": 3,
+    "max_inflight": 2,
+    "recovery_seconds": 30.0,
+    "schema_version": "1.0"
+  },
+  "offline_release_id": "agent-evaluation-release-sha256-5a1aec780b8b33487d5989bc737e1e77efbf393acdea36a01c901b67467224c5",
+  "runtime_graph_config_id": "agent-graph-config-sha256-a4e9e5bedabadb5e0bfdc3eaed432af765a8bd7670268bcd70dc132eeb79bd74",
+  "schema_version": "1.0"
+}

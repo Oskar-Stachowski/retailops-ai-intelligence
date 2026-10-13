@@ -1,0 +1,252 @@
+{
+  "application_base_commit": "e671d73bbbfaa478fc17ab1de64d336732a21ca2",
+  "application_code_sha256": "4ee93c6bbd9dbb29708dc16f34f45e691319b12473ebc0b144cf37d3c5f8b64f",
+  "aws_executed": false,
+  "broker_executed": false,
+  "ci_collection": {
+    "collection_is_not_execution": true,
+    "every_case_assigned_once": true,
+    "files": 219,
+    "sha256": "fa1a526475b4ac425e6e19e3d652eb0b3ec1514e6e5d8135c390e612aa2bc631",
+    "shards": 4,
+    "status": "passed",
+    "total_cases": 4835
+  },
+  "followup_head_ci": "requires_own_remote_execution_after_publish",
+  "limits": [
+    "No real HTTP admission/load qualification at 1000 events.",
+    "No independent question-label or native-v2 policy acceptance.",
+    "No current Source/model-publication qualification.",
+    "No scoped heartbeat or Kafka-lag observations.",
+    "No live Source consumer/UI delivery or consumer deduplication qualification.",
+    "No AWS LLM/RAG quality qualification."
+  ],
+  "local_acceptance": {
+    "capacity_test": {
+      "all_fixture_changes_rolled_back": true,
+      "bound": 1000,
+      "database_guards_enabled": true,
+      "identical_retry_at_capacity": true,
+      "identity_collision_at_capacity_rejected": true,
+      "new_event_1001_rejected": true,
+      "origin": "validated_copies_of_actual_HTTP_result_with_required_SQL_transitions",
+      "qualification": "SQL_capacity_and_identity_only",
+      "status": "passed"
+    },
+    "ci_checks": "passed",
+    "critical_passed": 36,
+    "critical_total": 36,
+    "database": "owned_private_PostgreSQL_16.15_pgvector_0.8.6",
+    "duration_seconds": 30.208,
+    "golden_passed": 50,
+    "golden_total": 50,
+    "junit_sha256": "b556e11d6d5e0562d4d02e2babe66d4ed3449ba08db30fbbd37c31a578b2150c",
+    "revision": "0028_ai12_suggestion_outbox",
+    "safe_postgres_receipt": {
+      "application_code_sha256": "4ee93c6bbd9dbb29708dc16f34f45e691319b12473ebc0b144cf37d3c5f8b64f",
+      "atomic_completion": true,
+      "aws_executed": false,
+      "competing_workers_skip_locked": true,
+      "database_revision": "0028_ai12_suggestion_outbox",
+      "expired_send_withheld": true,
+      "identical_retry_bytes": true,
+      "policy": "read-only-review-v1",
+      "producer": "scripted_delivery_callback_no_broker",
+      "retry_after_ack_sql_crash": true,
+      "rollback_after_enqueue": true,
+      "source_projection_executed": false,
+      "status": "passed",
+      "stored_lifecycle_counts": {
+        "delivered": 30,
+        "expired": 4
+      }
+    },
+    "status": "passed",
+    "tests": 20
+  },
+  "neighboring_worktrees_modified": false,
+  "published_application_ci": {
+    "conclusion": "success",
+    "head_sha": "e671d73bbbfaa478fc17ab1de64d336732a21ca2",
+    "id": 37676309071,
+    "jobs": [
+      {
+        "conclusion": "success",
+        "name": "secrets"
+      },
+      {
+        "conclusion": "success",
+        "name": "checks"
+      },
+      {
+        "conclusion": "success",
+        "name": "acceptance (ci-detectors)"
+      },
+      {
+        "conclusion": "success",
+        "name": "persistence-forecast"
+      },
+      {
+        "conclusion": "success",
+        "name": "observation-replay"
+      },
+      {
+        "conclusion": "success",
+        "name": "observation-broker"
+      },
+      {
+        "conclusion": "success",
+        "name": "TensorFlow CPU training, artifact and reload"
+      },
+      {
+        "conclusion": "success",
+        "name": "persistence"
+      },
+      {
+        "conclusion": "success",
+        "name": "anomaly-oci"
+      },
+      {
+        "conclusion": "success",
+        "name": "tests (3)"
+      },
+      {
+        "conclusion": "success",
+        "name": "acceptance (ci-qualified-inputs)"
+      },
+      {
+        "conclusion": "success",
+        "name": "tests (2)"
+      },
+      {
+        "conclusion": "success",
+        "name": "acceptance (ci-source-inputs)"
+      },
+      {
+        "conclusion": "success",
+        "name": "acceptance (ci-forecast)"
+      },
+      {
+        "conclusion": "success",
+        "name": "tests (0)"
+      },
+      {
+        "conclusion": "success",
+        "name": "tests (1)"
+      },
+      {
+        "conclusion": "success",
+        "name": "required-result"
+      }
+    ],
+    "passed_jobs": 17,
+    "safe_sql_artifact": {
+      "archive_sha256": "fc8808f64276362fd6e21d5345b2722b22980958afd42b9a82e75fc952d56a4d",
+      "artifact_digest": "sha256:fc8808f64276362fd6e21d5345b2722b22980958afd42b9a82e75fc952d56a4d",
+      "artifact_id": 11507886788,
+      "head": "e671d73bbbfaa478fc17ab1de64d336732a21ca2",
+      "receipts": {
+        "ai12-native-offline-postgres.json": {
+          "receipt": {
+            "application_code_sha256": "4ee93c6bbd9dbb29708dc16f34f45e691319b12473ebc0b144cf37d3c5f8b64f",
+            "authorized_trace_restart": "passed",
+            "aws_executed": false,
+            "canonical_forecast_and_stockout_sql": "missing_outputs_preserved",
+            "chat_provider": "fake",
+            "curated_dataset_id": "curated-sha256-7253251d1a4666819b6f25dadfb10530cf8ce1b71d4091593721b2fbad02967e",
+            "deadline_seconds": 45.0,
+            "embedding_provider": "fake",
+            "http_rejected_expired_source_horizons": [
+              "forecast",
+              "risk"
+            ],
+            "http_succeeded_intents": [
+              "sales",
+              "inventory",
+              "anomalies",
+              "operations",
+              "model",
+              "documentation"
+            ],
+            "index_generation_drift_rejected": true,
+            "native_and_knowledge_trace_revocation": "passed_after_policy_restart",
+            "native_read_adapters": 7,
+            "persisted_answers": 6,
+            "persisted_operations_review_outbox_events": 1,
+            "persisted_operations_review_suggestions": 1,
+            "positive_model_publication": "not_qualified_by_this_run",
+            "producer_write_denied": true,
+            "query_duration_seconds": [
+              0.5652343289999635,
+              0.4592635040000914,
+              0.001487124000050244,
+              0.0014773729999433272,
+              0.4611010260000512,
+              0.46232019599995056,
+              0.4548771120000765,
+              0.6195632889999843
+            ],
+            "semantic_quality": "not_evaluated_fake_vectors",
+            "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09",
+            "source_fixture": "full-raw-dq-v2/physical + day-coverage-v1/physical",
+            "status": "passed",
+            "tools": [
+              "get_demand_forecast",
+              "get_detected_anomalies",
+              "get_inventory_status",
+              "get_live_operations",
+              "get_model_status",
+              "get_sales_summary",
+              "get_stockout_risk",
+              "search_knowledge"
+            ],
+            "utc_readiness_rejection": true
+          },
+          "sha256": "5d832e0917a9eb277f8d1e5d869fd7716d5e1a3c6c45fcda20be54523a842f91"
+        },
+        "ai12-suggestion-outbox.json": {
+          "receipt": {
+            "application_code_sha256": "4ee93c6bbd9dbb29708dc16f34f45e691319b12473ebc0b144cf37d3c5f8b64f",
+            "atomic_completion": true,
+            "aws_executed": false,
+            "competing_workers_skip_locked": true,
+            "database_revision": "0028_ai12_suggestion_outbox",
+            "expired_send_withheld": true,
+            "identical_retry_bytes": true,
+            "policy": "read-only-review-v1",
+            "producer": "scripted_delivery_callback_no_broker",
+            "retry_after_ack_sql_crash": true,
+            "rollback_after_enqueue": true,
+            "source_projection_executed": false,
+            "status": "passed",
+            "stored_lifecycle_counts": {
+              "delivered": 15,
+              "expired": 2,
+              "pending": 1
+            }
+          },
+          "sha256": "49a56bcef74c74920d6ad2a0940b5ab2b04d1e636ab00f0dea0d5e05bde5193d"
+        }
+      },
+      "run_id": 37676309071,
+      "run_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37676309071"
+    },
+    "status": "completed",
+    "total_jobs": 17,
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37676309071"
+  },
+  "recorded_at": "2026-10-07T20:31:08.083402+00:00",
+  "shared_services_started": false,
+  "source_projection_executed": false,
+  "stage_status": "in_progress",
+  "test_source_sha256": "30177d91d611f0adb604db6fe0567620c5ccbf19a033031ddce5cd896bb9d334",
+  "unchanged": [
+    "application_Python",
+    "all_95_published_agent_files",
+    "event_contracts",
+    "Source_owner_pins",
+    "dependency_locks",
+    "published_receipts"
+  ],
+  "version": "ai12-suggestion-capacity-acceptance-1.0.0"
+}

@@ -1,0 +1,47 @@
+{
+  "artifact_digest": "sha256:10dfa27c5785202f1c48b7dd16e4eb3f74df12d48c1b2d734c4205bfc0523355",
+  "artifact_id": 11533334633,
+  "published_head": "ea4a6a5bf0ea31b02f912776837ec1e31c387783",
+  "receipt": {
+    "actual_ai_sql_outbox": true,
+    "actual_assistant_api": true,
+    "actual_broker": true,
+    "actual_locked_publisher": true,
+    "ai_commit": "7138767b52b503ee8755fe640f31e5610e708e56",
+    "aws_calls": 0,
+    "browser": {
+      "exact_original_evidence": true,
+      "execution_controls": false,
+      "live_revocation": true,
+      "status": "passed",
+      "stored_credential": false
+    },
+    "completed_at": "2026-10-08T07:03:48.006114+00:00",
+    "exact_original_payload": true,
+    "exact_wire_sha256": "f71a3006c51bd5e58ea99eb48062f4ba9455de3ad98402916acea3db36b72eb7",
+    "execution_authorized": false,
+    "llm": "explicit_scripted_policy_fixture_not_quality_acceptance",
+    "one_business_row": true,
+    "screenshot_sha256": "7963aced663af1188e672a15b99fd0ef1812c15bcc5f72aa7ef1d3f5dca2138f",
+    "source_api_anonymous": 401,
+    "source_api_foreign_scope": 403,
+    "source_atomic_receipts": [
+      "projected",
+      "duplicate"
+    ],
+    "source_commit": "5c05445e8105c378107099785bae7355388ed7e7",
+    "source_observation": "invented_sales_event_in_actual_Source_SQL_SELECT_only",
+    "source_transport": "accepted_v1_fixture_transport_opt_in",
+    "source_transport_fingerprints": [
+      "badc197c2fcd683d41a9847b1330e9103286366b69ddc660407fb15b1c1e7de2",
+      "6b35cab1ae6743d6c60781065b607f51ccc51099c8df08511dcbabdfb02b519e"
+    ],
+    "started_at": "2026-10-08T07:03:22.676884+00:00",
+    "status": "passed"
+  },
+  "receipt_sha256": "e1ef478867d771a1b9bacf7cf8532e6f0ae3197d091fb567649ae5f6ab750525",
+  "run_id": 37740983436,
+  "run_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37740983436",
+  "screenshot_path": "docs/evidence/12-prepaid-source-ui.png",
+  "workflow_checkout": "7138767b52b503ee8755fe640f31e5610e708e56"
+}

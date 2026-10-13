@@ -1,0 +1,221 @@
+{
+  "application_changed_by_ci_integration": false,
+  "application_evaluator_sha256": "881417f349317bc2c823a808518ddebfbea3696f46b69346a23fe324fd32d85a",
+  "branch": "ai/12-resume",
+  "checked_at": "2026-10-07T12:45:05.606214+00:00",
+  "ci_performance_integrated_commit": "82803820bdee125833c34e3682f79c80f5f93100",
+  "ci_performance_source_commit": "02554284bc05df6d2687fe4142b3cbac0d1c3ac0",
+  "ci_performance_source_pr": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/34",
+  "collection_plan_only": true,
+  "complete_test_collection_plan": {
+    "full_collection_count": 3992,
+    "full_collection_sha256": "f0a0087d745f4c820d07f98d03a24474320bf6da43f906267254399309c6fb1b",
+    "shards": [
+      {
+        "cases": 991,
+        "estimated_seconds": 1258.5,
+        "files": 45
+      },
+      {
+        "cases": 993,
+        "estimated_seconds": 1258.6,
+        "files": 46
+      },
+      {
+        "cases": 964,
+        "estimated_seconds": 1258.5,
+        "files": 45
+      },
+      {
+        "cases": 1044,
+        "estimated_seconds": 1258.5,
+        "files": 46
+      }
+    ]
+  },
+  "full_3992_tests_execution_delegated_to_required_remote_ci": true,
+  "isolation": {
+    "aws_calls": 0,
+    "local_model_training_or_full_source_exports": false,
+    "neighbor_processes_stopped": false,
+    "neighbor_worktrees_edited": false,
+    "shared_compose_or_databases_changed": false
+  },
+  "native_checkpoint": "fd9e892e42a6378b57c6cf4b30743c8aa2fe9813",
+  "new_head_remote_ci": {
+    "not_inherited_from_previous_checkpoint": true,
+    "required": true,
+    "status": "pending_publication"
+  },
+  "performance_changes": [
+    "one_full_run_for_pr_and_main; explicit_full_dispatch_for_branches_without_pr",
+    "heavy_jobs_require_checks_and_secrets",
+    "balanced_all_four_test_shards_with_complete_execution_receipts",
+    "redistributed_acceptance_without_dropping_targets",
+    "separate_forecast_persistence_job_required_by_aggregate",
+    "safe_anomaly_phase_timings_and_image_build_overlap_with_fresh_generation"
+  ],
+  "preserved_ai12_gates": [
+    "agent-evaluate_in_ci-checks_and_repository_guard",
+    "native_security_tests",
+    "explicit_frozen_anomaly_training_lock",
+    "all_contracts_and_safety_limits"
+  ],
+  "previous_checkpoint_required_ci": {
+    "conclusion": "success",
+    "head_sha": "3dd53c2875242b292a322353d934bb57baa53e8f",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 112772284829,
+        "name": "anomaly-oci",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285103,
+        "name": "checks",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285213,
+        "name": "acceptance (ci-qualified-inputs)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285217,
+        "name": "tests (3)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285225,
+        "name": "secrets",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285241,
+        "name": "acceptance (ci-forecast)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285253,
+        "name": "tests (1)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285257,
+        "name": "persistence",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285296,
+        "name": "TensorFlow CPU training, artifact and reload",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285319,
+        "name": "tests (0)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285340,
+        "name": "acceptance (ci-source-inputs)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285353,
+        "name": "tests (2)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112772285532,
+        "name": "acceptance (ci-detectors)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112792514581,
+        "name": "required-result",
+        "status": "completed"
+      }
+    ],
+    "run_id": 37615009993,
+    "run_number": 282,
+    "run_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37615009993",
+    "scope": "previous_published_checkpoint_before_native_v12_adapter",
+    "status": "completed"
+  },
+  "pull_request": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/32",
+  "release_id": "agent-evaluation-release-sha256-829d4f0268f1f7b9ebd4a9b37dd338f12681ed8e493c6ffd3b2841a492363617",
+  "remaining": [
+    "required_ci_on_final_published_head",
+    "qualified_native_forecast_runtime_http_and_llm_acceptance",
+    "remaining_business_ml_adapters_and_physical_inventory_stockout_mapping",
+    "native_model_status_and_risk_bindings_for_suggestions",
+    "actual_agent_suggestion_ai10_outbox_v2_api_ui_retry_deduplication",
+    "reviewed_question_and_configuration_labels",
+    "bounded_real_sonnet_titan_on_accepted_ai11_index_with_available_budget"
+  ],
+  "runtime_locks_changed_by_ci_integration": false,
+  "schema_version": "1.0",
+  "stage": "AI12",
+  "status": "in_progress",
+  "validation": {
+    "ci_and_native_integration_tests": {
+      "errors": "0",
+      "failures": "0",
+      "hostname": "Oskars-MacBook-Air.local",
+      "junit_sha256": "bba1db593e9faf80204eb45f50d3a8be158ca9dfbeed2cc7c39582702471e3ea",
+      "name": "pytest",
+      "skipped": "0",
+      "tests": "191",
+      "time": "10.160",
+      "timestamp": "2026-10-07T14:40:09.114842+02:00"
+    },
+    "ci_checks": {
+      "log_sha256": "2a580bf31822b7aa72f96892f7f9dd98c8e0e4ebfdaa012d37ea1e483e9e1eb6",
+      "mypy_source_and_script_files": 653,
+      "status": "passed"
+    },
+    "gitleaks_current_tree": "passed",
+    "native_regression_before_ci_integration": {
+      "errors": "0",
+      "failures": "0",
+      "hostname": "Oskars-MacBook-Air.local",
+      "junit_sha256": "6c76d2add9f29d6c41da8d6353702496dd51962fb56973166e35c38f59e03c0a",
+      "name": "pytest",
+      "skipped": "0",
+      "tests": "630",
+      "time": "146.600",
+      "timestamp": "2026-10-07T14:25:52.909091+02:00"
+    },
+    "offline_evaluation": {
+      "aws_executed": false,
+      "case_pass": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "critical_cases": {
+        "passed": 36,
+        "total": 36,
+        "value": 1.0
+      },
+      "failed_gates": [],
+      "fixture_only": true,
+      "release_id": "agent-evaluation-release-sha256-829d4f0268f1f7b9ebd4a9b37dd338f12681ed8e493c6ffd3b2841a492363617",
+      "status": "passed"
+    }
+  }
+}

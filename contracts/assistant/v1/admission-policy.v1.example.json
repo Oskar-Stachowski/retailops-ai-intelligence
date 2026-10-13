@@ -1,0 +1,14 @@
+{
+  "capacity": 100,
+  "cost_per_principal_window": "1",
+  "cost_total_window": "4",
+  "parallel_per_principal": 2,
+  "parallel_total": 8,
+  "policy_version": "assistant-admission-v1",
+  "retention_seconds": 900,
+  "runs_per_principal_window": 6,
+  "runs_total_window": 24,
+  "tokens_per_principal_window": 81000,
+  "tokens_total_window": 324000,
+  "window_seconds": 60
+}

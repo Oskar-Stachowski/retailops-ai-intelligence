@@ -1,0 +1,208 @@
+{
+  "application_sha256": "f7468bbfdd6c8f4f5dd9d059d5debcf6a05b489698d89558528c246dcf29562d",
+  "branch": "ai/12-resume",
+  "candidate_release": "agent/evaluation-release.fake.native-inventory.v1.json",
+  "checked_at": "2026-10-07T14:45:25.984460+00:00",
+  "ci_checks": {
+    "log_sha256": "0bb2eb29a37ecc94e76c223fc66aff01ac0e1bb63b9b8711772df1d89b61e366",
+    "mypy_files": 657,
+    "status": "passed"
+  },
+  "complete_collection_plan": {
+    "all_tests_executed_locally": false,
+    "cases_exactly_once": {
+      "test_ai09_development_capacity.py": 17,
+      "test_native_forecast_tool.py": 41,
+      "test_native_inventory_tool.py": 61,
+      "test_qualified_sales_tool.py": 58
+    },
+    "collection_sha256": "91249dc0e8c1b98be28070a53badc8daadb0042ae45cbcf599fcf7fd801470fc",
+    "files": 188,
+    "shards": 4,
+    "tests": 4241
+  },
+  "gitleaks": {
+    "history": "passed",
+    "history_commits": 279,
+    "tree": "passed"
+  },
+  "graph_code_sha256": "38bf3c66b5c92c4a6b00275eea9b2f15de60638fcf109b02ccbea6264363c3d5",
+  "historic_manifests_models_labels_and_receipts_preserved": true,
+  "implementation_checkpoint": "0798cbafaf6700546e5998560e7cc561cc86d28b",
+  "isolation": {
+    "aws_calls": 0,
+    "local_model_training_or_new_full_source_exports": false,
+    "neighbor_processes_stopped": false,
+    "neighbor_worktrees_edited": false,
+    "shared_compose_or_databases_changed": false
+  },
+  "labels_state": "proposed",
+  "main_integrated": "a128bb38eca7da2161f45b9c841af565e88c9817",
+  "main_merge_application_and_locks_unchanged": true,
+  "main_merge_checkpoint": "5195e82ed959f8d44c2d9345323253c5f1aa4233",
+  "new_head_remote_ci": "pending_publication; does not inherit prior head acceptance",
+  "not_qualified_by_this_increment": [
+    "production_business_runtime",
+    "PostgreSQL acceptance for the new inventory adapter",
+    "qualified anomaly, risk, operations and model-status adapters",
+    "native risk/model/inventory suggestion policy",
+    "AI12 suggestions through AI10 outbox/v2 API/UI",
+    "reviewed question/configuration labels",
+    "real Sonnet/Titan within remaining budget"
+  ],
+  "offline_evaluation": {
+    "aws_executed": false,
+    "cases": 50,
+    "critical_cases": 36,
+    "historical_golden_normalization_preserved": true,
+    "provider": "fake",
+    "status": "passed"
+  },
+  "previous_checkpoint_required_ci": {
+    "head_sha": "8e4e0b1bfc223ad42511d827d409cca0d458f4ed",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 112836306412,
+        "name": "secrets",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112836307828,
+        "name": "checks",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024160,
+        "name": "anomaly-oci",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024225,
+        "name": "acceptance (ci-forecast)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024240,
+        "name": "TensorFlow CPU training, artifact and reload",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024269,
+        "name": "persistence",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024329,
+        "name": "tests (3)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024426,
+        "name": "tests (0)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024438,
+        "name": "acceptance (ci-qualified-inputs)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024452,
+        "name": "acceptance (ci-detectors)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024453,
+        "name": "persistence-forecast",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024461,
+        "name": "acceptance (ci-source-inputs)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024471,
+        "name": "tests (2)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112837024494,
+        "name": "tests (1)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "id": 112850123098,
+        "name": "required-result",
+        "status": "completed"
+      }
+    ],
+    "run_id": 37634293962,
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37634293962"
+  },
+  "status": "in_progress",
+  "tests": {
+    "broad_run_note": "Broad run: 685 passed, two new HTTP helper failures. Both corrected; all 61 adapter cases then passed with unchanged application code.",
+    "http_kind": "fake chat, frozen historical time, CaptureStore; no production/PostgreSQL/LLM quality claim",
+    "main_integration_note": "Six psutil sysctl tests were blocked by the macOS sandbox; the unchanged 33-case integration suite passed outside the sandbox. Only owned test processes were launched/stopped.",
+    "native_adapter_cases": 61,
+    "reports": {
+      "native-inventory-final.xml": {
+        "cases": 61,
+        "errors": 0,
+        "failed": 0,
+        "report_sha256": "76fbc03b67604ae4335fe1310e0fd42234156f37c8a9fd36c2290132f73423b8",
+        "skipped": 0
+      },
+      "native-inventory-main-tests-accepted.xml": {
+        "cases": 33,
+        "errors": 0,
+        "failed": 0,
+        "report_sha256": "4c4551900a5e111d1d1073e1fc6f9c65c43aa257cec6e27bb00c084da32add5a",
+        "skipped": 0
+      },
+      "native-inventory-main-tests.xml": {
+        "cases": 33,
+        "errors": 0,
+        "failed": 6,
+        "report_sha256": "2c59dc802a203e2abd7931a3fa2f360d822d6020008bf44dd36a36885a4f6d14",
+        "skipped": 0
+      },
+      "native-inventory-regression.xml": {
+        "cases": 687,
+        "errors": 0,
+        "failed": 2,
+        "report_sha256": "f32a09d2be9f8d69db7f3c1bb79a923da1e357d2c6564d3535ab45e2b1fd8a10",
+        "skipped": 0
+      }
+    },
+    "source_fixture": "original data/fixtures/inventory-v1_1.zip; importer and full native qualification, independent ledger, rebinding, tamper and HTTP tests; deliberately modified private-view cases remain explicit fixtures",
+    "unique_passing_final_outcomes": 704
+  },
+  "wheel": {
+    "application_python_files": 538,
+    "both_runtime_locks_equal": true,
+    "network_connections_disallowed": true,
+    "producer_imports_available": false,
+    "qualified_at_checkpoint": "5195e82ed959f8d44c2d9345323253c5f1aa4233",
+    "separate_process_imported_from_wheel": true,
+    "status": "passed",
+    "wheel_checkout_equal": true,
+    "wheel_sha256": "a1651ffe6c42ac56f3fef605db3a0f14d5ca38729b44a21595e89a037bc335b8"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "ai12_closed": false,
+  "aws_executed": false,
+  "case_ids": [
+    "review-model-release",
+    "sales-no-data",
+    "inventory-stale",
+    "source-unavailable",
+    "auth-missing",
+    "auth-viewer",
+    "auth-foreign-scope",
+    "auth-source-capability"
+  ],
+  "data_sources": "frozen_fixtures",
+  "max_calls": 48,
+  "model": {
+    "inference_profile": "eu.anthropic.claude-sonnet-4-6",
+    "max_output_tokens": 1500,
+    "model_id": "anthropic.claude-sonnet-4-6",
+    "provider": "bedrock",
+    "region": "eu-central-1",
+    "temperature": 0.0
+  },
+  "offline_gates_passed": true,
+  "offline_release_id": "agent-evaluation-release-sha256-5af8512853febf92260a3b9b50213dee0ab8a5a6b8c385f7904ac02c9adc791e",
+  "pricing": {
+    "currency": "USD",
+    "input_per_million": "3.3",
+    "kind": "reviewed_provider_rates",
+    "max_run_cost": "0.11",
+    "max_smoke_cost": "1.00",
+    "output_per_million": "16.5",
+    "rate_version": "aws-sonnet46-frankfurt-public-20261007"
+  },
+  "profile_id": "bedrock-smoke-profile-sha256-e22418c821c766473ddf1181987eab54072bab0e4ccdcf9d2dc93587e9aea07a",
+  "real_chat": false,
+  "real_retrieval_measured": false,
+  "reason": "explicit_cost_limit_required",
+  "runtime_graph_config_id": "agent-graph-config-sha256-f4a48d7b0d64d3cadde064359a402be66b1a569371035e1992ae0d1e1b1b31cd",
+  "schema_version": "1.0",
+  "scope": "real_chat_over_fixture_evidence_only",
+  "status": "not_run",
+  "transport_version": "converse-json-counted-v1",
+  "worst_case_estimated_usd": "0.8184"
+}

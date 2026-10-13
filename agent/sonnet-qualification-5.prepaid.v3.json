@@ -1,0 +1,21 @@
+{
+  "case_ids": [
+    "document-5",
+    "document-6",
+    "caller-identity-field",
+    "business-comparison",
+    "inventory-ambiguous",
+    "forecast-conflicting",
+    "forecast-warning",
+    "verified-without-evidence"
+  ],
+  "circuit": {
+    "failure_threshold": 3,
+    "max_inflight": 2,
+    "recovery_seconds": 30.0,
+    "schema_version": "1.0"
+  },
+  "offline_release_id": "agent-evaluation-release-sha256-5af8512853febf92260a3b9b50213dee0ab8a5a6b8c385f7904ac02c9adc791e",
+  "runtime_graph_config_id": "agent-graph-config-sha256-f4a48d7b0d64d3cadde064359a402be66b1a569371035e1992ae0d1e1b1b31cd",
+  "schema_version": "1.0"
+}

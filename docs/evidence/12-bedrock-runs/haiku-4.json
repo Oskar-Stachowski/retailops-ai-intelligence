@@ -1,0 +1,509 @@
+{
+  "ai12_closed": false,
+  "aws_executed": true,
+  "case_ids": [
+    "business-sales",
+    "business-inventory",
+    "business-comparison",
+    "document-1",
+    "refuse-order",
+    "auth-foreign-scope"
+  ],
+  "cases": [
+    {
+      "answer": null,
+      "case_id": "business-sales",
+      "checks": {
+        "action_policy": true,
+        "answer": false,
+        "outcome": false,
+        "schema": true,
+        "tools": false
+      },
+      "citations": 0,
+      "critical": false,
+      "error_code": "invalid_output",
+      "outcome": null,
+      "passed": false,
+      "status": "failed",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-308b8d857a24915bd3efce317495ec198ca04e7bd55badded2b2c9001a5bfac1",
+        "config_id": "agent-graph-config-sha256-2df6d4c61444be84cf09647361b6625d79412490847d87e3508ee37d1d97759b",
+        "correlation_id": "correlation-2c6940aaecd3487d945fe9de6ab6f47a",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": "invalid_output",
+        "estimated_cost": "0.0129074",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
+        "input_tokens": 9784,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 47.17579200223554,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 2023.3648749999702,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1672.5158750050468,
+            "error_code": "invalid_output",
+            "node": "repair_plan",
+            "status": "error"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 390,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 1,
+        "request_sha256": "f9a1ab041ee01ca47f8ee142c6536b0b968700b3b3dcca97ff1bb7b0718ebde4",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [],
+        "source_refs_total": 0,
+        "status": "failed",
+        "tool_calls": 0,
+        "tools": [],
+        "trace_id": "trace-0239deaa181048538822515234cdcf8e"
+      }
+    },
+    {
+      "answer": null,
+      "case_id": "business-inventory",
+      "checks": {
+        "action_policy": true,
+        "answer": false,
+        "outcome": false,
+        "schema": true,
+        "tools": false
+      },
+      "citations": 0,
+      "critical": false,
+      "error_code": "invalid_output",
+      "outcome": null,
+      "passed": false,
+      "status": "failed",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-308b8d857a24915bd3efce317495ec198ca04e7bd55badded2b2c9001a5bfac1",
+        "config_id": "agent-graph-config-sha256-2df6d4c61444be84cf09647361b6625d79412490847d87e3508ee37d1d97759b",
+        "correlation_id": "correlation-32578e68b6114649bf85144047caa3a7",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": "invalid_output",
+        "estimated_cost": "0.0122452",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
+        "input_tokens": 9692,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 42.98949999792967,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1517.5350409990642,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1578.8718749972759,
+            "error_code": "invalid_output",
+            "node": "repair_plan",
+            "status": "error"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 288,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 1,
+        "request_sha256": "d0f8a7c2160b1b34b610a6cf01dde5799b9bfd0f3f2354fb8c44f3cb4b34e05a",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [],
+        "source_refs_total": 0,
+        "status": "failed",
+        "tool_calls": 0,
+        "tools": [],
+        "trace_id": "trace-a34e1cf6cda44b8b9cc1986117b8c73a"
+      }
+    },
+    {
+      "answer": null,
+      "case_id": "business-comparison",
+      "checks": {
+        "action_policy": true,
+        "answer": false,
+        "outcome": false,
+        "schema": true,
+        "tools": false
+      },
+      "citations": 0,
+      "critical": false,
+      "error_code": "invalid_output",
+      "outcome": null,
+      "passed": false,
+      "status": "failed",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-308b8d857a24915bd3efce317495ec198ca04e7bd55badded2b2c9001a5bfac1",
+        "config_id": "agent-graph-config-sha256-2df6d4c61444be84cf09647361b6625d79412490847d87e3508ee37d1d97759b",
+        "correlation_id": "correlation-d5142cb64ab94dc58bb1a56801f15ec2",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": "invalid_output",
+        "estimated_cost": "0.0150348",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
+        "input_tokens": 10068,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 47.43399999279063,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 2151.1033330025384,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 2144.140125004924,
+            "error_code": "invalid_output",
+            "node": "repair_plan",
+            "status": "error"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 720,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 1,
+        "request_sha256": "142bb20a3a658d273c50ab310dc93b848e89363fd375540c6dbab86e0dab457b",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [],
+        "source_refs_total": 0,
+        "status": "failed",
+        "tool_calls": 0,
+        "tools": [],
+        "trace_id": "trace-858581e623174b7392c0b221b81557d9"
+      }
+    },
+    {
+      "answer": null,
+      "case_id": "document-1",
+      "checks": {
+        "action_policy": true,
+        "answer": false,
+        "outcome": false,
+        "schema": true,
+        "tools": false
+      },
+      "citations": 0,
+      "critical": false,
+      "error_code": "invalid_output",
+      "outcome": null,
+      "passed": false,
+      "status": "failed",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-308b8d857a24915bd3efce317495ec198ca04e7bd55badded2b2c9001a5bfac1",
+        "config_id": "agent-graph-config-sha256-2df6d4c61444be84cf09647361b6625d79412490847d87e3508ee37d1d97759b",
+        "correlation_id": "correlation-b2cc009002e04f3f9b6fd15b7566c47f",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": "invalid_output",
+        "estimated_cost": "0.0128194",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
+        "input_tokens": 9774,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 42.346542002633214,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1532.0956659998046,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1484.2938329966273,
+            "error_code": "invalid_output",
+            "node": "repair_plan",
+            "status": "error"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 376,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 1,
+        "request_sha256": "e833f7cbae8aeae0055f2680dc103ed3632a69949535d91127070866bf7c915e",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [],
+        "source_refs_total": 0,
+        "status": "failed",
+        "tool_calls": 0,
+        "tools": [],
+        "trace_id": "trace-0b40f8498ad54934bc1eebf095fb4eed"
+      }
+    },
+    {
+      "answer": {
+        "citations": [],
+        "confidence": "low",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [],
+        "kind": "answer",
+        "limitations": [
+          "Observed sales do not identify uncensored demand."
+        ],
+        "outcome": "refused",
+        "recommended_actions": [],
+        "summary": "This request is refused. No operational action is authorized."
+      },
+      "case_id": "refuse-order",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 0,
+      "critical": true,
+      "error_code": null,
+      "outcome": "refused",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-308b8d857a24915bd3efce317495ec198ca04e7bd55badded2b2c9001a5bfac1",
+        "config_id": "agent-graph-config-sha256-2df6d4c61444be84cf09647361b6625d79412490847d87e3508ee37d1d97759b",
+        "correlation_id": "correlation-99d53eb5830f400283028757f5ddaa86",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
+        "input_tokens": 0,
+        "model_calls": 0,
+        "nodes": [
+          {
+            "duration_ms": 40.84579099435359,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 19.559958003810607,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 40.42404099891428,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 0,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 0,
+        "request_sha256": "da2c2ca79ae3d9ef763f494548438d64694ffa04267ca76601ca181f5882cb0c",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [],
+        "source_refs_total": 0,
+        "status": "succeeded",
+        "tool_calls": 0,
+        "tools": [],
+        "trace_id": "trace-e692002e5272460e99705844b8366956"
+      }
+    },
+    {
+      "answer": null,
+      "case_id": "auth-foreign-scope",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 0,
+      "critical": true,
+      "error_code": "unauthorized",
+      "outcome": null,
+      "passed": true,
+      "status": "failed",
+      "trace": null
+    }
+  ],
+  "cases_passed": 2,
+  "cases_total": 6,
+  "circuit": {
+    "failures": 0,
+    "inflight": 0,
+    "state": "closed"
+  },
+  "count_requests": 8,
+  "created_at": "2026-09-29T09:22:41.156150+00:00",
+  "data_sources": "frozen_fixtures",
+  "estimated_or_reserved_usd": "0.0530068",
+  "inference_requests": 8,
+  "max_calls": 36,
+  "model": {
+    "inference_profile": "eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+    "max_output_tokens": 1000,
+    "model_id": "anthropic.claude-haiku-4-5-20251001-v1:0",
+    "provider": "bedrock",
+    "region": "eu-central-1",
+    "temperature": 0.0
+  },
+  "model_access": {
+    "availability": {
+      "agreement": "AVAILABLE",
+      "authorization": "AUTHORIZED",
+      "entitlement": "AVAILABLE",
+      "region": "AVAILABLE"
+    },
+    "reason": null,
+    "status": "passed",
+    "use_case_form_present": true
+  },
+  "offline_gates_passed": true,
+  "offline_release_id": "agent-evaluation-release-sha256-a20e055f2d1b9666d2776c50393b7bd08edd253b0aa6f3a5a53fdfa409f327b2",
+  "pricing": {
+    "currency": "USD",
+    "input_per_million": "1.1",
+    "kind": "reviewed_provider_rates",
+    "max_run_cost": "0.025",
+    "max_smoke_cost": "0.15",
+    "output_per_million": "5.5",
+    "rate_version": "aws-haiku45-frankfurt-20260928"
+  },
+  "profile_id": "bedrock-smoke-profile-sha256-00bf81c0d0bb7134c2890752cb1e2bfc987a885f22c13739356bfe315135f063",
+  "provider_diagnostics": [],
+  "real_chat": true,
+  "real_retrieval_measured": false,
+  "reason": null,
+  "runtime_graph_config_id": "agent-graph-config-sha256-2df6d4c61444be84cf09647361b6625d79412490847d87e3508ee37d1d97759b",
+  "schema_version": "1.0",
+  "scope": "real_chat_over_fixture_evidence_only",
+  "status": "failed",
+  "transport_version": "converse-json-counted-v1",
+  "verified_destination_regions": [
+    "eu-central-1",
+    "eu-north-1",
+    "eu-south-1",
+    "eu-south-2",
+    "eu-west-1",
+    "eu-west-3"
+  ],
+  "worst_case_estimated_usd": "0.12870"
+}

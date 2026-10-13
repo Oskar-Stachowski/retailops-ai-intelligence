@@ -7,6 +7,7 @@ from retailops_ai.anomaly_evaluation.contract import Decision
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.intelligence_events.contracts import ForecastGenerated
 from retailops_ai.intelligence_events.model_contracts import AnomalyDetected, StockoutRiskScored
+from retailops_ai.intelligence_events.suggestion_contracts import RecommendationGenerated
 
 ROOT = Path(__file__).resolve().parents[1] / "contracts/events/v2"
 
@@ -19,6 +20,9 @@ def main() -> int:
         "forecast_generated.schema.json": ForecastGenerated.model_json_schema(),
         "anomaly_detected.schema.json": AnomalyDetected.model_json_schema(),
         "stockout_risk_scored.schema.json": StockoutRiskScored.model_json_schema(),
+        "recommendation_generated.schema.json": RecommendationGenerated.model_json_schema(
+            mode="serialization"
+        ),
         "registry.json": {
             "contract_version": "2.0.0",
             "topic": "retailops.intelligence.v2",
@@ -28,15 +32,15 @@ def main() -> int:
                 "forecast_generated": "forecast_generated.schema.json",
                 "anomaly_detected": "anomaly_detected.schema.json",
                 "stockout_risk_scored": "stockout_risk_scored.schema.json",
+                "recommendation_generated": "recommendation_generated.schema.json",
             },
-            "reserved_event_types": [
-                "recommendation_generated",
-            ],
+            "reserved_event_types": [],
             "payload_owner": "retailops_ai.forecast_jobs.v12_read_contracts.V12ForecastItem",
             "payload_owners": {
                 "forecast_generated": "retailops_ai.forecast_jobs.v12_read_contracts.V12ForecastItem",
                 "anomaly_detected": "retailops_ai.anomaly_portfolio.serving_contract.Item",
                 "stockout_risk_scored": "retailops_ai.stockout_runtime.public_contracts.RiskItem",
+                "recommendation_generated": "retailops_ai.intelligence_events.suggestion_contracts.TransportSuggestion",
             },
             "native_identity_fields": {
                 "anomaly_detected": sorted(Decision.model_fields),
@@ -56,7 +60,7 @@ def main() -> int:
         else:
             ROOT.mkdir(parents=True, exist_ok=True)
             path.write_bytes(raw)
-    print("Intelligence v2 forecast, anomaly and physical stockout contracts passed.")
+    print("Intelligence v2 forecast, anomaly, stockout and human-review contracts passed.")
     return 0
 
 

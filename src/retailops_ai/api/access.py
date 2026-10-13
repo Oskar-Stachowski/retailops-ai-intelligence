@@ -22,7 +22,13 @@ from retailops_ai.api.stockout import add_stockout_routes
 from retailops_ai.api.v12_forecast_jobs import add_v12_forecast_routes
 from retailops_ai.api.v12_metadata import add_v12_metadata_routes
 from retailops_ai.data_contracts.common import Contract, Symbol, Versioned
-from retailops_ai.domain.access import Capability, Principal, Role, can_read_forecast
+from retailops_ai.domain.access import (
+    DATA_CAPABILITIES,
+    Capability,
+    Principal,
+    Role,
+    can_read_forecast,
+)
 from retailops_ai.forecast_jobs.queue import BatchAdministration
 from retailops_ai.forecast_jobs.reader import ForecastReader
 from retailops_ai.forecast_jobs.v12_administration import V12JobAdministration
@@ -121,8 +127,7 @@ def access_router(
                 selling_location_ids=sorted(principal.selling_location_ids),
                 channels=sorted(principal.channels),
             )
-            if {"forecast:read", "forecast:run", "anomaly:read", "anomaly:run"}
-            & principal.capabilities
+            if DATA_CAPABILITIES & principal.capabilities
             else None
         )
         return IdentityResponse(

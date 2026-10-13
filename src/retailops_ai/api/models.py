@@ -44,7 +44,9 @@ class ServiceVersion(ApplicationInfo):
 
 
 class Problem(Contract):
-    type: Literal["about:blank"] = "about:blank"
+    type: str = Field(
+        default="about:blank", pattern=r"^about:blank$|^urn:retailops:problem:[a-z-]+$"
+    )
     title: str
     status: int = Field(ge=400, le=599)
     detail: str

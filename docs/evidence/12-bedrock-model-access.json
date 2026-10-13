@@ -1,0 +1,44 @@
+{
+  "checked_at": "2026-09-29T09:18:04.168303+00:00",
+  "form_present": true,
+  "models": [
+    {
+      "model_id": "anthropic.claude-haiku-4-5-20251001-v1:0",
+      "offer_id": "offer-fudwqbphlos64",
+      "http_status": 202,
+      "usage_only_terms": true,
+      "regional_prices_match_config": true,
+      "access": {
+        "status": "blocked",
+        "reason": "model_access_not_ready",
+        "use_case_form_present": true,
+        "availability": {
+          "agreement": "PENDING",
+          "authorization": "AUTHORIZED",
+          "entitlement": "AVAILABLE",
+          "region": "AVAILABLE"
+        }
+      }
+    },
+    {
+      "model_id": "anthropic.claude-sonnet-4-6",
+      "offer_id": "offer-ldnd26nhxx676",
+      "http_status": 202,
+      "usage_only_terms": true,
+      "regional_prices_match_config": true,
+      "access": {
+        "status": "blocked",
+        "reason": "model_access_not_ready",
+        "use_case_form_present": true,
+        "availability": {
+          "agreement": "PENDING",
+          "authorization": "AUTHORIZED",
+          "entitlement": "AVAILABLE",
+          "region": "AVAILABLE"
+        }
+      }
+    }
+  ],
+  "inference_requests": 0,
+  "reserved_capacity_created": false
+}

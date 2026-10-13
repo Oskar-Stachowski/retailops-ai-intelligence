@@ -1,0 +1,36 @@
+{
+  "chat_config_id": "agent-chat-config-sha256-f877d85b3b657f7aa38c1d4f204db45df999d457e82267b673dd4e71655f9e60",
+  "config_id": "agent-graph-config-sha256-c0b9b0f38a1aa6e02f4dfea2602c264438524c15dc4c80924e47f5f97cc79ddf",
+  "correlation_id": "correlation-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "created_at": "2026-08-23T00:00:00Z",
+  "error_code": "dependency_unavailable",
+  "estimated_cost": "0",
+  "extra_evidence_rounds": 0,
+  "fixture_only": true,
+  "index_id": null,
+  "input_tokens": 0,
+  "model_calls": 0,
+  "nodes": [],
+  "output_tokens": 0,
+  "owner_id": "fixture-agent-operator",
+  "release_refs": [],
+  "release_refs_total": 0,
+  "repairs": 0,
+  "request_sha256": "f736dc6abef1e4b109f8c97642f1b0131dc42bb5188fa2cdd8f8229a140e3e5d",
+  "schema_version": "1.0",
+  "scope": {
+    "channel": "store",
+    "product_ids": [
+      "p-101"
+    ],
+    "selling_location_ids": [
+      "s-03"
+    ]
+  },
+  "source_refs": [],
+  "source_refs_total": 0,
+  "status": "failed",
+  "tool_calls": 0,
+  "tools": [],
+  "trace_id": "trace-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

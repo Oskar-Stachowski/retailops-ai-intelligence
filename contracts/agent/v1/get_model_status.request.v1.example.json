@@ -1,0 +1,16 @@
+{
+  "as_of": "2026-08-22T23:59:59Z",
+  "contract_type": "tool_request",
+  "limit": 20,
+  "schema_version": "1.0",
+  "scope": {
+    "channel": "store",
+    "product_ids": [
+      "p-101"
+    ],
+    "selling_location_ids": [
+      "s-03"
+    ]
+  },
+  "tool": "get_model_status"
+}

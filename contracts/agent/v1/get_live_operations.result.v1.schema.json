@@ -1,0 +1,481 @@
+{
+  "$defs": {
+    "DataScope": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "product_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Product Ids",
+          "type": "array"
+        },
+        "selling_location_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Selling Location Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "product_ids",
+        "selling_location_ids",
+        "channel"
+      ],
+      "title": "DataScope",
+      "type": "object"
+    },
+    "NativeOperationsEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "evidence_version": {
+          "const": "native-operations-read-v1",
+          "default": "native-operations-read-v1",
+          "title": "Evidence Version",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "points": {
+          "items": {
+            "$ref": "#/$defs/NativeOperationsItem"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Points",
+          "type": "array"
+        },
+        "request": {
+          "$ref": "#/$defs/OperationsRequest"
+        },
+        "source_view_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source View Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "environment",
+        "request",
+        "observed_at",
+        "source_view_sha256",
+        "points"
+      ],
+      "title": "NativeOperationsEvidence",
+      "type": "object"
+    },
+    "NativeOperationsItem": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "consumer_lag_seconds": {
+          "default": null,
+          "title": "Consumer Lag Seconds",
+          "type": "null"
+        },
+        "failed_dead_lettered": {
+          "minimum": 0,
+          "title": "Failed Dead Lettered",
+          "type": "integer"
+        },
+        "ignored_duplicate": {
+          "minimum": 0,
+          "title": "Ignored Duplicate",
+          "type": "integer"
+        },
+        "latest_ingested_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Latest Ingested At"
+        },
+        "latest_processed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Latest Processed At"
+        },
+        "max_processing_latency_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Max Processing Latency Seconds"
+        },
+        "measurement_kind": {
+          "const": "scoped_persisted_event_processing",
+          "default": "scoped_persisted_event_processing",
+          "title": "Measurement Kind",
+          "type": "string"
+        },
+        "newer_state_not_evaluable": {
+          "minimum": 0,
+          "title": "Newer State Not Evaluable",
+          "type": "integer"
+        },
+        "processed": {
+          "minimum": 0,
+          "title": "Processed",
+          "type": "integer"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "received": {
+          "minimum": 0,
+          "title": "Received",
+          "type": "integer"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "stream_status": {
+          "const": "not_observed",
+          "default": "not_observed",
+          "title": "Stream Status",
+          "type": "string"
+        },
+        "window_minutes": {
+          "const": 15,
+          "default": 15,
+          "title": "Window Minutes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "received",
+        "processed",
+        "failed_dead_lettered",
+        "ignored_duplicate",
+        "newer_state_not_evaluable",
+        "latest_ingested_at",
+        "latest_processed_at",
+        "max_processing_latency_seconds"
+      ],
+      "title": "NativeOperationsItem",
+      "type": "object"
+    },
+    "OperationsItem": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "lag_seconds": {
+          "minimum": 0,
+          "title": "Lag Seconds",
+          "type": "number"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "stream_status": {
+          "enum": [
+            "healthy",
+            "degraded",
+            "stopped"
+          ],
+          "title": "Stream Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "stream_status",
+        "lag_seconds"
+      ],
+      "title": "OperationsItem",
+      "type": "object"
+    },
+    "OperationsRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_live_operations",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool"
+      ],
+      "title": "OperationsRequest",
+      "type": "object"
+    },
+    "ToolError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_scope",
+            "unauthorized",
+            "unavailable",
+            "stale",
+            "not_found",
+            "unsupported_grain",
+            "budget_exceeded"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "description": {
+          "enum": [
+            "The requested scope is invalid.",
+            "The requested scope is not authorized.",
+            "The required source is unavailable.",
+            "The requested source is stale.",
+            "The requested output was not found.",
+            "The requested grain is unsupported.",
+            "The tool budget was exceeded."
+          ],
+          "title": "Description",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "description",
+        "retryable"
+      ],
+      "title": "ToolError",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:agent:get_live_operations:result:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "as_of": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "As Of"
+    },
+    "contract_type": {
+      "const": "agent_tool_result",
+      "title": "Contract Type",
+      "type": "string"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ToolError"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "freshness_status": {
+      "enum": [
+        "current",
+        "stale",
+        "missing",
+        "unavailable"
+      ],
+      "title": "Freshness Status",
+      "type": "string"
+    },
+    "items": {
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/OperationsItem"
+          },
+          {
+            "$ref": "#/$defs/NativeOperationsItem"
+          }
+        ]
+      },
+      "maxItems": 50,
+      "title": "Items",
+      "type": "array"
+    },
+    "native_view": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/NativeOperationsEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_kind": {
+      "enum": [
+        "fixture",
+        "runtime"
+      ],
+      "title": "Source Kind",
+      "type": "string"
+    },
+    "source_ref": {
+      "anyOf": [
+        {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Source Ref"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "no_data",
+        "error"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "tool": {
+      "const": "get_live_operations",
+      "title": "Tool",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "contract_type",
+    "status",
+    "as_of",
+    "freshness_status",
+    "source_ref",
+    "items",
+    "error",
+    "source_kind",
+    "tool"
+  ],
+  "title": "OperationsResult",
+  "type": "object"
+}

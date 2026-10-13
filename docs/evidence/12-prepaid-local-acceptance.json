@@ -1,0 +1,109 @@
+{
+  "ai_main": "bc5073306ffceb2104c0daeb36405b14f1505dfb",
+  "application_code_sha256": "2759cff04267511d6cb6c08de8be76bd7754dd1f44c4c9846fac0fb7cb1d8c3a",
+  "current_checks": {
+    "ci_checks": "passed",
+    "native_runtime_junit_sha256": "4caf5352573dad3c6dac5de71da61b73306092f5abd7bd906887b83775c0cc95",
+    "native_runtime_tests": 49,
+    "wheel_golden_passed": 50,
+    "wheel_golden_total": 50,
+    "wheel_network_blocked": true
+  },
+  "free_controlplane_operations": 6,
+  "paid_calls": 0,
+  "previous_checkpoint_unchanged_assistant": {
+    "application_code_sha256": "91641a069f9ec1da0f3c32608bc848eb059e6e02b749a309b9b440a1dc0ca489",
+    "native_postgres": {
+      "application_code_sha256": "91641a069f9ec1da0f3c32608bc848eb059e6e02b749a309b9b440a1dc0ca489",
+      "authorized_trace_restart": "passed",
+      "aws_executed": false,
+      "canonical_forecast_and_stockout_sql": "missing_outputs_preserved",
+      "chat_provider": "fake",
+      "curated_dataset_id": "curated-sha256-7253251d1a4666819b6f25dadfb10530cf8ce1b71d4091593721b2fbad02967e",
+      "deadline_seconds": 45.0,
+      "embedding_provider": "fake",
+      "http_rejected_expired_source_horizons": [
+        "forecast",
+        "risk"
+      ],
+      "http_succeeded_intents": [
+        "sales",
+        "inventory",
+        "anomalies",
+        "operations",
+        "model",
+        "documentation"
+      ],
+      "index_generation_drift_rejected": true,
+      "native_and_knowledge_trace_revocation": "passed_after_policy_restart",
+      "native_read_adapters": 7,
+      "persisted_answers": 6,
+      "persisted_operations_review_outbox_events": 1,
+      "persisted_operations_review_suggestions": 1,
+      "positive_model_publication": "not_qualified_by_this_run",
+      "producer_write_denied": true,
+      "query_duration_seconds": [
+        1.302106458984781,
+        0.8029995420074556,
+        0.003326917008962482,
+        0.0018126670038327575,
+        0.6675275419838727,
+        0.688186624989612,
+        0.632845999993151,
+        1.2444394579797518
+      ],
+      "semantic_quality": "not_evaluated_fake_vectors",
+      "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09",
+      "source_fixture": "full-raw-dq-v2/physical + day-coverage-v1/physical",
+      "status": "passed",
+      "tools": [
+        "get_demand_forecast",
+        "get_detected_anomalies",
+        "get_inventory_status",
+        "get_live_operations",
+        "get_model_status",
+        "get_sales_summary",
+        "get_stockout_risk",
+        "search_knowledge"
+      ],
+      "utc_readiness_rejection": true
+    },
+    "postgres_tests_passed": 21,
+    "security_tests_passed": 728,
+    "suggestion_outbox_postgres": {
+      "application_code_sha256": "91641a069f9ec1da0f3c32608bc848eb059e6e02b749a309b9b440a1dc0ca489",
+      "atomic_completion": true,
+      "aws_executed": false,
+      "competing_workers_skip_locked": true,
+      "database_revision": "0028_ai12_suggestion_outbox",
+      "expired_send_withheld": true,
+      "identical_retry_bytes": true,
+      "policy": "read-only-review-v1",
+      "producer": "scripted_delivery_callback_no_broker",
+      "retry_after_ack_sql_crash": true,
+      "rollback_after_enqueue": true,
+      "source_projection_executed": false,
+      "status": "passed",
+      "stored_lifecycle_counts": {
+        "delivered": 16,
+        "expired": 4
+      }
+    }
+  },
+  "real_rag_replay": {
+    "cache": "actual_Titan_vectors_from_accepted_AI11_release",
+    "case_passed": 39,
+    "citation_correctness": 1.0,
+    "critical_passed": 9,
+    "critical_total": 9,
+    "independent_AI12_label_acceptance": false,
+    "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+    "mrr": 0.6612745098039216,
+    "new_model_calls": 0,
+    "recall_at_5": 0.8529411764705882,
+    "sql_cases_evaluated": 44,
+    "thresholds_passed": true
+  },
+  "source_main": "5c05445e8105c378107099785bae7355388ed7e7",
+  "status": "passed_with_scope_limits"
+}

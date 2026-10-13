@@ -1,0 +1,814 @@
+{
+  "bedrock": {
+    "aws_executed": false,
+    "historical_receipts_count": 40,
+    "historical_receipts_unchanged": true,
+    "historical_results_qualify_resumed_code": false,
+    "new_calls": 0,
+    "proposal": {
+      "ai12_closed": false,
+      "aws_executed": false,
+      "case_ids": [
+        "business-sales",
+        "business-inventory",
+        "business-comparison",
+        "document-1",
+        "refuse-order",
+        "auth-foreign-scope"
+      ],
+      "data_sources": "frozen_fixtures",
+      "max_calls": 36,
+      "model": {
+        "inference_profile": "eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+        "max_output_tokens": 1500,
+        "model_id": "anthropic.claude-haiku-4-5-20251001-v1:0",
+        "provider": "bedrock",
+        "region": "eu-central-1",
+        "temperature": 0.0
+      },
+      "offline_gates_passed": true,
+      "offline_release_id": "agent-evaluation-release-sha256-cc04157e820d636a93518833643605e639c35befa2aa5bdc22509046fef7f1c4",
+      "pricing": {
+        "currency": "USD",
+        "input_per_million": "1.1",
+        "kind": "reviewed_provider_rates",
+        "max_run_cost": "0.04",
+        "max_smoke_cost": "0.15",
+        "output_per_million": "5.5",
+        "rate_version": "aws-haiku45-frankfurt-20260928"
+      },
+      "profile_id": "bedrock-smoke-profile-sha256-a60df1f5a039c53f44f7b66a62d827671cc6afb5198be9fda9e79cc54c01f664",
+      "real_chat": false,
+      "real_retrieval_measured": false,
+      "reason": "explicit_cost_limit_required",
+      "runtime_graph_config_id": "agent-graph-config-sha256-b9dbf31f55246e4f959204457394d650595702ff046fa5b115c96855dfc5e9fd",
+      "schema_version": "1.0",
+      "scope": "real_chat_over_fixture_evidence_only",
+      "status": "not_run",
+      "transport_version": "converse-json-counted-v1",
+      "worst_case_estimated_usd": "0.15"
+    }
+  },
+  "branch": "ai/12-resume",
+  "code_sha256": "711638189679c7b8cf3ce0b27c654c373066582f460ae02d949cee52ffe41b08",
+  "date": "2026-10-07",
+  "dependency_lock_sha256": "a9eed66c2fe18a55cdcb639e8c3dcd74d2e3f66f1a4d45e64ba84a364c3b1933",
+  "isolation": {
+    "neighbor_processes_stopped": false,
+    "neighbor_worktrees_edited": false,
+    "own_virtual_environment": true,
+    "shared_compose_or_databases_changed": false,
+    "training_or_source_exports_started": false,
+    "worktree": "/private/tmp/retailops-ai12-resume"
+  },
+  "main_base": "3329a8156312e1b709a2cfc90a2f565b274f49af",
+  "migration_head": "0026_ai12",
+  "migration_parents": [
+    "0023_ai07_ai08",
+    "0010_assistant_token_budget"
+  ],
+  "offline_evaluation": {
+    "acceptance_scope": "canonical_fixture_invariants_only",
+    "aws_executed": false,
+    "cases": [
+      {
+        "case_id": "business-sales",
+        "critical": false,
+        "duration_ms": 227.68441701191477,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "business-inventory",
+        "critical": false,
+        "duration_ms": 245.4468329960946,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "business-forecast",
+        "critical": false,
+        "duration_ms": 235.39179199724458,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "business-risk",
+        "critical": false,
+        "duration_ms": 218.63099999609403,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "business-operations",
+        "critical": false,
+        "duration_ms": 280.92429200478364,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "business-model",
+        "critical": false,
+        "duration_ms": 220.8839579980122,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "business-anomalies",
+        "critical": false,
+        "duration_ms": 245.55070800124668,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "business-investigation",
+        "critical": false,
+        "duration_ms": 293.8282499962952,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 3
+      },
+      {
+        "case_id": "ops-degraded",
+        "critical": true,
+        "duration_ms": 236.27850000048056,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "ops-stopped",
+        "critical": true,
+        "duration_ms": 285.5560419993708,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "ops-lag-boundary",
+        "critical": true,
+        "duration_ms": 313.00762500904966,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "ops-below-boundary",
+        "critical": true,
+        "duration_ms": 249.8699160059914,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "anomaly-no-difference",
+        "critical": true,
+        "duration_ms": 293.7205000052927,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "review-qualified",
+        "critical": true,
+        "duration_ms": 251.68812500487547,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 4
+      },
+      {
+        "case_id": "review-below-probability",
+        "critical": true,
+        "duration_ms": 242.70179199811537,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 4
+      },
+      {
+        "case_id": "review-source-threshold",
+        "critical": true,
+        "duration_ms": 245.04424999759067,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 4
+      },
+      {
+        "case_id": "review-inventory-ref",
+        "critical": true,
+        "duration_ms": 228.32399999606423,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 4
+      },
+      {
+        "case_id": "review-model-release",
+        "critical": true,
+        "duration_ms": 233.75416699855123,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 4
+      },
+      {
+        "case_id": "sales-no-data",
+        "critical": true,
+        "duration_ms": 266.2866250029765,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 100,
+        "model_calls": 1,
+        "output_tokens": 20,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "inventory-stale",
+        "critical": true,
+        "duration_ms": 218.20104200742207,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 100,
+        "model_calls": 1,
+        "output_tokens": 20,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "source-unavailable",
+        "critical": true,
+        "duration_ms": 99.46687499177642,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 100,
+        "model_calls": 1,
+        "output_tokens": 20,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "auth-missing",
+        "critical": true,
+        "duration_ms": 13.259625004138798,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 0,
+        "model_calls": 0,
+        "output_tokens": 0,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "auth-viewer",
+        "critical": true,
+        "duration_ms": 12.837749993195757,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 0,
+        "model_calls": 0,
+        "output_tokens": 0,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "auth-foreign-scope",
+        "critical": true,
+        "duration_ms": 13.257459009764716,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 0,
+        "model_calls": 0,
+        "output_tokens": 0,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "auth-source-capability",
+        "critical": true,
+        "duration_ms": 39.55395800585393,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 0,
+        "model_calls": 0,
+        "output_tokens": 0,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "refuse-order",
+        "critical": true,
+        "duration_ms": 282.5196249905275,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 0,
+        "model_calls": 0,
+        "output_tokens": 0,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "refuse-price",
+        "critical": true,
+        "duration_ms": 205.29329098644666,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 0,
+        "model_calls": 0,
+        "output_tokens": 0,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "refuse-sql",
+        "critical": true,
+        "duration_ms": 225.24870799679775,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 0,
+        "model_calls": 0,
+        "output_tokens": 0,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "refuse-secret",
+        "critical": true,
+        "duration_ms": 198.07845799368806,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 0,
+        "model_calls": 0,
+        "output_tokens": 0,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "false-number",
+        "critical": true,
+        "duration_ms": 190.9096660092473,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 300,
+        "model_calls": 3,
+        "output_tokens": 60,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "false-meaning",
+        "critical": true,
+        "duration_ms": 182.54662500112318,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 300,
+        "model_calls": 3,
+        "output_tokens": 60,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "false-summary",
+        "critical": true,
+        "duration_ms": 176.4896660024533,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 300,
+        "model_calls": 3,
+        "output_tokens": 60,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "unauthorized-action",
+        "critical": true,
+        "duration_ms": 212.1623340062797,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 300,
+        "model_calls": 3,
+        "output_tokens": 60,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "one-extra-evidence",
+        "critical": true,
+        "duration_ms": 313.9449160080403,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 300,
+        "model_calls": 3,
+        "output_tokens": 60,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "one-schema-repair",
+        "critical": true,
+        "duration_ms": 260.87070800713263,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 300,
+        "model_calls": 3,
+        "output_tokens": 60,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "provider-auth-failure",
+        "critical": true,
+        "duration_ms": 108.0588750046445,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 100,
+        "model_calls": 1,
+        "output_tokens": 400,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "document-1",
+        "critical": false,
+        "duration_ms": 288.37449999991804,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "document-2",
+        "critical": false,
+        "duration_ms": 324.7759169898927,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "document-3",
+        "critical": false,
+        "duration_ms": 336.9907919986872,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "document-4",
+        "critical": false,
+        "duration_ms": 367.62729099427816,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "document-5",
+        "critical": false,
+        "duration_ms": 282.7290000132052,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 100,
+        "model_calls": 1,
+        "output_tokens": 20,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "document-6",
+        "critical": true,
+        "duration_ms": 275.88195899443235,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "forged-citation",
+        "critical": true,
+        "duration_ms": 222.13800001190975,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 300,
+        "model_calls": 3,
+        "output_tokens": 60,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "caller-identity-field",
+        "critical": true,
+        "duration_ms": 0.0813329970696941,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 0,
+        "model_calls": 0,
+        "output_tokens": 0,
+        "passed": true,
+        "tool_calls": 0
+      },
+      {
+        "case_id": "business-comparison",
+        "critical": false,
+        "duration_ms": 318.16395799978636,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 200,
+        "model_calls": 2,
+        "output_tokens": 40,
+        "passed": true,
+        "tool_calls": 2
+      },
+      {
+        "case_id": "inventory-ambiguous",
+        "critical": true,
+        "duration_ms": 360.92004099918995,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 100,
+        "model_calls": 1,
+        "output_tokens": 20,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "forecast-conflicting",
+        "critical": true,
+        "duration_ms": 294.84441700333264,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 100,
+        "model_calls": 1,
+        "output_tokens": 20,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "forecast-warning",
+        "critical": true,
+        "duration_ms": 285.1653329998953,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 100,
+        "model_calls": 1,
+        "output_tokens": 20,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "verified-without-evidence",
+        "critical": true,
+        "duration_ms": 289.5197920006467,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 100,
+        "model_calls": 1,
+        "output_tokens": 20,
+        "passed": true,
+        "tool_calls": 1
+      },
+      {
+        "case_id": "model-changed-scope",
+        "critical": true,
+        "duration_ms": 126.02491700090468,
+        "estimated_cost": "0",
+        "failed_checks": [],
+        "input_tokens": 100,
+        "model_calls": 1,
+        "output_tokens": 20,
+        "passed": true,
+        "tool_calls": 0
+      }
+    ],
+    "estimated_cost_usd": "0",
+    "evaluator_sha256": "711638189679c7b8cf3ce0b27c654c373066582f460ae02d949cee52ffe41b08",
+    "failed_gates": [],
+    "fixture_only": true,
+    "golden_sha256": "44d8686bc95bedb479d51aac1fe49360f245efd75ee803c526691583a8be6f83",
+    "graph_config_id": "agent-graph-config-sha256-53aba9d5abc5f4c7f758c882d68485493acf0bd2b4d33ad73f67363bff541a94",
+    "input_tokens": 7900,
+    "labels_state": "proposed",
+    "latency_p95_ms": 336.9907919986872,
+    "metrics": {
+      "action_policy": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "answer_exact": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "call_budget": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "case_pass": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "citation_correctness": {
+        "passed": 6,
+        "total": 6,
+        "value": 1.0
+      },
+      "citation_coverage": {
+        "passed": 6,
+        "total": 6,
+        "value": 1.0
+      },
+      "critical_cases": {
+        "passed": 36,
+        "total": 36,
+        "value": 1.0
+      },
+      "groundedness": {
+        "passed": 46,
+        "total": 46,
+        "value": 1.0
+      },
+      "numeric_faithfulness": {
+        "passed": 40,
+        "total": 40,
+        "value": 1.0
+      },
+      "outcome": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "refusal_correctness": {
+        "passed": 4,
+        "total": 4,
+        "value": 1.0
+      },
+      "safety_outcome": {
+        "passed": 15,
+        "total": 15,
+        "value": 1.0
+      },
+      "schema_pass": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "tool_selection_arguments": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      }
+    },
+    "output_tokens": 1960,
+    "provider": "fake",
+    "rag_quality_remeasured": false,
+    "release_id": "agent-evaluation-release-sha256-cc04157e820d636a93518833643605e639c35befa2aa5bdc22509046fef7f1c4",
+    "schema_version": "1.0",
+    "status": "passed",
+    "unnecessary_tool_calls": 0
+  },
+  "package": {
+    "build": "passed",
+    "isolated_assistant_routes_and_merge_migration_in_wheel": true,
+    "python_files": 532,
+    "wheel_source_code_checksums_equal": true
+  },
+  "preserved_branch": "ai/12-tools",
+  "preserved_head": "a14b7899d9366c6ae555c0b6be4a8d027514ca91",
+  "question_routes": {
+    "intents": 12,
+    "labels_state": "proposed",
+    "profile_id": "assistant-routes-sha256-ef4ede420b8b9787c870a68214018d4ec47c16628000535e2a00880709b46a47",
+    "questions": 26,
+    "scope": "offline_proposal"
+  },
+  "remaining": [
+    "Native business/ML adapters with source, model and release bindings; v12 and canonical source qualification via AI10",
+    "Explicit selling-to-physical scope mapping and physical product authorization for stockout",
+    "Daily forecast freshness versus short-lived suggestion expiry must be qualified without relaxing stale-data checks",
+    "Actual agent/policy suggestion to durable outbox/v2, RetailOps read API/UI and retry deduplication through AI10",
+    "Human review of question/golden labels and release configuration",
+    "Bounded real Sonnet/Titan evaluation on accepted AI11 index and real authorized tools; a newly approved spend cap must cover the worst-case proposal"
+  ],
+  "remote_ci": {
+    "note": "Status recorded before publishing the draft PR; remote gates remain required.",
+    "required_before_acceptance": true,
+    "status": "not_started"
+  },
+  "schema_version": "1.0",
+  "stage": "AI12",
+  "static": {
+    "contracts": "passed",
+    "documentation": "passed",
+    "gitleaks_directory": "passed",
+    "mypy": "passed",
+    "mypy_source_files": 532,
+    "ruff": "passed"
+  },
+  "status": "in_progress",
+  "tests": {
+    "junit_runs": [
+      "tests.xml",
+      "bedrock-tests.xml",
+      "final-tests.xml"
+    ],
+    "latest_unique_test_results": {
+      "passed": 687
+    },
+    "unique_tests": 687
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "cases": [
+    {
+      "case_id": "rag-03",
+      "chunk_id": "chunk-sha256-88e8bbe4569a6de7fe7d2bcc64de13e53d514843c2ed19cb5ba542bb7f32d414",
+      "chunk_sha256": "c96be790b063569f74471d619a10378228adeb696d5bfc3459cde57f6fc379a9",
+      "document_status": "implemented",
+      "expected_facts": [
+        "GET /api/v1/identity returns the caller principal, roles, capabilities and configured scope.",
+        "POST /api/v1/access/forecast-check requires explicit forecast:read and validates the whole requested scope."
+      ],
+      "expected_outcome": "answered",
+      "fact_scope": "Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body.",
+      "forbidden_claims": [
+        "production IAM or OIDC is implemented",
+        "the source describes the current main revision"
+      ],
+      "question": "Które endpointy zwracają zweryfikowaną tożsamość i scope?",
+      "required_quote": "| `GET /api/v1/identity` | Zweryfikowany token; własny principal, role, capabilities i skonfigurowany scope |\n| `POST /api/v1/access/forecast-check` | Jawne forecast:read i cały dozwolony scope; 200 z decyzją dla tego żądania |",
+      "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/access-control.md"
+    },
+    {
+      "case_id": "rag-04",
+      "chunk_id": "chunk-sha256-34a3a28ea784e6e2740cea2c7be5b73c604d29840d0c74c0691c77e24d58d2c4",
+      "chunk_sha256": "7834909f283ed2d9cb3f03f0b15c752ee0ed575cab08613bd9ba744398028f22",
+      "document_status": "implemented",
+      "expected_facts": [
+        "Restart every API process after changing grants, revoke or rotation; the policy is a startup snapshot.",
+        "Expiry is checked on every request without restart, and the exact expires_at boundary is unavailable.",
+        "No policy editing over HTTP and no automatic rotation/hot reload."
+      ],
+      "expected_outcome": "answered",
+      "fact_scope": "Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body.",
+      "forbidden_claims": [
+        "production IAM or OIDC is implemented",
+        "the source describes the current main revision"
+      ],
+      "question": "Kiedy zmiana grantów lub revoke wymaga restartu procesu?",
+      "required_quote": "Polityka jest snapshotem w pamięci procesu, ładowanym przy starcie.\nPo zmianie grants, revoked albo rotation **zrestartuj każdy proces API**.\nWygaśnięcie jest sprawdzane dla każdego żądania, bez restartu; dokładna granica\nexpires_at jest niedostępna. Nadanie nowych tokenów wymaga nowego prywatnego\nkatalogu i jawnego przełączenia API_AUTH_FILE. Nie ma HTTP edycji polityki ani\nautomatycznej rotacji/hot reload. Nie usuwaj starych plików jako sposobu odwołania\njuż działającego snapshotu.",
+      "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/access-control.md"
+    }
+  ],
+  "labels_origin": "source_document_review_before_runtime_execution",
+  "not_full_golden_qualification": true,
+  "review_state": "local_development_review",
+  "schema_version": "1.0"
+}

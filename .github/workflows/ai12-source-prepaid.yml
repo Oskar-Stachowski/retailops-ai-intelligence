@@ -1,0 +1,63 @@
+name: AI12 unpaid Source acceptance
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai12-unpaid-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  source-acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      AI12_UNPAID_ACCEPTANCE: "1"
+      REQUIRE_BROKER_TESTS: "1"
+      AWS_EC2_METADATA_DISABLED: "true"
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: 5c05445e8105c378107099785bae7355388ed7e7
+          path: .local/ai12-source
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - name: Prepare independent locked AI and pinned Source environments
+        run: |
+          make bootstrap intelligence-delivery-bootstrap
+          uv venv --python 3.11.15 .local/ai12-source/services/api/.venv
+          uv pip install --python .local/ai12-source/services/api/.venv/bin/python -r .local/ai12-source/services/api/requirements-dev.txt
+          printf 'AI12_SOURCE_ROOT=%s/.local/ai12-source\nAI12_CORE_PYTHON=%s/.venv/bin/python\nAI12_DELIVERY_PYTHON=%s/tools/intelligence-delivery/.venv/bin/python\n' "$GITHUB_WORKSPACE" "$GITHUB_WORKSPACE" "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
+      - name: Build original Source UI and install Chromium
+        working-directory: .local/ai12-source/frontend
+        run: |
+          npm ci
+          npm run build
+          npx playwright install --with-deps chromium
+      - name: Run original emitter, broker, consumer, authenticated API and Chromium
+        run: |
+          export PYTHONPATH="$AI12_SOURCE_ROOT/services/api:$AI12_SOURCE_ROOT/services/api/tests"
+          "$AI12_SOURCE_ROOT/services/api/.venv/bin/python" -m pytest tests/ai12_source_acceptance/acceptance.py --noconftest -q -o addopts= --junitxml=artifacts/ai12-source-e2e/junit.xml
+      - name: Preserve safe receipt and built UI evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai12-source-prepaid
+          path: artifacts/ai12-source-e2e/
+          if-no-files-found: error
+          retention-days: 30

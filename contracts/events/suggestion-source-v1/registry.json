@@ -1,0 +1,13 @@
+{
+  "adapter_registry_version": "1.0",
+  "topic": "retailops.intelligence.v2",
+  "schema_version": "2.0",
+  "event_type_schemas": {
+    "recommendation_generated": "recommendation_generated.schema.json"
+  },
+  "payload_schema": "suggestion.v1.schema.json",
+  "producer_owner_commit": "a14b7899d9366c6ae555c0b6be4a8d027514ca91",
+  "qualification": "fixture_only",
+  "enabled_by": "RETAILOPS_ENABLE_SUGGESTION_FIXTURE_TRANSPORT=1",
+  "real_outbox_emitter_available": false
+}

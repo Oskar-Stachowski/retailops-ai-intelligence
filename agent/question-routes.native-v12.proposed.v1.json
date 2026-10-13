@@ -1,0 +1,112 @@
+{
+  "graph_config_id": "agent-graph-config-sha256-2c4c7ce47ac41ee1cebe4d00d7490e353aab5c1e4b99eaf360f80f251af281d3",
+  "labels_state": "proposed",
+  "profile": "assistant-question-routes-v1",
+  "routes": [
+    {
+      "intent": "sales",
+      "question": "Jaka jest zaobserwowana sprzeda\u017c w wybranym okresie?"
+    },
+    {
+      "intent": "sales",
+      "question": "What sales were observed in the selected period?"
+    },
+    {
+      "intent": "sales_comparison",
+      "question": "Jak sprzeda\u017c zmieni\u0142a si\u0119 wzgl\u0119dem poprzedniego okresu?"
+    },
+    {
+      "intent": "sales_comparison",
+      "question": "How did sales change versus the preceding period?"
+    },
+    {
+      "intent": "inventory",
+      "question": "Jaki jest stan zapasu dla wybranych produkt\u00f3w?"
+    },
+    {
+      "intent": "inventory",
+      "question": "What inventory is available for the selected products?"
+    },
+    {
+      "intent": "forecast",
+      "question": "Jaka jest prognoza popytu w wybranym horyzoncie?"
+    },
+    {
+      "intent": "forecast",
+      "question": "What is the demand forecast for the selected horizon?"
+    },
+    {
+      "intent": "risk",
+      "question": "Jakie jest ryzyko braku zapasu w wybranym horyzoncie?"
+    },
+    {
+      "intent": "risk",
+      "question": "What stockout risk is predicted for the selected horizon?"
+    },
+    {
+      "intent": "anomalies",
+      "question": "Jakie anomalie wykryto w wybranym okresie?"
+    },
+    {
+      "intent": "anomalies",
+      "question": "What anomalies were detected in the selected period?"
+    },
+    {
+      "intent": "operations",
+      "question": "Jaka jest \u015bwie\u017co\u015b\u0107 danych operacyjnych?"
+    },
+    {
+      "intent": "operations",
+      "question": "How fresh are the operational data?"
+    },
+    {
+      "intent": "model",
+      "question": "Jaki jest zweryfikowany status modeli?"
+    },
+    {
+      "intent": "model",
+      "question": "What is the verified model status?"
+    },
+    {
+      "intent": "investigation",
+      "question": "Jakie dane sprzeda\u017cy, zapasu i anomalii wymagaj\u0105 przegl\u0105du?"
+    },
+    {
+      "intent": "investigation",
+      "question": "Which sales, inventory and anomaly evidence needs review?"
+    },
+    {
+      "intent": "recommendations",
+      "question": "Jakie dzia\u0142ania wymagaj\u0105 przegl\u0105du na podstawie prognozy i ryzyka?"
+    },
+    {
+      "intent": "recommendations",
+      "question": "Which actions need review based on forecast and risk evidence?"
+    },
+    {
+      "intent": "documentation",
+      "question": "Jak rozpocz\u0105\u0107 prac\u0119 lokaln\u0105 nad pakietem AI?"
+    },
+    {
+      "intent": "documentation",
+      "question": "Jakie kontrole nale\u017cy uruchomi\u0107 przed commitem AI?"
+    },
+    {
+      "intent": "documentation",
+      "question": "Kt\u00f3re endpointy zwracaj\u0105 zweryfikowan\u0105 to\u017csamo\u015b\u0107 i scope?"
+    },
+    {
+      "intent": "documentation",
+      "question": "Kiedy zmiana grant\u00f3w lub revoke wymaga restartu procesu?"
+    },
+    {
+      "intent": "verified_state",
+      "question": "Jak zabezpieczono odczyt metryk diagnostycznych?"
+    },
+    {
+      "intent": "documentation",
+      "question": "Co sprawdzaj\u0105 health i ready serwisu AI?"
+    }
+  ],
+  "schema_version": "1.0"
+}
