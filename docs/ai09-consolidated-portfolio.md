@@ -2,12 +2,12 @@
 
 Obowiązuje [zatwierdzony zakres](ai09-portfolio-ready.md). Ta strona zestawia
 wyniki o różnych zakresach danych; nie udaje jednego wspólnego testu.
-Forecasting AI 09 pozostaje **w trakcie / not_ready**. Historyczne etapy
+Ocena forecastingu AI 09 jest **ukończona, publikacja w odbiorze**. Historyczne etapy
 AI 07–08 pozostają **ready** w swoich zaakceptowanych zakresach.
 
 | Zastosowanie | Przypięty model | Zakres dowodów | Bieżąca decyzja |
 | --- | --- | --- | --- |
-| Forecasting | Baseline/RF/HGB/TensorFlow; nowe porównanie w toku | Nowy mniejszy profil i planowane trzy seedy final; wyników jeszcze nie odebrano | Brak nowej promocji; wynik TF może być negatywny |
+| Forecasting | Baseline/RF/HGB/TensorFlow; [raport](ai09-forecast-portfolio-report.md) i [karta TF](cards/tensorflow-portfolio.md) | Nowy mniejszy profil, trzy zakończone seedy final; po 19443 wspólne klucze i 17437 kwalifikowanych etykiet | TF odrzucony przez zamrożoną regułę; bez nowej promocji lub zmiany championa |
 | Anomaly — AI 07 | Seasonal residual; referencyjny Isolation Forest | Odebrane `synthetic_ai_07_portfolio_v4`, 56/56 oryginalnych bramek dla obu modeli; zapisane karty i kapsuły | Zachować historyczne rozstrzygnięcie |
 | Stockout — AI 08 | LogisticRegression with_upstream + conditional sigmoid C10 | Sześć źródeł, 9296 kwalifikujących punktów, 90 passed, 3 zaakceptowane warnings, 0 blokad | Zachować model, kalibrację, progi 25/50/90% i capacity top50% |
 
@@ -54,6 +54,9 @@ MLflow run odbioru: `f4f7493bfff343a1bcf3d8d6e6953ac4`.
   danych ani zgody na nową promocję. Odbiory usług odbyły się w środowiskach
   izolowanych, bez wdrożenia produkcyjnego.
 
-Nowy raport forecastingu, jego artefakt i karta zostaną dołączone dopiero po
-rzeczywistym wykonaniu. Brakujące wyniki pozostają brakujące — manifest
-konsolidacji sam nie zamyka AI 09.
+Nowy [raport forecastingu](ai09-forecast-portfolio-report.md),
+[karta](cards/tensorflow-portfolio.md) i [manifest końcowych wyników](evidence/09-136-portfolio-final-complete.json)
+wiążą wykonane oceny. TF ma znormalizowany bias średniej od −23,06% do −42,74%
+między seedami; nie spełnia limitu 10%. Nieobecne grupy historycznego wolumenu
+zero/high pozostają `not_ready`. Odrzucenie TF nie zmienia historycznych
+kwalifikacji pozostałych zastosowań. Pełny odbiór publikacji należy do R8.

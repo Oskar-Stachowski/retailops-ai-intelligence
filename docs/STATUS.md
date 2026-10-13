@@ -1,5 +1,18 @@
 # Aktualny status
 
+**2026-10-13 — AI 09: wykonanie ukończone, odbiór publikacji R8.**
+[Raport końcowy](ai09-forecast-portfolio-report.md) i [karta TF](cards/tensorflow-portfolio.md)
+wiążą rzeczywisty trening, kalibrację oraz trzy poprawnie zakończone seedy
+42/137/2026. Każdy ma 19443 wspólne klucze i 17437 kwalifikowanych etykiet;
+wszystkie metryki odtworzono dokładnie z zapisanych predykcji i etykiet.
+Decyzja: **odrzucić TF do nowej promocji, zachować historyczne portfolio**.
+Bias TF wynosi od −23,06% do −42,74% przy limicie 10%; zero/high bez próbek
+pozostają not_ready. Nie przeprowadzono nowych fitów po zamrożeniu final.
+[R1–R7 mają dowody](ai09-portfolio-ready.md); R8 wymaga pełnego Required CI
+dokładnego końcowego PR AI i wynikowego main oraz zgodnego odbioru planu Source.
+Nie jest potrzebny kolejny capacity diagnostic, trening ani wariant 2–3.
+Niższe wpisy są historyczne i nie zastępują tej checklisty zamknięcia.
+
 **2026-10-13 — zatwierdzony mniejszy zakres zamknięcia AI 09.**
 Użytkownik wybrał [TensorFlow i konsolidację portfolio](ai09-portfolio-ready.md).
 AI 07–08 pozostają zamknięte; ich wyniki zostaną przypięte jako historyczne

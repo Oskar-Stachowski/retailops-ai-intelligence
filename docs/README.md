@@ -1,6 +1,10 @@
-**AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
-i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
-[kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
+**AI 09 — zakończone porównanie TensorFlow i konsolidacja portfolio.**
+[Raport końcowy](ai09-forecast-portfolio-report.md), [karta TF](cards/tensorflow-portfolio.md),
+[portfolio AI 07–08](ai09-consolidated-portfolio.md) oraz
+[warunki odbioru R1–R8](ai09-portfolio-ready.md) są aktualnym zakresem.
+TF odrzucono do nowej promocji. [STATUS](STATUS.md) podaje stan publikacji.
+Poniższe wpisy zachowują historię wcześniejszego, szerszego wariantu;
+ich dawne otwarte zadania nie rozszerzają zatwierdzonego zakresu zamknięcia.
 [Wspólny wykonawca 25 → 50 → 100](ai09-development-workflow.md) zamraża program
 przed generacją i łączy 43 oryginalne operacje z zachowaniem 12 fitów oraz kosztów.
 [09.104](evidence/09-104-development-workflow.json) potwierdza 39 kontroli źródeł

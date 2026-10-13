@@ -9,7 +9,11 @@ Ta decyzja zastępuje zakres zamknięcia AI 09 opisany w starszych wpisach
 STATUS i dokumentach wspólnej kampanii. Nie zmienia wyników dawnych prób,
 nie usuwa ich kosztów i nie oznacza wykonania pierwotnej pełnej kampanii.
 
-**Bieżący status: in_progress / not_ready.** Zatwierdzono zakres, nie wyniki.
+**Porównanie i konsolidacja zakończone; końcowy odbiór publikacji (R8).**
+Trzy seedy final zakończyły się poprawnie, a wszystkie metryki odtworzono
+dokładnie z oryginalnych predykcji i etykiet. [Raport końcowy](ai09-forecast-portfolio-report.md)
+odrzuca TensorFlow do nowej promocji zgodnie z zamrożoną regułą. Gotowość
+etapu nie wymaga wygranej TF ani kolejnej rundy treningu.
 
 ## Warunki zamknięcia
 
@@ -24,10 +28,26 @@ nie usuwa ich kosztów i nie oznacza wykonania pierwotnej pełnej kampanii.
 | R7 | Konsolidacja AI 07–08 | Przypięte dotychczasowe odbiory, karty, raporty, model IDs, polityki i ograniczenia; jawne oznaczenie historycznej oceny na jej własnych danych, bez deklaracji nowej wspólnej kampanii |
 | R8 | Decyzja i odbiór projektu | Raport RF/HGB/TF/baseline, aktualna karta forecastu oraz przypięte karty anomaly/stockout, decyzja retain/reject, istniejący odbiór lifecycle wskazany z zakresem; kontrole zmienionego kodu, pełne Required CI dokładnego PR i wynikowego main oraz zgodna dokumentacja planu |
 
-R1–R6 i R8 pozostają otwarte do wskazania i sprawdzenia oryginalnych dowodów.
-R7 ma [sprawdzone powiązania artefaktów](evidence/09-128-historical-portfolio.json)
-i [zestawienie portfolio](ai09-consolidated-portfolio.md); końcowy odbiór
-publikacji tej dokumentacji należy do R8.
+| ID | Wynik odbioru wykonania | Dowód |
+| --- | --- | --- |
+| R1 | Ukończone; modele, role, kalibracja, polityki, daty, seedy i budżety zamrożone przed final | [Protokół](reference/ai09-portfolio-assessment-v1.json), [zamrożenie](evidence/09-134-portfolio-calibration-complete.json), [plan final](reference/ai09-portfolio-final-v1.json) |
+| R2 | Ukończone; oryginalny Source, 19443 wspólne klucze i 17437 kwalifikowanych etykiet w każdym seedzie | [Trzy populacje i lineage](evidence/09-136-portfolio-final-complete.json) |
+| R3 | Ukończone; rzeczywisty RF, HGB i TF, stałe baseline oraz jedna konfiguracja rodziny | [Trening](evidence/09-132-portfolio-development-repair-complete.json), [karta TF](cards/tensorflow-portfolio.md) |
+| R4 | Ukończone; seedy 42/137/2026, wagi po 1/3, bez ponownego fitu lub wyboru po final | [Oryginalne raporty i replay](evidence/09-136-portfolio-final-complete.json), [agregat](evidence/09-final/summary.json) |
+| R5 | Ukończone; metryki i segmenty opisane, brakujące zero/high pozostają not_ready i blokują pozytywną rekomendację TF | [Raport jakości](ai09-forecast-portfolio-report.md) |
+| R6 | Ukończone; rzeczywisty MLflow, świeży CPU reload, zasoby i zachowane niepowodzenia | [Karta TF](cards/tensorflow-portfolio.md), receipts [09.130](evidence/09-130-portfolio-development-attempt-1.json)–[09.136](evidence/09-136-portfolio-final-complete.json) |
+| R7 | Ukończone; sprawdzone historyczne odbiory i artefakty, bez nowej kampanii lub promocji AI 07–08 | [Manifest](evidence/09-128-historical-portfolio.json), [portfolio](ai09-consolidated-portfolio.md) |
+| R8 | Raport, karty i decyzja gotowe; publikacja wymaga poniższego końcowego odbioru | [Raport](ai09-forecast-portfolio-report.md), [zasady CI](contributing.md) |
+
+Końcowy odbiór R8: pełny Required CI dokładnego PR AI oraz wynikowego main
+(wszystkie 17 jobs success), następnie zgodny plan Source na odebranym main.
+Dokładne AI PR/main i wyniki CI zapisuje końcowy receipt w
+[dokumentacji Source](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/plans/ai/etapy/09-tensorflow-robustness.md).
+Source podlega własnemu Required CI dla zakresu dokumentacji; celowe pominięcia
+zadań spoza zakresu pozostają pominięciami. Receiptu nie dopisujemy do tego
+samego commitu, którego hash i późniejszy wynik main dopiero powstają.
+**Ready obowiązuje dopiero po tych odbiorach**, bez ponownego eksperymentu.
+
 Liczba zaliczonych testów komponentów nie jest procentem gotowości kampanii.
 Ready etapu nie oznacza, że TensorFlow został championem lub dopuszczono nową
 promocję. Odrzucenie TF jest poprawnym wynikiem zakończonego porównania.
@@ -55,7 +75,28 @@ promocję. Odrzucenie TF jest poprawnym wynikiem zakończonego porównania.
   Limit drzewa procesu do 12 GiB i rezerwa hosta 1 GiB pozostają zachowane;
   lokalny komputer z 8 GiB nie otrzymuje od tej deklaracji dodatkowej pamięci.
 
-## Kolejność pracy
+## Dlaczego etap trwał długo i co przyspiesza jego zamknięcie
+
+- Wcześniejszy zakres łączył trzy zastosowania, pełne profile i rozwój
+  brakujących adapterów. Wykonano wiele komponentów, lecz ich testy nie
+  zastępowały końcowego eksperymentu. Zatwierdzony wariant 1 ograniczył ten zakres.
+- Duża diagnostyka capacity miała kolejne nieudane próby, w tym timeout przy
+  12 GiB. Podniesienie limitu RAM samo nie usuwa kosztu CPU i przygotowania.
+- Błędy pomiaru pamięci workera, fixture preflight i dwóch połączeń importu
+  zatrzymały później mały przebieg. Naprawy mają testy regresji, jawny budżet
+  i zachowane wcześniejsze koszty; nie wymagały zmiany modeli lub ich progów.
+- Sam trening TF trwał 13,47 s. Przygotowanie Source, instalacja środowisk,
+  transfer dużych artefaktów oraz pełny CI zajmują znacznie więcej czasu.
+  Nie ma podstaw, by przyspieszać zamknięcie przez kolejne strojenie TF.
+- Pozostała ścieżka to jeden odbiór końcowych dokumentów i kodu przez PR/main
+  oraz zgodny plan. Nowe optymalizacje mają sens tylko przy konkretnej blokadzie
+  tego odbioru. Warianty 2–3, duży capacity diagnostic i nowa promocja są odłożone.
+
+## Przebieg i zachowana historia prób
+
+Poniższa chronologia zachowuje stan wiedzy na kolejnych krokach. Aktualne
+wyniki i warunki odbioru znajdują się powyżej; dawne zapowiedzi kalibracji
+i final nie oznaczają dodatkowych prac do ponowienia.
 
 Pierwszy zamrożony przebieg opisuje
 [receptura development v1](reference/ai09-portfolio-development-v1.json):
@@ -157,12 +198,14 @@ zarezerwowanych danych, nie deklaracja nowego nietkniętego final.
 Pełny ZIP kalibracji dodatkowo pobrano i sprawdzono; niezależne obliczenie
 przedziałów z oryginalnych predykcji i etykiet dało dokładnie ten sam wynik.
 
-1. Przypiąć zakres i zinwentaryzować istniejące dane, modele i historię ekspozycji.
-2. Zamrozić mały development i wykonać jeden oryginalny przebieg od Source,
-   przez niepuste role i model, do odtworzenia oraz raportu. Zachować koszty.
-3. Ukończyć porównanie wszystkich rodzin i osobną kalibrację, zamrozić wybór.
-4. Dopiero wtedy wygenerować i ocenić zadeklarowane świeże źródła końcowe.
-5. Utrwalić portfolio, ograniczenia i decyzje; odebrać dokładny kod PR/main.
+[Końcowe wykonanie 09.136](evidence/09-136-portfolio-final-complete.json), run
+`38387579572`, zakończyło wszystkie trzy seedy. Metryki, populacje i agregat
+zweryfikowano niezależnie; modele i kalibratory pozostały niezmienione.
+Kompletne kopie trzech archiwów mają zgodne rozmiary i SHA-256; raporty,
+etykiety i predykcje użyte do replay są identyczne z zawartością tych ZIP.
+TF narusza limit biasu 10% na każdym seedzie, a grupy zero/high nie mają
+wymaganych próbek. Zgodna z protokołem decyzja odrzuca nową promocję TF;
+nie otwiera treningu ani zbierania nowego final. Pozostaje odbiór R8.
 
 Jedna gałąź integracyjna AI `ai/09-portfolio-ready`; odpowiadająca gałąź
 repozytorium platformy aktualizuje plan. Starszych sesji i procesów nie

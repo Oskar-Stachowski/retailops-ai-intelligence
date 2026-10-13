@@ -1,5 +1,8 @@
 # Karta modelu — AI 09 Keras CPU development 1.0.0
 
+Ta karta zachowuje historyczne modele 09.2–09.5. Nowy model z zatwierdzonego
+zakresu AI 09 ma osobną [kartę portfolio](tensorflow-portfolio.md).
+
 Właściciel: RetailOps AI Intelligence. Stan: **experimental / not_ready**.
 Przeznaczenie: uczciwy challenger prognozy obserwowanej sprzedaży na CPU,
 z oddzielnymi mean i median, do późniejszej wspólnej kampanii portfolio.
