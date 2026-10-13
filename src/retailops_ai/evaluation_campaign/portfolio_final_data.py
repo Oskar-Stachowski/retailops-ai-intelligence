@@ -15,10 +15,9 @@ from retailops_ai.evaluation_campaign.final_forecast import (
     _build_final_forecast,
     verify_final_forecast,
 )
-from retailops_ai.evaluation_campaign.partitions import membership_key
+from retailops_ai.evaluation_campaign.partitions import membership_key, runtime_pin
 from retailops_ai.evaluation_campaign.physical_contract import PhysicalSourceSpec
 from retailops_ai.evaluation_campaign.portfolio_data_io import documents, write_population
-from retailops_ai.evaluation_campaign.preparation import runtime_pin
 from retailops_ai.evaluation_campaign.source_replay import (
     _open_verified_source_parent,
     physical_limits,
@@ -30,7 +29,11 @@ from retailops_ai.source_snapshot.files import SnapshotError, file_hash, read_js
 
 
 def prepare_final(
-    output: Path, assessment: dict[str, Any], generation: dict[str, Any]
+    output: Path,
+    assessment: dict[str, Any],
+    generation: dict[str, Any],
+    *,
+    parent_paths: tuple[Path, Path] | None = None,
 ) -> dict[str, Any]:
     """Call only after a durable whole-source final reservation; never export training roles."""
     intent = read_json(output, "intent.json")
@@ -41,8 +44,10 @@ def prepare_final(
         or intent["source_plan"]["generation"] != generation
     ):
         raise SnapshotError("portfolio_final_reservation_required")
-    snapshot = Path(read_json(output, "import.json")["destination"])
-    curated = Path(read_json(output, "curation.json")["destination"])
+    snapshot, curated = parent_paths or (
+        Path(read_json(output, "import.json")["destination"]) / "snapshot",
+        Path(read_json(output, "curation.json")["destination"]),
+    )
     if any(not path.resolve().is_relative_to(output.resolve()) for path in (snapshot, curated)):
         raise SnapshotError("portfolio_final_parent_outside_owned_output")
     actual = read_json(curated, "curated_manifest.json")

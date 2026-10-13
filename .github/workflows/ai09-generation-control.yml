@@ -18,6 +18,7 @@ on:
           - portfolio_repair
           - portfolio_calibration
           - portfolio_final
+          - portfolio_final_repair
         default: generation
       previous_run_id:
         description: Completed original failure run, required only for checkpoint_recovery
@@ -50,7 +51,7 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        seed: ${{ inputs.mode == 'portfolio_final' && fromJSON('[42,137,2026]') || fromJSON('[0]') }}
+        seed: ${{ startsWith(inputs.mode, 'portfolio_final') && fromJSON('[42,137,2026]') || fromJSON('[0]') }}
     runs-on: ubuntu-24.04
     timeout-minutes: ${{ startsWith(inputs.mode, 'portfolio_') && 110 || 25 }}
     steps:
@@ -59,7 +60,7 @@ jobs:
           persist-credentials: false
           path: consumer
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration'
+        if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration' && inputs.mode != 'portfolio_final_repair'
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
           ref: ${{ (inputs.mode == 'portfolio_development' || inputs.mode == 'portfolio_final') && 'd2363a5c78e0b190132e5e3d804da73b3136487d' || inputs.mode != 'generation' && 'ff2504a9cf6e4f46040c8327901b7bcb82d115c0' || '16d34887b058b3dfb270af474f28242194a968ca' }}
@@ -86,7 +87,7 @@ jobs:
         if: startsWith(inputs.mode, 'portfolio_')
         run: uv sync --directory consumer/environments/tensorflow --locked --no-install-project --no-install-package retailops-ai-intelligence
       - name: Install pinned producer dependencies
-        if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration'
+        if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration' && inputs.mode != 'portfolio_final_repair'
         run: |
           uv venv --python 3.11.15 source/.venv
           uv pip install --python source/.venv/bin/python \
@@ -122,6 +123,46 @@ jobs:
         with:
           name: ai09-checkpoint-control-${{ github.sha }}-${{ github.run_id }}-prefix
           path: control/prefix-artifact/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Verify original import layout and fixed final summary before repair
+        if: inputs.mode == 'portfolio_final_repair'
+        working-directory: consumer
+        env:
+          PYTHONPATH: ${{ github.workspace }}/consumer/src:${{ github.workspace }}/consumer/tests
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/final-repair-preflight"
+          environments/tensorflow/.venv/bin/python -m pytest -q \
+            tests/test_portfolio_final.py tests/test_portfolio_final_repair.py tests/test_portfolio_summary.py \
+            --junitxml="$GITHUB_WORKSPACE/final-repair-preflight/tests.xml"
+      - name: Finish the unchanged original final seed after the explicit wiring repair
+        if: inputs.mode == 'portfolio_final_repair'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          FINAL_SEED: ${{ matrix.seed }}
+          CUDA_VISIBLE_DEVICES: "-1"
+          TF_CPP_MIN_LOG_LEVEL: "2"
+          TF_ENABLE_ONEDNN_OPTS: "0"
+          TF_NUM_INTEROP_THREADS: "1"
+          TF_NUM_INTRAOP_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+        run: |
+          consumer/environments/tensorflow/.venv/bin/python consumer/scripts/run_ai09_portfolio_final_repair.py \
+            --output "$GITHUB_WORKSPACE/final-repair" --seed "$FINAL_SEED"
+      - name: Preserve original failures and completed final repair together
+        if: always() && inputs.mode == 'portfolio_final_repair'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai09-portfolio-final-repair-seed${{ matrix.seed }}-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            final-repair/
+            final-repair-preflight/
           if-no-files-found: error
           compression-level: 0
           retention-days: 90

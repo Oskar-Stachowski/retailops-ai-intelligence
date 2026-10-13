@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 import pytest
+from test_forecast_source_replay import physical_parents as physical_parents
 
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.evaluation_campaign.campaign_final_contract import CampaignFinalExportPlan
@@ -78,3 +79,57 @@ def test_source_worker_entrypoint_remains_stdlib_only_before_operation():
     )
     assert result.returncode == 0, result.stderr
     assert "--producer-python" in result.stdout
+
+
+@pytest.mark.parametrize("relocated", [False, True])
+def test_real_import_layout_reaches_wire_and_rejects_empty_smoke(
+    physical_parents, tmp_path, relocated
+):
+    """Exposed public smoke verifies wiring, not project holdout quality or maturity."""
+    import json
+    import shutil
+
+    from retailops_ai.data_contracts.identity import canonical_sha256
+    from retailops_ai.evaluation_campaign.final_forecast import verify_final_forecast
+
+    output = tmp_path / "assessment"
+    snapshot, curated = output / "original/imported/snapshot", output / "original/curated"
+    shutil.copytree(physical_parents[0], snapshot)
+    shutil.copytree(physical_parents[1], curated)
+    generation = json.loads((curated / "curated_manifest.json").read_bytes())["descriptor"][
+        "source_parameters"
+    ]
+    assessment = {
+        "final": {
+            "origins": {"start": "2026-07-04", "end": "2026-07-05"},
+            "label_knowledge_cutoff": "2026-07-31T23:59:59Z",
+            "prior_documented_parent_exposure_end": "2026-06-18",
+            "label_delay_days": 1,
+            "maximum_rows_per_seed": 50000,
+            # This short, already public fixture cannot prove project eligibility.
+            "minimum_eligible_rows_per_seed": 0,
+        }
+    }
+    documents = {
+        "intent.json": {
+            "final_test_opened": True,
+            "whole_parent_reserved": True,
+            "assessment_sha256": canonical_sha256(assessment),
+            "source_plan": {"generation": generation},
+        },
+        "import.json": {"destination": str(snapshot.parent)},
+        "curation.json": {"destination": str(curated)},
+    }
+    for name, value in documents.items():
+        (output / name).write_bytes(canonical_bytes(value))
+    with pytest.raises(SnapshotError, match="portfolio_empty_eligible_population"):
+        prepare_final(
+            output, assessment, generation, parent_paths=(snapshot, curated) if relocated else None
+        )
+    dataset = next((output / "final-data").glob("ai09-final-forecast-sha256-*"))
+    manifest = verify_final_forecast(dataset)
+    assert manifest.descriptor.population.row_count > 0
+    assert manifest.descriptor.population.eligible_rows == 0
+    assert (output / "inputs.jsonl").is_file()
+    assert (output / "actuals.jsonl").is_file()
+    assert not manifest.stage_ready

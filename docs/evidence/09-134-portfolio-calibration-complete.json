@@ -916,5 +916,12 @@
     "version": "ai09-portfolio-final-freeze-1.0.0"
   },
   "final_sources_generated": 0,
-  "stage_ready": false
+  "stage_ready": false,
+  "independent_full_artifact_replay": {
+    "artifact_id": 11804136314,
+    "zip_sha256": "b4e2e6970e06e004e8cc6f6296ba204972940d61857a329bd5fe960750bdd36d",
+    "zip_bytes": 1023355932,
+    "verified": true,
+    "all_original_prediction_label_intervals_exactly_equal": true
+  }
 }

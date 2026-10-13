@@ -139,6 +139,24 @@ transformację curated. Trzy seedy wykonują się na trzech odrębnych runnerach
 każdy ma jedną próbę i własny limit 12 GiB. Kod nie tworzy nowych modeli.
 Po wyniku final nie zmieniamy wyboru, kalibracji ani progów.
 
+[Pierwsza próba final](evidence/09-135-portfolio-final-attempt-1.json), run
+`38384080156`, zachowała trzy kompletne przygotowania Source/snapshot/curated.
+Każde zaliczyło pięć faz, po czym przygotowanie oceny zatrzymał błędny poziom
+katalogu importu: manifest jest w podkatalogu `snapshot`. Żaden seed nie
+rozpoczął inferencji ani oceny jakości; dostęp do całego final pozostaje
+ujawniony. Nowy test rzeczywistego importu wykrył też niewłaściwy import
+funkcji przypinającej runtime replay. Obie pomyłki poprawiono bez zmiany
+danych, modeli, kalibracji, segmentów i metryk.
+
+[Jawny plan naprawy final](reference/ai09-portfolio-final-repair-v1.json)
+przypina trzy oryginalne archiwa, ich SHA-256 oraz receipts. Dopuszcza po
+jednym dodatkowym wykonaniu przygotowania oceny, inferencji i scoringu;
+nie uruchamia ponownie generatora ani treningu. Oryginalne archiwa, koszty
+i błędy są zachowane razem z nowym wynikiem. To kontynuacja tych samych
+zarezerwowanych danych, nie deklaracja nowego nietkniętego final.
+Pełny ZIP kalibracji dodatkowo pobrano i sprawdzono; niezależne obliczenie
+przedziałów z oryginalnych predykcji i etykiet dało dokładnie ten sam wynik.
+
 1. Przypiąć zakres i zinwentaryzować istniejące dane, modele i historię ekspozycji.
 2. Zamrozić mały development i wykonać jeden oryginalny przebieg od Source,
    przez niepuste role i model, do odtworzenia oraz raportu. Zachować koszty.
