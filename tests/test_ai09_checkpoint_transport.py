@@ -394,6 +394,7 @@ def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editab
         "census_memory",
         "portfolio_development",
         "portfolio_repair",
+        "portfolio_calibration",
         "checkpoint_resume",
         "checkpoint_failure",
         "checkpoint_interruption",
@@ -405,12 +406,12 @@ def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editab
     assert (
         source["if"]
         == producer["if"]
-        == "inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair'"
+        == "inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration'"
     )
     consumer = next(s for s in steps if s.get("name") == "Install locked consumer dependencies")
     assert (
         consumer["if"]
-        == "inputs.mode != 'portfolio_development' && inputs.mode != 'portfolio_repair'"
+        == "inputs.mode != 'portfolio_development' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration'"
     )
     portfolio = next(
         s

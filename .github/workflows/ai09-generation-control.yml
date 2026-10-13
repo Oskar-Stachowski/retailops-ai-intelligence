@@ -16,6 +16,7 @@ on:
           - census_memory
           - portfolio_development
           - portfolio_repair
+          - portfolio_calibration
         default: generation
       previous_run_id:
         description: Completed original failure run, required only for checkpoint_recovery
@@ -52,7 +53,7 @@ jobs:
           persist-credentials: false
           path: consumer
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair'
+        if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration'
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
           ref: ${{ inputs.mode == 'portfolio_development' && 'd2363a5c78e0b190132e5e3d804da73b3136487d' || inputs.mode != 'generation' && 'ff2504a9cf6e4f46040c8327901b7bcb82d115c0' || '16d34887b058b3dfb270af474f28242194a968ca' }}
@@ -64,7 +65,7 @@ jobs:
           python-version: "3.11.15"
           enable-cache: true
       - name: Install locked consumer dependencies
-        if: inputs.mode != 'portfolio_development' && inputs.mode != 'portfolio_repair'
+        if: inputs.mode != 'portfolio_development' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration'
         env:
           CONTROL_MODE: ${{ inputs.mode }}
         run: |
@@ -79,7 +80,7 @@ jobs:
         if: startsWith(inputs.mode, 'portfolio_')
         run: uv sync --directory consumer/environments/tensorflow --locked --no-install-project --no-install-package retailops-ai-intelligence
       - name: Install pinned producer dependencies
-        if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair'
+        if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration'
         run: |
           uv venv --python 3.11.15 source/.venv
           uv pip install --python source/.venv/bin/python \
@@ -317,6 +318,67 @@ jobs:
           path: |
             repair/
             repair-preflight/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Verify label-free portfolio adapter and real frozen model parity
+        if: inputs.mode == 'portfolio_calibration'
+        working-directory: consumer
+        env:
+          PYTHONPATH: ${{ github.workspace }}/consumer/src:${{ github.workspace }}/consumer/tests
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+          TF_CPP_MIN_LOG_LEVEL: "2"
+          TF_ENABLE_ONEDNN_OPTS: "0"
+          CUDA_VISIBLE_DEVICES: "-1"
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/assessment-preflight"
+          environments/tensorflow/.venv/bin/python -m pytest -q \
+            tests/test_portfolio_assessment.py tests/test_ai09_portfolio_repair.py \
+            --junitxml="$GITHUB_WORKSPACE/assessment-preflight/unit.xml"
+          environments/tensorflow/.venv/bin/python -m pytest -q -rA \
+            environments/tensorflow/tests/test_keras_cpu.py::test_comparison_real_tree_heads_tensorflow_reload_and_no_refits \
+            --junitxml="$GITHUB_WORKSPACE/assessment-preflight/native.xml"
+      - name: Calibrate the unchanged original models and freeze final assessment
+        if: inputs.mode == 'portfolio_calibration'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CUDA_VISIBLE_DEVICES: "-1"
+          TF_CPP_MIN_LOG_LEVEL: "2"
+          TF_ENABLE_ONEDNN_OPTS: "0"
+          TF_NUM_INTEROP_THREADS: "1"
+          TF_NUM_INTRAOP_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+        run: |
+          consumer/environments/tensorflow/.venv/bin/python consumer/scripts/run_ai09_portfolio_assessment.py \
+            --output "$GITHUB_WORKSPACE/assessment"
+      - name: Publish frozen models and calibration for the independent final
+        if: inputs.mode == 'portfolio_calibration'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai09-portfolio-freeze-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            assessment/models/
+            assessment/freeze.json
+            assessment/calibration.json
+            assessment/result.json
+            assessment/intent.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Preserve the entire calibration attempt including failures
+        if: always() && inputs.mode == 'portfolio_calibration'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai09-portfolio-calibration-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            assessment/
+            assessment-preflight/
           if-no-files-found: error
           compression-level: 0
           retention-days: 90

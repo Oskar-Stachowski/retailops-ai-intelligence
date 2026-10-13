@@ -38,7 +38,13 @@ def frozen_plan() -> dict[str, Any]:
     return plan
 
 
-def restore_archive(archive: Path, output: Path, plan: dict[str, Any]) -> None:
+def restore_archive(
+    archive: Path,
+    output: Path,
+    plan: dict[str, Any],
+    *,
+    roots: frozenset[str] = frozenset({"control", "control-preflight"}),
+) -> None:
     """Restore only the pinned original Actions ZIP into a fresh private root."""
     from retailops_ai.source_snapshot.files import file_hash
 
@@ -63,7 +69,7 @@ def restore_archive(archive: Path, output: Path, plan: dict[str, Any]) -> None:
             if (
                 path.is_absolute()
                 or not path.parts
-                or path.parts[0] not in {"control", "control-preflight"}
+                or path.parts[0] not in roots
                 or any(part in {"", ".", ".."} for part in entry.filename.rstrip("/").split("/"))
                 or any(c in entry.filename for c in ("\\", "\x00", ":"))
                 or stat.S_IFMT(entry.external_attr >> 16) not in {0, stat.S_IFREG, stat.S_IFDIR}

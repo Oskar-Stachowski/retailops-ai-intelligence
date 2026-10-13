@@ -94,6 +94,39 @@ Source ani nie zeruje historii niepowodzenia. Nowy budżet wykonania naprawy
 wynosi 60 minut, obok zachowanego kosztu pierwszej próby. Wynik development
 nadal nie zastępuje osobnej kalibracji i końcowej oceny trzech seedów.
 
+[Naprawa zakończona](evidence/09-132-portfolio-development-repair-complete.json):
+run `38378609989`, 34 kontrole Linux passed bez pominięć, pełne porównanie
+wszystkich modeli na 9408 wspólnych kluczach (8400 kwalifikowanych).
+ZIP i wszystkie 75 plików porównania zostały zweryfikowane. Source nie był
+ponownie generowany. Czasy workerów: RF 10,71 s, HGB mean 3,97 s, HGB median
+4,58 s, TF 18,00 s; cała naprawa z transportem 582,30 s i około 2,75 GiB
+zmierzonego szczytu drzewa procesu. TF ma oryginalny run MLflow oraz odtworzenie
+na CPU. To zamyka wykonanie development R3 i część artefaktową R6;
+nie jest wynikiem kalibracji ani końcowej kwalifikacji jakości.
+
+[Protokół kalibracji i oceny końcowej](reference/ai09-portfolio-assessment-v1.json)
+ustala TF jako jednego challengera i `history28` jako stały punkt odniesienia.
+RF, HGB oraz dwa pozostałe baseline pozostają porównaniami. Oddzielna rola
+28 listopada–11 grudnia służy wyłącznie kalibracji: 90% przedziały z osobnym
+promieniem na model i horyzont, co najmniej 100 etykiet i 80% kwalifikowanych
+wierszy. RF ma wyłącznie średnią; przedział wokół niej nie zmienia jej w medianę.
+
+Dopiero kompletny artefakt zamrożenia pozwoli uruchomić nowy Source dla seedów
+42/137/2026: 365 dni 2026-04-01–2027-03-31, ta sama szerokość 8 × 3,
+originy końcowe 2027-01-17–2027-03-15 i cutoff etykiet 2027-03-30.
+To daty symulacji, nie zebrane obserwacje przyszłości. Wszystkie modele mają
+te same oceniane klucze; agregat nadaje każdemu seedowi wagę 1/3.
+Brak próbki w grupie pozostaje `not_ready`, a słaby wynik kończy się
+odrzuceniem TF bez ponownego strojenia. Dane końcowe nie zostały jeszcze wygenerowane.
+
+Jawnie zachowujemy ograniczenie starszej, utraconej historii: znane wcześniejsze
+próby AI09 dotyczyły danych do lipca 2026, nowy development do grudnia 2026,
+ale nieudokumentowanego dawnego użycia nie da się uznać za zero. Świeżość oceny
+będzie oparta na nowym, prospektywnym wykonaniu i rozłączności z konkretnymi
+danymi dopasowania i kalibracji; nie deklarujemy globalnego dowodu wszystkich
+dawnych odczytów. [Plan kalibracji](reference/ai09-portfolio-calibration-v1.json)
+przypina dokładny wynik naprawy, zachowuje jedną próbę i nie dopuszcza nowych fitów.
+
 1. Przypiąć zakres i zinwentaryzować istniejące dane, modele i historię ekspozycji.
 2. Zamrozić mały development i wykonać jeden oryginalny przebieg od Source,
    przez niepuste role i model, do odtworzenia oraz raportu. Zachować koszty.
