@@ -127,6 +127,10 @@ from retailops_ai.evaluation_campaign.campaign_stockout_training_contract import
     CampaignStockoutPreprocessing,
     CampaignStockoutRiskPipeline,
 )
+from retailops_ai.evaluation_campaign.campaign_stockout_trial_contract import (
+    CampaignStockoutTrialPlan,
+    CampaignStockoutTrialReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_tune_contract import (
     CampaignForecastTunePlan,
     CampaignForecastTuneReceipt,
@@ -1113,6 +1117,22 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Stockout preparation contract differs:", name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, stockout_trial_model in (
+        ("stockout_trial_plan", CampaignStockoutTrialPlan),
+        ("stockout_trial_receipt", CampaignStockoutTrialReceipt),
+    ):
+        schema = stockout_trial_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:52.0.0"
+        path = ROOT / "contracts/evaluation/v52" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Stockout trial contract differs:", name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,247 @@
+{
+  "version": "ai09-stockout-trial-execution-evidence-1.0.0",
+  "observed_at_utc": "2026-10-13T05:42:07.714202+00:00",
+  "scope": "Synthetic complete role files and Source/preparation metadata, supervisor cost doubles; actual native LR/HGB fits, conditional calibration, durable journal and cold worker reloads. Not real Project, quality or capacity acceptance.",
+  "base_commit": "b9bea0bd4b6f9278d05feeff9f4f619a5bb44205",
+  "source_monitor": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 216.78933587495703,
+    "sampled_tree_peak_rss_bytes": 337707008,
+    "sampled_worker_cpu_seconds": 204.694163882,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 201870,
+    "sampled_peak_scratch_allocated_bytes": 221184,
+    "minimum_free_disk_bytes": 17581903872,
+    "minimum_available_memory_bytes": 1279000576,
+    "samples": 1944,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 369098752,
+    "code_pins_unchanged": true
+  },
+  "source_pytest": {
+    "name": "complete-stockout-trial-controls",
+    "tests": "191",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "211.216"
+  },
+  "source_junit_sha256": "c2c154f6aad7d1eea0f2f6cda93d92693fb2cfbf2d3906dbfaced57e0da8ee70",
+  "mypy_files": 819,
+  "source_wheel_installed_bytes": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 3129846,
+    "sha256": "6e970974ba9965cbac8cec68e9007593f4c85e33fe27a5d1b3e04210e2b8f7c5",
+    "python_modules_equal": 686,
+    "new_contract_files_equal": 59,
+    "private_files_absent": true
+  },
+  "installed_tests": {
+    "status": "not_accepted",
+    "monitor": {
+      "status": "failed",
+      "reason": "available_memory_reserve",
+      "exit_code": -9,
+      "wall_seconds": 27.83480729209259,
+      "sampled_tree_peak_rss_bytes": 324059136,
+      "sampled_worker_cpu_seconds": 24.748198592,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 324,
+      "sampled_peak_scratch_allocated_bytes": 4096,
+      "minimum_free_disk_bytes": 17573867520,
+      "minimum_available_memory_bytes": 1041219584,
+      "samples": 253,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "source_and_control_pins_unchanged": true,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+    },
+    "cause": "Global available memory fell below unchanged 1GiB reserve; only the owned test process tree was stopped. Build/install/import and byte parity passed; incomplete pytest is not acceptance.",
+    "next": "Run complete source and installed controls in isolated Linux CI."
+  },
+  "compatibility": {
+    "base": "b9bea0bd4b6f9278d05feeff9f4f619a5bb44205",
+    "closed_ai08_stockout_modules_unchanged": 129,
+    "previous_contract_files_unchanged": 426
+  },
+  "prior_attempts": [
+    {
+      "attempt": 1,
+      "monitor": {
+        "status": "failed",
+        "reason": "worker_exit",
+        "exit_code": 1,
+        "wall_seconds": 6.167445958009921,
+        "sampled_tree_peak_rss_bytes": 189169664,
+        "sampled_worker_cpu_seconds": 5.228217192,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 143331,
+        "sampled_peak_scratch_allocated_bytes": 155648,
+        "minimum_free_disk_bytes": 20757409792,
+        "minimum_available_memory_bytes": 1567719424,
+        "samples": 57,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 536870912,
+        "code_pins_unchanged": true
+      }
+    },
+    {
+      "attempt": 2,
+      "monitor": {
+        "status": "failed",
+        "reason": "worker_exit",
+        "exit_code": 1,
+        "wall_seconds": 9.749862874974497,
+        "sampled_tree_peak_rss_bytes": 245137408,
+        "sampled_worker_cpu_seconds": 7.198976480999999,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 149381,
+        "sampled_peak_scratch_allocated_bytes": 163840,
+        "minimum_free_disk_bytes": 20700364800,
+        "minimum_available_memory_bytes": 1496727552,
+        "samples": 90,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 536870912,
+        "code_pins_unchanged": true
+      }
+    },
+    {
+      "attempt": 3,
+      "admission-expired": {
+        "worker_started": false,
+        "elapsed_seconds": 301.25413520797156
+      }
+    },
+    {
+      "attempt": 4,
+      "admission-expired": {
+        "worker_started": false,
+        "elapsed_seconds": 300.9674319580081
+      }
+    },
+    {
+      "attempt": 5,
+      "admission-expired": {
+        "worker_started": false,
+        "elapsed_seconds": 300.8902432080358
+      }
+    },
+    {
+      "attempt": 6,
+      "monitor": {
+        "status": "failed",
+        "reason": "worker_exit",
+        "exit_code": 1,
+        "wall_seconds": 6.727985457982868,
+        "sampled_tree_peak_rss_bytes": 181846016,
+        "sampled_worker_cpu_seconds": 4.947516803000001,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 151369,
+        "sampled_peak_scratch_allocated_bytes": 167936,
+        "minimum_free_disk_bytes": 17751257088,
+        "minimum_available_memory_bytes": 1375584256,
+        "samples": 63,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 369098752,
+        "code_pins_unchanged": true
+      }
+    },
+    {
+      "attempt": 7,
+      "monitor": {
+        "status": "failed",
+        "reason": "worker_exit",
+        "exit_code": 1,
+        "wall_seconds": 9.89233754191082,
+        "sampled_tree_peak_rss_bytes": 247840768,
+        "sampled_worker_cpu_seconds": 8.141882356,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 154371,
+        "sampled_peak_scratch_allocated_bytes": 167936,
+        "minimum_free_disk_bytes": 17758244864,
+        "minimum_available_memory_bytes": 1297874944,
+        "samples": 92,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 369098752,
+        "code_pins_unchanged": true
+      }
+    },
+    {
+      "attempt": 8,
+      "monitor": {
+        "status": "failed",
+        "reason": "worker_exit",
+        "exit_code": 1,
+        "wall_seconds": 130.83289237506688,
+        "sampled_tree_peak_rss_bytes": 339836928,
+        "sampled_worker_cpu_seconds": 122.59653423300001,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 150423,
+        "sampled_peak_scratch_allocated_bytes": 163840,
+        "minimum_free_disk_bytes": 17703563264,
+        "minimum_available_memory_bytes": 1291632640,
+        "samples": 1204,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 369098752,
+        "code_pins_unchanged": true
+      }
+    }
+  ],
+  "fixes": [
+    "Validate synthetic stock quantities together with all derived supply values.",
+    "Keep complete preparation ancestry once; bind both worker phase receipts by equal hash, preserving all measured resource evidence and existing512KiB receipt limit.",
+    "Retain explicitly registered SnapshotError machine codes for stockout nonpositive calibrator slope and nonconvergence; defaults and arbitrary exception details remain generic.",
+    "Reject different fit/reload receipts, repeated trials, wrong original model/role/preparation, changed artifacts and receipts; unknown memory costs remain unknown."
+  ],
+  "fixture_assertions": {
+    "bases": 6,
+    "conditional_calibrators": 24,
+    "eligible_rows_per_role": 80,
+    "all_successful_trials_cold_reloaded": true,
+    "all_four_nonpositive_slope_rejections_charged": true,
+    "no_base_refit_for_calibrators": true,
+    "no_unselected_role_payload_open": true
+  },
+  "source_tests_passed": true,
+  "installed_tests_passed": false,
+  "new_project_generations": 0,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "tree_rss_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "stage_ready": false,
+  "publication_check": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 69.58799970906693,
+    "sampled_tree_peak_rss_bytes": 195788800,
+    "sampled_worker_cpu_seconds": 70.51742577099999,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 3425,
+    "sampled_peak_scratch_allocated_bytes": 16384,
+    "minimum_free_disk_bytes": 17579630592,
+    "minimum_available_memory_bytes": 1482620928,
+    "samples": 646,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; no Mypy or pytest in publication check; global6GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  }
+}

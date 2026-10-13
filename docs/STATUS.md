@@ -1,5 +1,12 @@
 # Aktualny status
 
+**2026-10-13 — AI 09: rzeczywiste próby stockout na kontrolowanych rolach.**
+[Wykonawca prób](ai09-stockout-trial-execution.md) rezerwuje sześć baz LR/HGB i 24 kalibratory, korzysta wyłącznie z przypisanej roli i odtwarza każdy model w świeżym procesie. **191 testów kodu przeszło**, bez pominięć; Mypy **819 plików**. Zgodne są bajty **686 modułów i 59 schematów** w źródłach, paczce i instalacji.
+
+Naprawiono powielanie pełnej historii w receipts oraz utratę jawnej przyczyny odrzucenia kalibratora. Limit zapisu **512 KiB**, koszty nieudanych prób i blokady nieuprawnionych odczytów pozostają zachowane. [09.124](evidence/09-124-stockout-trial-execution.json) zapisuje również nieukończony test instalacji: nadzorca zatrzymał własne procesy po naruszeniu rezerwy wolnego RAM. **Odbiór paczki pozostaje otwarty**; kod nie jest pełnym odbiorem komponentu ani kampanii.
+
+To jawnie syntetyczne fixtures i zastępcze metadane Source, z rzeczywistymi fitami i zimnym odtworzeniem. Wybór oryginalnych modeli, polityki i niezależne oceny, pełny workflow, profile reprezentatywne, kampania/final, MLflow, lifecycle i odbiór PR/main pozostają wymagane. Nowe operacje Project: **0**. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: rezerwowane przygotowanie pełnych ról stockout.**
 [Wykonawca przygotowania](ai09-stockout-preparation-execution.md) wiąże oryginalną generację, konfigurację Source, wspólne daty i budżety z trwałym dziennikiem. Trzy osobne procesy przygotowują publiczne cechy, dojrzałe etykiety i ponownie sprawdzają pełny artefakt. Błąd pozostaje rozliczony; nieznany RSS nie staje się zerem, a zmiana pliku po kontroli blokuje odbiór.
 

@@ -1,0 +1,382 @@
+{
+  "$defs": {
+    "CampaignGenerationResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "max_log_bytes": {
+          "default": 16777216,
+          "maximum": 16777216,
+          "minimum": 1024,
+          "title": "Max Log Bytes",
+          "type": "integer"
+        },
+        "minimum_available_memory_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Available Memory Bytes",
+          "type": "integer"
+        },
+        "minimum_free_disk_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Free Disk Bytes",
+          "type": "integer"
+        },
+        "sample_seconds": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0.01,
+          "title": "Sample Seconds",
+          "type": "number"
+        },
+        "scratch_bytes": {
+          "maximum": 137438953472,
+          "minimum": 1024,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "tree_rss_bytes": {
+          "maximum": 68719476736,
+          "minimum": 1024,
+          "title": "Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "tree_rss_bytes",
+        "scratch_bytes",
+        "minimum_free_disk_bytes",
+        "minimum_available_memory_bytes"
+      ],
+      "title": "CampaignGenerationResources",
+      "type": "object"
+    },
+    "TrainingPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration": {
+          "const": "fixed_regularized_sigmoid_separate_calibration_period",
+          "default": "fixed_regularized_sigmoid_separate_calibration_period",
+          "title": "Calibration",
+          "type": "string"
+        },
+        "calibration_reporting": {
+          "const": "in_sample_fit_diagnostic_not_generalization",
+          "default": "in_sample_fit_diagnostic_not_generalization",
+          "title": "Calibration Reporting",
+          "type": "string"
+        },
+        "capacity_fraction": {
+          "default": 0.2,
+          "maximum": 0.2,
+          "minimum": 0.2,
+          "title": "Capacity Fraction",
+          "type": "number"
+        },
+        "capacity_unit": {
+          "const": "ceil_fraction_per_origin_physical_keys_lexical_ties",
+          "default": "ceil_fraction_per_origin_physical_keys_lexical_ties",
+          "title": "Capacity Unit",
+          "type": "string"
+        },
+        "categories": {
+          "const": "train_only_stock_location_and_PIT_category_unknown_all_zero",
+          "default": "train_only_stock_location_and_PIT_category_unknown_all_zero",
+          "title": "Categories",
+          "type": "string"
+        },
+        "configurations": {
+          "const": "one_frozen_configuration_per_family",
+          "default": "one_frozen_configuration_per_family",
+          "title": "Configurations",
+          "type": "string"
+        },
+        "cost_interpretation": {
+          "const": "fixed_exploratory_units_not_validated_business_savings",
+          "default": "fixed_exploratory_units_not_validated_business_savings",
+          "title": "Cost Interpretation",
+          "type": "string"
+        },
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "false_attention_cost": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 1.0,
+          "title": "False Attention Cost",
+          "type": "number"
+        },
+        "final_test": {
+          "const": "no_outcome_scoring_selection_calibration_or_threshold_access",
+          "default": "no_outcome_scoring_selection_calibration_or_threshold_access",
+          "title": "Final Test",
+          "type": "string"
+        },
+        "hgb_early_stopping": {
+          "const": false,
+          "default": false,
+          "title": "Hgb Early Stopping",
+          "type": "boolean"
+        },
+        "hgb_l2_regularization": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 1.0,
+          "title": "Hgb L2 Regularization",
+          "type": "number"
+        },
+        "hgb_learning_rate": {
+          "default": 0.1,
+          "maximum": 0.1,
+          "minimum": 0.1,
+          "title": "Hgb Learning Rate",
+          "type": "number"
+        },
+        "hgb_max_iter": {
+          "const": 80,
+          "default": 80,
+          "title": "Hgb Max Iter",
+          "type": "integer"
+        },
+        "hgb_max_leaf_nodes": {
+          "const": 15,
+          "default": 15,
+          "title": "Hgb Max Leaf Nodes",
+          "type": "integer"
+        },
+        "hgb_min_samples_leaf": {
+          "const": 20,
+          "default": 20,
+          "title": "Hgb Min Samples Leaf",
+          "type": "integer"
+        },
+        "imputation": {
+          "const": "train_median_empty_zero_all_column_missing_indicators",
+          "default": "train_median_empty_zero_all_column_missing_indicators",
+          "title": "Imputation",
+          "type": "string"
+        },
+        "lr_C": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 1.0,
+          "title": "Lr C",
+          "type": "number"
+        },
+        "lr_max_iter": {
+          "const": 1000,
+          "default": 1000,
+          "title": "Lr Max Iter",
+          "type": "integer"
+        },
+        "lr_tol": {
+          "default": 1e-08,
+          "maximum": 1e-08,
+          "minimum": 1e-08,
+          "title": "Lr Tol",
+          "type": "number"
+        },
+        "minimum_calibration_per_class": {
+          "const": 10,
+          "default": 10,
+          "title": "Minimum Calibration Per Class",
+          "type": "integer"
+        },
+        "missed_incident_cost": {
+          "default": 5.0,
+          "maximum": 5.0,
+          "minimum": 5.0,
+          "title": "Missed Incident Cost",
+          "type": "number"
+        },
+        "random_state": {
+          "const": 42,
+          "default": 42,
+          "title": "Random State",
+          "type": "integer"
+        },
+        "sampling": {
+          "const": "all_eligible_rows_natural_prevalence_no_class_weights",
+          "default": "all_eligible_rows_natural_prevalence_no_class_weights",
+          "title": "Sampling",
+          "type": "string"
+        },
+        "selection": {
+          "const": "tune_AP_then_Brier_then_LR_without_upstream",
+          "default": "tune_AP_then_Brier_then_LR_without_upstream",
+          "title": "Selection",
+          "type": "string"
+        },
+        "version": {
+          "const": "stockout-development-models-1.0.0",
+          "default": "stockout-development-models-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "TrainingPolicy",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:stockout_trial_plan:52.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "base_operation_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Base Operation Id"
+    },
+    "calibrator_C": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Calibrator C"
+    },
+    "family": {
+      "enum": [
+        "logistic_regression",
+        "hist_gradient_boosting"
+      ],
+      "title": "Family",
+      "type": "string"
+    },
+    "final_test_accessed": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Accessed",
+      "type": "boolean"
+    },
+    "full_population": {
+      "const": "complete_original_eligible_role_no_sampling",
+      "default": "complete_original_eligible_role_no_sampling",
+      "title": "Full Population",
+      "type": "string"
+    },
+    "initialization_seed": {
+      "const": 42,
+      "default": 42,
+      "title": "Initialization Seed",
+      "type": "integer"
+    },
+    "kind": {
+      "enum": [
+        "base",
+        "conditional"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "max_artifact_bytes": {
+      "default": 134217728,
+      "maximum": 536870912,
+      "minimum": 4096,
+      "title": "Max Artifact Bytes",
+      "type": "integer"
+    },
+    "policy": {
+      "$ref": "#/$defs/TrainingPolicy",
+      "default": {
+        "calibration": "fixed_regularized_sigmoid_separate_calibration_period",
+        "calibration_reporting": "in_sample_fit_diagnostic_not_generalization",
+        "capacity_fraction": 0.2,
+        "capacity_unit": "ceil_fraction_per_origin_physical_keys_lexical_ties",
+        "categories": "train_only_stock_location_and_PIT_category_unknown_all_zero",
+        "configurations": "one_frozen_configuration_per_family",
+        "cost_interpretation": "fixed_exploratory_units_not_validated_business_savings",
+        "cpu_threads": 1,
+        "false_attention_cost": 1.0,
+        "final_test": "no_outcome_scoring_selection_calibration_or_threshold_access",
+        "hgb_early_stopping": false,
+        "hgb_l2_regularization": 1.0,
+        "hgb_learning_rate": 0.1,
+        "hgb_max_iter": 80,
+        "hgb_max_leaf_nodes": 15,
+        "hgb_min_samples_leaf": 20,
+        "imputation": "train_median_empty_zero_all_column_missing_indicators",
+        "lr_C": 1.0,
+        "lr_max_iter": 1000,
+        "lr_tol": 1e-08,
+        "minimum_calibration_per_class": 10,
+        "missed_incident_cost": 5.0,
+        "random_state": 42,
+        "sampling": "all_eligible_rows_natural_prevalence_no_class_weights",
+        "selection": "tune_AP_then_Brier_then_LR_without_upstream",
+        "version": "stockout-development-models-1.0.0"
+      }
+    },
+    "preparation_operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Preparation Operation Id",
+      "type": "string"
+    },
+    "reload_scope": {
+      "const": "portable_equations_on_same_fit_role_not_quality",
+      "default": "portable_equations_on_same_fit_role_not_quality",
+      "title": "Reload Scope",
+      "type": "string"
+    },
+    "resources": {
+      "$ref": "#/$defs/CampaignGenerationResources"
+    },
+    "source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Recipe Sha256",
+      "type": "string"
+    },
+    "variant": {
+      "enum": [
+        "without_upstream",
+        "with_upstream",
+        "raw_sales_only"
+      ],
+      "title": "Variant",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-stockout-trial-plan-1.0.0",
+      "default": "ai09-stockout-trial-plan-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_recipe_sha256",
+    "preparation_operation_id",
+    "kind",
+    "family",
+    "variant",
+    "resources"
+  ],
+  "title": "CampaignStockoutTrialPlan",
+  "type": "object"
+}
