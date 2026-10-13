@@ -1,0 +1,24 @@
+{
+  "version": "ai09-portfolio-calibration-1.0.0",
+  "maximum_attempts": 1,
+  "original": {
+    "run_id": 38378609989,
+    "head": "2ec1e697ac008c1b538ef2d682e8a4c7886d3286",
+    "artifact_id": 11802772416,
+    "name": "ai09-portfolio-repair-2ec1e697ac008c1b538ef2d682e8a4c7886d3286-38378609989",
+    "zip_sha256": "a29337a71917470f9a9288fd76e8a8344fff8127bed47f6fb567de1959a0e00c",
+    "zip_size_bytes": 457035185
+  },
+  "assessment_sha256": "64480d8b5b40be5fd6074cc0c46e86e35654fece131c9286d40a8f3421823675",
+  "transport_maximum_bytes": 1073741824,
+  "budgets": {
+    "tree_rss_bytes": 12884901888,
+    "scratch_bytes": 6442450944,
+    "wall_seconds": 3600,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "final_test_opened": false,
+  "stage_ready": false
+}

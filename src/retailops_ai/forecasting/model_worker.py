@@ -1,7 +1,6 @@
 """Private bounded fit process; only numeric matrices and allowlisted estimator recipes."""
 
 import json
-import platform
 import resource
 import sys
 import time
@@ -17,6 +16,7 @@ from threadpoolctl import threadpool_limits  # type: ignore[import-untyped]
 from retailops_ai.forecasting.model_contract import ModelPolicy
 from retailops_ai.forecasting.model_trees import TreePredictor, export_estimator
 from retailops_ai.source_snapshot.files import SnapshotError, read_json, regular_file
+from retailops_ai.worker_resources import worker_peak_rss_bytes
 
 
 def main() -> int:
@@ -72,9 +72,7 @@ def main() -> int:
     (root / "worker_receipt.json").write_text(
         json.dumps(
             {
-                "peak_rss_bytes": int(
-                    usage.ru_maxrss * (1 if platform.system() == "Darwin" else 1024)
-                ),
+                "peak_rss_bytes": worker_peak_rss_bytes(),
                 "cpu_seconds": usage.ru_utime + usage.ru_stime,
                 "fit_seconds": time.monotonic() - started,
                 "portable_max_absolute_error": float(np.max(np.abs(native - portable))),

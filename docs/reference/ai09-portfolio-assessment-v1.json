@@ -1,0 +1,153 @@
+{
+  "version": "ai09-portfolio-assessment-1.0.0",
+  "scope": "forecast_only_TensorFlow_challenger_plus_historical_AI07_AI08_consolidation",
+  "target": "observed_sales_units_not_latent_demand",
+  "scenario": "ordinary_original_Source_ai_load_without_new_intervention_matrix",
+  "model_selection": {
+    "candidate": "tensorflow",
+    "reference": "history28",
+    "comparators": [
+      "history7",
+      "weekday28",
+      "rf_mean",
+      "hgb"
+    ],
+    "configuration": "exact_completed_development_artifacts_no_refit",
+    "post_final_reselection": false
+  },
+  "calibration": {
+    "source": "existing_development_source_seed42",
+    "original_role": "development_holdout",
+    "origins": {
+      "start": "2026-11-28",
+      "end": "2026-12-11"
+    },
+    "label_cutoff": "2026-12-26T23:59:59Z",
+    "method": "per_model_per_horizon_absolute_residual_order_statistic_ceil_0.9_n_plus_1",
+    "center": "median_except_RF_conditional_mean",
+    "minimum_eligible_rows_per_horizon": 100,
+    "minimum_eligibility_fraction": 0.8,
+    "bounds": "max_zero_center_minus_radius_to_center_plus_radius",
+    "time_series_exchangeability_guarantee": false,
+    "independent_quality_acceptance": false
+  },
+  "final": {
+    "profile_name": "ai09-portfolio-final-1",
+    "producer_commit": "d2363a5c78e0b190132e5e3d804da73b3136487d",
+    "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+    "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+    "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "tensorflow_lock_sha256": "105f6de592a64c4da475c938ffdede6e4e8c640032f48101c1127ad0dd26ff88",
+    "data_seeds": [
+      42,
+      137,
+      2026
+    ],
+    "seed_weights": {
+      "42": 0.3333333333333333,
+      "137": 0.3333333333333333,
+      "2026": 0.3333333333333333
+    },
+    "generation": {
+      "profile": "ai-load",
+      "seed": 42,
+      "days": 365,
+      "products": 8,
+      "stores": 3,
+      "warehouses": 2,
+      "start_date": "2026-04-01",
+      "end_date": "2027-03-31",
+      "max_daily_rows": 8760,
+      "forecast_plan_days": 14
+    },
+    "origins": {
+      "start": "2027-01-17",
+      "end": "2027-03-15"
+    },
+    "label_knowledge_cutoff": "2027-03-30T23:59:59Z",
+    "label_delay_days": 1,
+    "prior_documented_parent_exposure_end": "2026-12-31",
+    "simulation_dates_not_real_observations": true,
+    "maximum_attempts_per_seed": 1,
+    "minimum_eligible_rows_per_seed": 336,
+    "maximum_rows_per_seed": 50000,
+    "history_exposure": "whole_final_parent_reserved_before_generation_including_out_of_role_rows",
+    "budgets": {
+      "tree_rss_bytes": 12884901888,
+      "scratch_bytes": 6442450944,
+      "wall_seconds": 5400,
+      "minimum_free_disk_bytes": 6442450944,
+      "minimum_available_memory_bytes": 1073741824,
+      "sample_seconds": 0.2
+    }
+  },
+  "metrics": {
+    "same_complete_keys_for_all_models": true,
+    "point": [
+      "mean_mae",
+      "mean_mse",
+      "mean_bias_units",
+      "normalized_mean_bias",
+      "median_mae",
+      "median_mse",
+      "median_bias_units"
+    ],
+    "interval": [
+      "coverage",
+      "mean_width",
+      "mean_interval_score"
+    ],
+    "uncertainty": "separate_seed_results_equal_seed_weighted_means_min_max_stddev_no_bootstrap_delta_CI",
+    "dimensions": [
+      "horizon",
+      "volume",
+      "category",
+      "channel"
+    ],
+    "required_horizons": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "required_volume_bins": [
+      "zero",
+      "low",
+      "medium",
+      "high"
+    ],
+    "required_categories_and_channels": "freeze_from_development_report_before_final",
+    "empty_or_insufficient_group": "not_ready_never_passed",
+    "undefined_denominator": "null_not_zero"
+  },
+  "decision": {
+    "rules": "reuse_numeric_assess_segment_v2_components_QualityPolicyV2_without_relabeling_its_development_report_as_final",
+    "accept_TF_for_further_consideration": "all_three_seed_global_and_all_frozen_required_segment_components_pass",
+    "otherwise": "reject_TF_for_new_promotion_retain_existing_portfolio",
+    "RF_median": "unsupported_never_relabel_conditional_mean",
+    "stage_ready_does_not_require_TF_to_win": true,
+    "production_promotion": false
+  },
+  "historical_exposure": {
+    "known_AI09_legacy_parent_end": "2026-07-31",
+    "new_development_parent_end": "2026-12-31",
+    "legacy_fit_starts": 44,
+    "legacy_fit_completions": 40,
+    "later_unrecorded_usage": "unknown_not_zero",
+    "global_historical_unseen_guarantee": false,
+    "freshness_basis": "prospectively_generated_after_model_and_calibration_freeze_with_targets_after_documented_exposure; known-model training/validation/calibration origin sets disjoint",
+    "qualification_limit": "older lost history cannot be reconstructed; no claim all unrecorded historical sources were unseen"
+  },
+  "final_generation_authorized_by_this_plan_alone": false,
+  "stage_ready": false
+}

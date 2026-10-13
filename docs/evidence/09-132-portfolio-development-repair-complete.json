@@ -1,0 +1,206 @@
+{
+  "version": "ai09-portfolio-development-repair-complete-1.0.0",
+  "run": 38378609989,
+  "job": 115233140075,
+  "head": "2ec1e697ac008c1b538ef2d682e8a4c7886d3286",
+  "artifact": {
+    "id": 11802772416,
+    "size_bytes": 457035185,
+    "sha256": "a29337a71917470f9a9288fd76e8a8344fff8127bed47f6fb567de1959a0e00c",
+    "download_verified": true,
+    "all_comparison_files_verified": 75
+  },
+  "result": {
+    "comparison_id": "ai09-development-sha256-b4fd3a05b47ff21d661da87152d7bb761ba979555e7396748dd825f9c317db7a",
+    "final_test_opened": false,
+    "original": {
+      "accepted_model_fits": 0,
+      "artifact_id": 11799744916,
+      "charged_forecast_wall_seconds": 746.849792391,
+      "charged_preparation_wall_seconds": 432.518961493,
+      "head": "3c242e7838be72ce3cbe23a9943ae50f0738a75a",
+      "name": "ai09-portfolio-development-3c242e7838be72ce3cbe23a9943ae50f0738a75a-38372487953",
+      "run_id": 38372487953,
+      "zip_sha256": "2c1336369773008b0c6c52f877c1f7142d0c3d7986d830363741cad93da63442",
+      "zip_size_bytes": 202936788
+    },
+    "repair_wall_seconds_including_transport": 582.3027674790001,
+    "resources": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 13001302016,
+      "minimum_free_disk_bytes": 87412416512,
+      "reason": null,
+      "sample_seconds": 0.2,
+      "sampled_peak_scratch_allocated_bytes": 1376518144,
+      "sampled_peak_scratch_logical_bytes": 1373353274,
+      "sampled_tree_peak_rss_bytes": 2952867840,
+      "sampled_worker_cpu_seconds": 578.6799999999998,
+      "samples": 2473,
+      "status": "passed",
+      "wall_seconds": 578.221259049
+    },
+    "source_regenerated": false,
+    "stage_ready": false,
+    "status": "completed_development_diagnostic"
+  },
+  "model_ids": {
+    "hgb_mean": "model-sha256-53b6e714f037eb62bd5e760b7baf903e7a467daf4e076c3120afd51ad7109586",
+    "hgb_median": "model-sha256-b8599b5c1668508605575c278ddbf9643ed793d049a6e08bd612d7789220b821",
+    "rf_mean": "model-sha256-a08aa33ea1606c0dc86f7d4c517f5ee99b835a1a8dc587354b286d145ed67efb",
+    "tensorflow": "model-sha256-d9747b63efb9136fa967951e0cf38ceb186d0922148bb21baf614ea73fcb8d73"
+  },
+  "validation_rows_per_model": 9408,
+  "resources": {
+    "all_models_reload_and_prediction_seconds": 36.116431276000185,
+    "scope": "sequential_model_workers_not_a_full_pipeline_peak_rss_receipt",
+    "tensorflow": {
+      "artifact_bytes": 334935,
+      "inference": {
+        "resources": {
+          "cpu_seconds": 4.09,
+          "peak_rss_bytes": 702955520,
+          "status": "passed",
+          "threads": 1,
+          "wall_seconds": 4.143011855000168
+        },
+        "worker": {
+          "batch_prediction_seconds": 0.06893346399988332,
+          "cold_load_seconds_including_framework_import": 2.966560888999993,
+          "cpu_seconds": 3.3812849999999997,
+          "final_test_accessed": false,
+          "model_id": "model-sha256-d9747b63efb9136fa967951e0cf38ceb186d0922148bb21baf614ea73fcb8d73",
+          "output_sha256": "23a7ae8edd49b0040adde710a0c83641f58a4ef8ed60d4966c2aa44371162baa",
+          "peak_rss_bytes": 702955520,
+          "threads": 1,
+          "validation_windows": 672,
+          "visible_gpu_count": 0
+        }
+      },
+      "resources": {
+        "cpu_seconds": 17.95,
+        "cpu_threads": 1,
+        "monitor_interval_seconds": 0.05,
+        "peak_tree_rss_bytes": 720691200,
+        "wall_seconds": 18.002575909999905
+      },
+      "worker": {
+        "batch_inference_seconds": 0.05112956800007851,
+        "best_epoch": 7,
+        "cold_load_seconds": 0.022088264999865714,
+        "determinism_enabled": true,
+        "determinism_scope": "fixed_versions_platform_and_initialization_seed_not_cross_platform_bitwise",
+        "epochs_run": 11,
+        "final_test_accessed": false,
+        "history": [
+          {
+            "epoch": 1,
+            "validation_loss": 2.512582408062049
+          },
+          {
+            "epoch": 2,
+            "validation_loss": 2.0484763799111048
+          },
+          {
+            "epoch": 3,
+            "validation_loss": 1.9135010719157401
+          },
+          {
+            "epoch": 4,
+            "validation_loss": 1.8608455023311434
+          },
+          {
+            "epoch": 5,
+            "validation_loss": 1.842231637523288
+          },
+          {
+            "epoch": 6,
+            "validation_loss": 1.8242598609981082
+          },
+          {
+            "epoch": 7,
+            "validation_loss": 1.810537873336247
+          },
+          {
+            "epoch": 8,
+            "validation_loss": 1.8163590903083484
+          },
+          {
+            "epoch": 9,
+            "validation_loss": 1.8272164074296042
+          },
+          {
+            "epoch": 10,
+            "validation_loss": 1.8188537378680139
+          },
+          {
+            "epoch": 11,
+            "validation_loss": 1.8332236811944416
+          }
+        ],
+        "input_shape": [
+          null,
+          1428
+        ],
+        "interval_status": "not_ready",
+        "keras_version": "3.11.3",
+        "machine": "x86_64",
+        "mlflow_run_id": "8431adeb9d024647a1d19ea01a4a2594",
+        "mlflow_version": "3.4.0",
+        "output_order": [
+          "mean",
+          "median"
+        ],
+        "output_shape": [
+          null,
+          14,
+          2
+        ],
+        "peak_self_rss_bytes": 720691200,
+        "promotion_allowed": false,
+        "python_version": "3.11.15",
+        "reload_atol": 1e-06,
+        "reload_rtol": 1e-06,
+        "self_cpu_seconds": 17.145705,
+        "status": "passed",
+        "system": "Linux",
+        "tensorflow_version": "2.20.0",
+        "training_seconds": 13.469450985000094,
+        "visible_gpu_count": 0,
+        "worker_seconds": 16.85686973499992
+      }
+    },
+    "validation_rows": 9408
+  },
+  "tree_resources": {
+    "rf_mean": {
+      "cpu_seconds": 10.64,
+      "peak_rss_bytes": 660721664,
+      "status": "passed",
+      "threads": 1,
+      "train_rows": 27168,
+      "wall_seconds": 10.706486599000073
+    },
+    "hgb_mean": {
+      "cpu_seconds": 3.91,
+      "peak_rss_bytes": 285528064,
+      "status": "passed",
+      "threads": 1,
+      "train_rows": 27168,
+      "wall_seconds": 3.973724344999937
+    },
+    "hgb_median": {
+      "cpu_seconds": 4.510000000000001,
+      "peak_rss_bytes": 286556160,
+      "status": "passed",
+      "threads": 1,
+      "train_rows": 27168,
+      "wall_seconds": 4.575262226999939
+    }
+  },
+  "inference_scope": "early_stopping_validation_diagnostic_not_independent_acceptance",
+  "calibration_pending": true,
+  "independent_final_pending": true,
+  "stage_ready": false
+}

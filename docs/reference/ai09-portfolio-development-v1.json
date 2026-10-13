@@ -1,0 +1,109 @@
+{
+  "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+  "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+  "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "parent_limits": {
+    "max_bytes": 2147483648,
+    "max_files": 10000,
+    "max_rows": 20000000,
+    "batch_rows": 256
+  },
+  "expected_snapshot_schema_version": "1.1.0",
+  "snapshot": {
+    "include_truth": false,
+    "chunk_rows": 256,
+    "partition_by_day": false,
+    "required_use_cases": [
+      "forecast_source",
+      "inventory_source"
+    ]
+  },
+  "producer_audit": {
+    "evidence": "docs/evidence/ml/ai09-source-live-progress.json",
+    "evidence_sha256": "4595523596b4d06ace264fb47287b41b2395746119c1dd653d27824f851b48f5",
+    "ordinary_implementation": "inventory-source-cached-ledger-2.2.3",
+    "planned_implementation": "planned-source-cached-execution-1.1.3"
+  },
+  "worker_stack_observation": {
+    "phases": [
+      "generation"
+    ],
+    "interval_seconds": 120,
+    "repeat": true,
+    "locals_dumped": false,
+    "periodic_observation_not_allocation_measurement": true,
+    "implementation": "python_current_frames_owned_references_no_native_watchdog",
+    "maximum_threads": 64,
+    "maximum_frames_per_thread": 64,
+    "maximum_snapshot_bytes": 65536,
+    "join_timeout_seconds": 5,
+    "may_be_delayed_without_GIL": true,
+    "truncation_explicit": true,
+    "maximum_filename_characters": 256,
+    "maximum_function_characters": 96
+  },
+  "live_progress": {
+    "source_version": "source-progress-1.0.0",
+    "supervisor_version": "ai09-live-progress-1.0.0",
+    "heartbeat_seconds": 60,
+    "output": "flushed_actions_stdout_and_private_jsonl",
+    "heartbeat_is_not_work_progress": true,
+    "percent_and_eta_inferred": false,
+    "actions_live_visibility_control_required": true
+  },
+  "version": "ai09-portfolio-development-1.0.0",
+  "scope": "original_source_and_frozen_forecast_development_comparison_no_final",
+  "profile_name": "ai09-portfolio-development-1",
+  "producer_commit": "d2363a5c78e0b190132e5e3d804da73b3136487d",
+  "generation": {
+    "profile": "ai-load",
+    "seed": 42,
+    "days": 365,
+    "products": 8,
+    "stores": 3,
+    "warehouses": 2,
+    "start_date": "2026-01-01",
+    "end_date": "2026-12-31",
+    "max_daily_rows": 8760,
+    "forecast_plan_days": 14
+  },
+  "budgets": {
+    "tree_rss_bytes": 12884901888,
+    "scratch_bytes": 6442450944,
+    "wall_seconds": 5400,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "comparison": {
+    "fold": {
+      "name": "portfolio-development",
+      "train": {
+        "start": "2026-07-01",
+        "end": "2026-09-28"
+      },
+      "validation": {
+        "start": "2026-10-15",
+        "end": "2026-11-11"
+      },
+      "development_holdout": {
+        "start": "2026-11-28",
+        "end": "2026-12-11"
+      },
+      "purge_days": 15,
+      "training_cutoff": "2026-10-13T23:59:59Z",
+      "selection_cutoff": "2026-11-26T23:59:59Z",
+      "evaluation_cutoff": "2026-12-26T23:59:59Z"
+    },
+    "tensorflow_epochs": 25,
+    "initialization_seed": 42,
+    "tree_fit_wall_seconds": 300,
+    "tree_fit_cpu_seconds": 300,
+    "minimum_eligible_rows_per_role": 336,
+    "maximum_attempts": 1
+  },
+  "final_generation_authorized": false,
+  "final_test_opened": false,
+  "quality_qualified": false,
+  "stage_ready": false
+}

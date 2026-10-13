@@ -14,6 +14,7 @@ import local_stack as stack
 import mlflow_store as store
 
 from retailops_ai.forecast_jobs.inputs import PreparedInputs
+from retailops_ai.forecast_jobs.read_progress import safe_read_progress
 from retailops_ai.security.local import strict_json
 
 
@@ -53,9 +54,15 @@ def main(*, read: bool = False, catalog: bool = False, evaluations: bool = False
     if evaluations:
         parser.add_argument("--historical-evidence", type=Path)
     args = parser.parse_args()
-    raw = (stack.ROOT / "contracts/forecast_jobs/v1/fixture/inputs.json").read_bytes()
-    strict_json(raw)
-    inputs = PreparedInputs.model_validate_json(raw)
+    report: dict[str, Any] = {
+        "checked_at": datetime.now(UTC).isoformat(),
+        "input_origin": "controlled_contract_fixture",
+        "status": "running",
+        "phase": "prepare_inputs",
+    }
+    # Invalidate any previous passing report before input validation or mutation.
+    args.report.parent.mkdir(parents=True, exist_ok=True)
+    args.report.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     project = (
         "retailops_ai_evaluations_"
         if evaluations
@@ -65,26 +72,6 @@ def main(*, read: bool = False, catalog: bool = False, evaluations: bool = False
         if read
         else "retailops_ai_outputs_"
     ) + uuid.uuid4().hex[:10]
-    payload = inputs.model_dump_json().encode()
-    if evaluations:
-        from retailops_ai.model_lifecycle.evaluation_contracts import EvaluationEvidence
-
-        historical = None
-        if args.historical_evidence:
-            with args.historical_evidence.open("rb") as stream:
-                evidence_raw = stream.read(65537)
-            if len(evidence_raw) > 65536:
-                raise ValueError("historical_evidence_byte_limit")
-            strict_json(evidence_raw)
-            historical = EvaluationEvidence.model_validate_json(evidence_raw)
-            if historical.descriptor.purpose != "historical_development_evidence":
-                raise ValueError("historical_evidence_purpose_required")
-        payload = json.dumps(
-            dict(
-                fixture=inputs.model_dump(mode="json"),
-                historical_evidence=historical.model_dump(mode="json") if historical else None,
-            )
-        ).encode()
     owned = False
     target = project
     original = store.compose
@@ -96,13 +83,33 @@ def main(*, read: bool = False, catalog: bool = False, evaluations: bool = False
         return [*base, *args]
 
     store.compose = isolated
-    report: dict[str, Any] = {
-        "checked_at": datetime.now(UTC).isoformat(),
-        "project": project,
-        "input_origin": "controlled_contract_fixture",
-    }
-    phase = "preflight"
+    report["project"] = project
+    phase = "prepare_inputs"
     try:
+        raw = (stack.ROOT / "contracts/forecast_jobs/v1/fixture/inputs.json").read_bytes()
+        strict_json(raw)
+        inputs = PreparedInputs.model_validate_json(raw)
+        payload = inputs.model_dump_json().encode()
+        if evaluations:
+            from retailops_ai.model_lifecycle.evaluation_contracts import EvaluationEvidence
+
+            historical = None
+            if args.historical_evidence:
+                with args.historical_evidence.open("rb") as stream:
+                    evidence_raw = stream.read(65537)
+                if len(evidence_raw) > 65536:
+                    raise ValueError("historical_evidence_byte_limit")
+                strict_json(evidence_raw)
+                historical = EvaluationEvidence.model_validate_json(evidence_raw)
+                if historical.descriptor.purpose != "historical_development_evidence":
+                    raise ValueError("historical_evidence_purpose_required")
+            payload = json.dumps(
+                dict(
+                    fixture=inputs.model_dump(mode="json"),
+                    historical_evidence=historical.model_dump(mode="json") if historical else None,
+                )
+            ).encode()
+        phase = "preflight"
         stack.environment_file(create=True)
         combined.require_fresh(project)
         store.require_fresh_test_images(project)
@@ -153,6 +160,9 @@ def main(*, read: bool = False, catalog: bool = False, evaluations: bool = False
             timeout=420 if read else 240 if catalog or evaluations else 180,
             check=False,
         )
+        if read:
+            for record in safe_read_progress(result.stderr):
+                print(json.dumps(record))
         if result.returncode:
             for line in result.stdout.decode(errors="replace").splitlines():
                 if re.fullmatch(r'\{"publication_failure_line": [0-9]{1,4}\}', line):
@@ -169,6 +179,8 @@ def main(*, read: bool = False, catalog: bool = False, evaluations: bool = False
             print(json.dumps({"acceptance_errors": [v.decode() for v in markers]}))
             raise ValueError(mode + "_acceptance_failed")
         report.update(json.loads(result.stdout))
+        # The child cannot approve restart persistence or the parent's cleanup.
+        report["status"] = "running"
         before = json.loads(store.checked_run([*command, "--inspect"]))
         phase = "database_sigkill_restart"
         store.checked_run(store.compose(project, "kill", "-s", "SIGKILL", "db"))
@@ -186,20 +198,19 @@ def main(*, read: bool = False, catalog: bool = False, evaluations: bool = False
             if read
             else "sigkill_database_restart_preserves_complete_forecast_partitions_manifests_pins_history_and_heads"
         )
-        args.report.parent.mkdir(parents=True, exist_ok=True)
-        args.report.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
-        print(
-            json.dumps(
-                {"status": "passed", "report": str(args.report), "published_forecast_outputs": 0}
-            )
-        )
+        report["status"] = "passed"
+        report.pop("phase", None)
         return 0
     except (OSError, ValueError, KeyError, TypeError, subprocess.TimeoutExpired) as exc:
+        if read and isinstance(exc, subprocess.TimeoutExpired):
+            for record in safe_read_progress(exc.stderr or b""):
+                print(json.dumps(record))
         reason = (
             str(exc)
             if isinstance(exc, ValueError) and re.fullmatch(r"[a-z][a-z_]{1,100}", str(exc))
             else type(exc).__name__
         )
+        report.update(status="failed", phase=phase, reason=reason)
         print(
             json.dumps(
                 {
@@ -220,9 +231,31 @@ def main(*, read: bool = False, catalog: bool = False, evaluations: bool = False
     finally:
         try:
             if owned:
-                store.cleanup_test_stacks(project)
+                try:
+                    store.cleanup_test_stacks(project)
+                except BaseException:
+                    if report["status"] != "failed":
+                        report.update(
+                            status="failed", phase="cleanup", reason="test_stack_cleanup_failed"
+                        )
+                    report["cleanup_status"] = "failed"
+                    raise
+                report["cleanup_status"] = "passed"
         finally:
             store.compose = original
+            if report["status"] == "running":
+                report.update(status="failed", phase=phase, reason="acceptance_interrupted")
+            args.report.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+            if report["status"] == "passed":
+                print(
+                    json.dumps(
+                        {
+                            "status": "passed",
+                            "report": str(args.report),
+                            "published_forecast_outputs": 0,
+                        }
+                    )
+                )
 
 
 if __name__ == "__main__":

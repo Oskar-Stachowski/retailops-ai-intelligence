@@ -1,5 +1,9 @@
 # AI 09 — rzeczywisty challenger TensorFlow na CPU
 
+Aktualny zakres i wykonanie opisują [portfolio AI 09](ai09-portfolio-ready.md)
+oraz [karta bieżącego modelu](cards/tensorflow-portfolio.md). Poniższy opis
+zachowuje historyczny odbiór przyrostów 09.2–09.4 i ich ograniczenia.
+
 Status AI 09: **in_progress**. Przyrost 09.2 dodaje rzeczywisty trening Keras,
 podpisany wymiarami MLflow artifact, preprocessing oraz ponowny odczyt na CPU.
 Małe dane kontrolne potwierdzają wykonanie ścieżki. Nie są końcową oceną jakości

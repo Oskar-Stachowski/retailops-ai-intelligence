@@ -1,0 +1,24 @@
+{
+  "version": "ai09-portfolio-final-execution-1.0.0",
+  "maximum_attempts_per_seed": 1,
+  "original": {
+    "run_id": 38381951994,
+    "head": "b00730b4f0c41edb4b72c32abc03212020b0752b",
+    "artifact_id": 11804525844,
+    "name": "ai09-portfolio-freeze-b00730b4f0c41edb4b72c32abc03212020b0752b-38381951994",
+    "zip_sha256": "507a0a284c2816e7647b78eb28a10f16b053755b0c0093bd230b1e55904fa98e",
+    "zip_size_bytes": 29799129
+  },
+  "freeze_sha256": "4255cf3a06436516675053a47f99cde8fb3444d8aae54ab00858a1b438fde8a2",
+  "comparison_id": "ai09-development-sha256-b4fd3a05b47ff21d661da87152d7bb761ba979555e7396748dd825f9c317db7a",
+  "assessment_sha256": "64480d8b5b40be5fd6074cc0c46e86e35654fece131c9286d40a8f3421823675",
+  "calibration_code_sha256": {
+    "scripts/run_ai09_portfolio_assessment.py": "b34493173926ca65b4f0f3228ff509ca6fa2030b010186b7be820a08f7f74010",
+    "src/retailops_ai/evaluation_campaign/portfolio_assessment.py": "73906eb465cab6c34cfca22b2f5034b8a743f7536c2ddd4c735ab79e2dbb5a00",
+    "src/retailops_ai/evaluation_campaign/portfolio_data_io.py": "00a5a33ad1c49c0b703d2bade8c52fa3bc82113fbd24e0d2ce04ace01aa3c84f",
+    "src/retailops_ai/evaluation_campaign/portfolio_model_io.py": "146f9d6a7e0479e7e7edec9fbe55733b3f3b2ea586f7219ab59fba67c7bcb8df"
+  },
+  "transport_maximum_bytes": 268435456,
+  "no_model_refits": true,
+  "ready_before_execution": false
+}

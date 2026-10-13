@@ -1,5 +1,33 @@
 # Aktualny status
 
+**2026-10-13 — AI 09: wykonanie ukończone, odbiór publikacji R8.**
+[Raport końcowy](ai09-forecast-portfolio-report.md) i [karta TF](cards/tensorflow-portfolio.md)
+wiążą rzeczywisty trening, kalibrację oraz trzy poprawnie zakończone seedy
+42/137/2026. Każdy ma 19443 wspólne klucze i 17437 kwalifikowanych etykiet;
+wszystkie metryki odtworzono dokładnie z zapisanych predykcji i etykiet.
+Decyzja: **odrzucić TF do nowej promocji, zachować historyczne portfolio**.
+Bias TF wynosi od −23,06% do −42,74% przy limicie 10%; zero/high bez próbek
+pozostają not_ready. Nie przeprowadzono nowych fitów po zamrożeniu final.
+[R1–R7 mają dowody](ai09-portfolio-ready.md); R8 wymaga pełnego Required CI
+dokładnego końcowego PR AI i wynikowego main oraz zgodnego odbioru planu Source.
+Nie jest potrzebny kolejny capacity diagnostic, trening ani wariant 2–3.
+Niższe wpisy są historyczne i nie zastępują tej checklisty zamknięcia.
+
+**2026-10-13 — zatwierdzony mniejszy zakres zamknięcia AI 09.**
+Użytkownik wybrał [TensorFlow i konsolidację portfolio](ai09-portfolio-ready.md).
+AI 07–08 pozostają zamknięte; ich wyniki zostaną przypięte jako historyczne
+odbiory. Nowa ocena dotyczy forecastingu: baseline/RF/HGB/TF, mniejszy jawny
+profil, trzy seedy, rzeczywisty model, odtworzenie, jakość, koszty i raport.
+Warianty 2–3 zapisano jako przyszłe ulepszenia, bez wdrażania w tym zadaniu.
+Starsze wpisy poniżej opisują wcześniejszy zakres i zachowane wyniki prób.
+Pełna wspólna kampania oraz jej canonical capacity nie są już warunkiem
+zamknięcia tego wariantu. R1–R8 pozostają do wykonania: **not_ready**.
+
+**2026-10-13 — AI 09: poprawki obsługi błędu odczytu prognoz.**
+Kontrola `main` `e544c78` zakończyła się błędem: odczyt przekroczył 420 sekund, a następnie nie udało się usunąć obrazu testowego. Pozostałe 15 jobs poza agregatorem przeszło. Poprawiono sprzątanie jednorazowych kontenerów profilu `maintenance`, usuwanie nieaktualnego wyniku „passed” oraz zachowanie bezpiecznej diagnostyki faz po timeoutcie. Pierwotna przyczyna timeoutu pozostaje niewyjaśniona; limit nie został podniesiony.
+
+[09.126](evidence/09-126-forecast-smoke-diagnostics.json): **146 testów kodu i te same 146 testów z instalacji**, bez pominięć; Mypy **821 plików**, zgodne bajty **687 modułów**. Dowód używa kontrolowanych zastępczych operacji Docker; rzeczywisty odbiór i Required CI tej poprawki są nadal wymagane. [PR #69](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/69) weryfikuje wcześniejszą integrację i jeszcze nie zawiera tej poprawki. Nowe operacje Project: **0**; canonical wyłączony, **12 GiB + 1 GiB rezerwy**, AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: poprawka podziału testów po pełnym wyniku PR 68.**
 [09.123](evidence/09-123-integration-ci-rebalance.json) zachowuje nieudany Required CI kodu `60b4a03`: **14 jobs success**, błąd RSS natywnego scoringu, anulowany po 90 minutach shard 2 i nieudany agregator. Żaden z tych wyników nie jest odbiorem. Wagi 266 w pełni zakończonych plików testowych zaktualizowano z oryginalnych pomiarów Linux; 20 niedokończonych lub nierozpoczętych plików zachowuje wcześniejsze wagi. Cztery shardy, pełna kolekcja, limit 90 minut i wszystkie 17 jobs pozostają wymagane.
 

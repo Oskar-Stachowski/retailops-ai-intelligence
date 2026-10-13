@@ -1,0 +1,223 @@
+{
+  "version": "ai09-portfolio-publication-workflow-contract-1.0",
+  "scope": "publication CI contract repair; no model, calibration, data or experiment changes",
+  "ci": {
+    "run_id": 38393691755,
+    "head": "1a9853ec8c8ca0937f77a75f54b635348c25364d",
+    "tested_merge_commit": "072c3b4061c5984684e23d519fb8dff746a3e0d2",
+    "conclusion": "failure",
+    "job_counts": {
+      "success": 15,
+      "failure": 2
+    },
+    "jobs": [
+      {
+        "id": 115283461514,
+        "name": "secrets",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283461986,
+        "name": "checks",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939285,
+        "name": "anomaly-oci",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939320,
+        "name": "persistence",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939324,
+        "name": "TensorFlow CPU training, artifact and reload",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939376,
+        "name": "tests (3)",
+        "conclusion": "failure"
+      },
+      {
+        "id": 115283939384,
+        "name": "persistence-forecast",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939391,
+        "name": "acceptance (ci-detectors)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939395,
+        "name": "acceptance (ci-forecast)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939424,
+        "name": "acceptance (ci-source-inputs)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939454,
+        "name": "acceptance (ci-qualified-inputs)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939457,
+        "name": "tests (0)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939488,
+        "name": "observation-broker",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939511,
+        "name": "observation-replay",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939522,
+        "name": "tests (2)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115283939882,
+        "name": "tests (1)",
+        "conclusion": "success"
+      },
+      {
+        "id": 115317795681,
+        "name": "required-result",
+        "conclusion": "failure"
+      }
+    ]
+  },
+  "complete_disjoint_collection_verified": true,
+  "full_collection_count": 6062,
+  "test_counts": {
+    "passed": 6012,
+    "skipped": 49,
+    "failed": 1
+  },
+  "failed_tests": [
+    "tests/test_ai09_checkpoint_transport.py::test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editable_install"
+  ],
+  "shards": [
+    {
+      "shard": 0,
+      "exit_code": 0,
+      "tests": {
+        "passed": 1378,
+        "skipped": 13
+      },
+      "sum_phase_seconds": 4730.67099414399
+    },
+    {
+      "shard": 1,
+      "exit_code": 0,
+      "tests": {
+        "passed": 1694,
+        "skipped": 6
+      },
+      "sum_phase_seconds": 4603.528364054999
+    },
+    {
+      "shard": 2,
+      "exit_code": 0,
+      "tests": {
+        "passed": 1357
+      },
+      "sum_phase_seconds": 4407.641417042989
+    },
+    {
+      "shard": 3,
+      "exit_code": 1,
+      "tests": {
+        "passed": 1583,
+        "failed": 1,
+        "skipped": 30
+      },
+      "sum_phase_seconds": 4469.66676356301
+    }
+  ],
+  "verified_original_artifacts": [
+    {
+      "id": 11817225578,
+      "name": "ci-test-shard-0-attempt-1",
+      "size_in_bytes": 331164,
+      "digest": "sha256:d6bf21e439f67e1619cacac6bf8fc0d2299e462d04c241d9f1c26aedc99337ff",
+      "expires_at": "2026-10-27T13:17:14Z"
+    },
+    {
+      "id": 11817195229,
+      "name": "ci-test-shard-1-attempt-1",
+      "size_in_bytes": 339422,
+      "digest": "sha256:a7e52e3270aefee8a53fbf94e88dfbda83b57a2b7eccf2dd421c147d28893923",
+      "expires_at": "2026-10-27T13:15:02Z"
+    },
+    {
+      "id": 11816322731,
+      "name": "ci-test-shard-2-attempt-1",
+      "size_in_bytes": 318134,
+      "digest": "sha256:fe365e272ddce51011995ef893b3ab657e8f680f6969b27f87dd53c1fab990f0",
+      "expires_at": "2026-10-27T13:11:46Z"
+    },
+    {
+      "id": 11815578494,
+      "name": "ci-test-shard-3-attempt-1",
+      "size_in_bytes": 338958,
+      "digest": "sha256:b8c472960d90093924f3be468901d6db090733b77f82f98c508dd7c42768db47",
+      "expires_at": "2026-10-27T13:12:43Z"
+    }
+  ],
+  "cause": "Workflow supports portfolio_final_repair, but the dependency setup contract test still expected the older mode list and producer condition. The actual repair excludes Source checkout/install and uses the same locked portfolio environment.",
+  "fix": {
+    "allowed_modes_include_portfolio_final_repair": true,
+    "source_checkout_and_install_are_still_excluded_for_repair": true,
+    "cheap_dependency_contract_runs_in_preflight_before_heavy_jobs": true,
+    "full_test_collection_and_all_17_required_jobs_retained": true,
+    "ci_timeouts_unchanged": true
+  },
+  "local_verification": {
+    "ci_contract_transport_and_repair": {
+      "passed": 165,
+      "skipped": 0,
+      "seconds": 13.96
+    },
+    "all_remaining_changed_test_files": {
+      "passed": 100,
+      "skipped": 1,
+      "skip_reason": "Linux pre-exec RSS retention on macOS",
+      "seconds": 83.45
+    },
+    "ruff_format_docs_diff": "passed"
+  },
+  "original_linux_worker_regressions": [
+    {
+      "node_id": "tests/test_forecast_worker_resources.py::test_actual_fit_survives_a_larger_parent_without_raising_any_budget",
+      "status": "passed"
+    },
+    {
+      "node_id": "tests/test_forecast_worker_resources.py::test_model_identity_binds_the_shared_memory_implementation",
+      "status": "passed"
+    },
+    {
+      "node_id": "tests/test_forecast_worker_resources.py::test_real_numeric_worker_receipt_uses_the_shared_executable_measurement[functional_worker]",
+      "status": "passed"
+    },
+    {
+      "node_id": "tests/test_forecast_worker_resources.py::test_real_numeric_worker_receipt_uses_the_shared_executable_measurement[model_worker]",
+      "status": "passed"
+    }
+  ],
+  "all_four_calibration_files_unchanged": true,
+  "new_project_operations": 0,
+  "stage_ready": false,
+  "publication": "requires full CI on corrected PR head and resulting main, plus final Source publication"
+}

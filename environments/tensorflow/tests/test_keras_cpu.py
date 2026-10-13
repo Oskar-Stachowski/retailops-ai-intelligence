@@ -180,7 +180,9 @@ def test_comparison_real_tree_heads_tensorflow_reload_and_no_refits(
 
     fold, train, validation = development
     policy = DevelopmentComparisonPolicy(tensorflow=ChallengerPolicy(epochs=3))
-    protocol = protocol_for(fold, policy)
+    protocol = protocol_for(fold, policy).model_copy(
+        update={"implementation_sha256": benchmark.comparison_code()}
+    )
     root = tmp_path / "comparison"
 
     # Controlled parents exercise the complete real fit/registry path, not source qualification.
@@ -249,6 +251,49 @@ def test_comparison_real_tree_heads_tensorflow_reload_and_no_refits(
     assert benchmark._prediction_bytes(
         benchmark._predictions(root, validation, reloaded)
     ) == benchmark._prediction_bytes(predictions)
+    # The approved portfolio adapter consumes features only, with no forged
+    # validation/final role and no additional fit. Check all six original points.
+    from retailops_ai.evaluation_campaign.campaign_forecast_inference import (
+        InferenceRecord,
+        InferenceWindow,
+    )
+    from retailops_ai.evaluation_campaign.comparison import forecast_key_bytes
+    from retailops_ai.evaluation_campaign.portfolio_assessment import predict
+    from retailops_ai.evaluation_campaign.portfolio_model_io import load_models, seal_models
+
+    bundle = tmp_path / "portfolio-models"
+    seal_models(root, bundle)
+    frozen_tf, frozen_trees, _ = load_models(bundle)
+    adapted = predict(
+        [
+            InferenceWindow(
+                tuple(
+                    InferenceRecord(forecast_key_bytes(s.row), s.row, s.membership.eligible)
+                    for s in w.samples
+                ),
+                w.history,
+            )
+            for w in validation
+        ],
+        tensorflow=frozen_tf.model,
+        state=frozen_tf.state,
+        trees=frozen_trees,
+    )
+    for name, original in predictions.items():
+        for prediction in original:
+            value = adapted[forecast_key_bytes(prediction)][name]
+            for component in ("mean", "median"):
+                expected = getattr(prediction.value, component)
+                actual = getattr(value, component)
+                if expected is None:
+                    assert actual is None
+                else:
+                    assert actual == pytest.approx(
+                        expected,
+                        rel=checked["worker"]["reload_rtol"],
+                        abs=checked["worker"]["reload_atol"],
+                    )
+            assert value.interval is None
     receipt_path = root / "trees/rf_mean.resources.json"
     receipt = json.loads(receipt_path.read_text())
     receipt["cpu_seconds"] = policy.trees.model.fit_cpu_seconds + 1

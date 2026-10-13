@@ -1,0 +1,77 @@
+{
+  "version": "ai09-portfolio-final-repair-1.0.0",
+  "maximum_additional_assessment_attempts_per_seed": 1,
+  "source_regenerated": false,
+  "models_refitted": false,
+  "calibration_changed": false,
+  "stage_ready": false,
+  "repeat_final_parent_access_disclosed": true,
+  "reason": "Correct imported snapshot subdirectory and matching native replay runtime pin; reuse all original data and frozen models; no new selection or tuning.",
+  "original_final_plan_sha256": "396868e64ca9d3b0cb461c2f8554d7043f20f885785bc5a7f4108acce2d61bbe",
+  "original_output_prefix": "/home/runner/work/retailops-ai-intelligence/retailops-ai-intelligence/final",
+  "transport_maximum_bytes": 2147483648,
+  "budgets": {
+    "tree_rss_bytes": 12884901888,
+    "scratch_bytes": 6442450944,
+    "wall_seconds": 5400,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "seeds": {
+    "42": {
+      "original": {
+        "run_id": 38384080156,
+        "head": "598172aa1672b9e4f68c277cdadecadfdbfdf728",
+        "artifact_id": 11804764072,
+        "name": "ai09-portfolio-final-seed42-598172aa1672b9e4f68c277cdadecadfdbfdf728-38384080156",
+        "zip_sha256": "8a65a47b081f9ef63d22fe8434b9d9f36ca07220d9a26fb79e3590d45bd7f925",
+        "zip_size_bytes": 174904675
+      },
+      "receipt_sha256": {
+        "result.json": "bc114442015cc5436e0a1a19794c28fca56392bbecb31b581417d90c0b0e4bf1",
+        "intent.json": "188154f666cda2c6ce92fd4ad9d9d5742c17a861c304dab858ad07c51ca95089",
+        "identity.json": "eadb16692a3e6c54071ab52b8ee8081d798311ff3eceda1e1c830fb658e9ff41",
+        "import.json": "fe4e555186dac94a6a9f05d11062d8f4251be12fa7cdf50eb9a4e0428fb36c06",
+        "curation.json": "943c9dafe902f7b804b520f54608307c480c7a2cdf04a2d84de6c96c8cfd252b",
+        "prepare.log": "37299ed2fb6dd0d07bd33b79ac5103cb089a9a9ea79d30a6750efad64d3baca0"
+      }
+    },
+    "137": {
+      "original": {
+        "run_id": 38384080156,
+        "head": "598172aa1672b9e4f68c277cdadecadfdbfdf728",
+        "artifact_id": 11805038489,
+        "name": "ai09-portfolio-final-seed137-598172aa1672b9e4f68c277cdadecadfdbfdf728-38384080156",
+        "zip_sha256": "e6ab382b803332e0b8e02c0c826e2e51be2284ef51e048e6fe67940fc7fef2ae",
+        "zip_size_bytes": 174874113
+      },
+      "receipt_sha256": {
+        "result.json": "ba6ce86d0987c5dbe11b6c5e428f22b34dcebd1a6e127759869f3ef9460f404e",
+        "intent.json": "9e087673230a344501476d26b463e8ea5159f98b7c50f0d8ffa5265abe2c141c",
+        "identity.json": "e3ce45832348e9716ca5d6c8eb7b4921855a54366e830a1ea742f11afae4a6bf",
+        "import.json": "eb3841f31256d486a1e549ef5d6ee05a8a9d5832af85355b9896d1f721ee08a5",
+        "curation.json": "553c22ce7fdde7613f85b50667a6197cd8c9976e66fc43b335e9e11ee53b0596",
+        "prepare.log": "37299ed2fb6dd0d07bd33b79ac5103cb089a9a9ea79d30a6750efad64d3baca0"
+      }
+    },
+    "2026": {
+      "original": {
+        "run_id": 38384080156,
+        "head": "598172aa1672b9e4f68c277cdadecadfdbfdf728",
+        "artifact_id": 11804927211,
+        "name": "ai09-portfolio-final-seed2026-598172aa1672b9e4f68c277cdadecadfdbfdf728-38384080156",
+        "zip_sha256": "c8dc507aa3f8dd2d28265569408bb1fd39b95b8a06254e1e33ee03e6b4293982",
+        "zip_size_bytes": 165648415
+      },
+      "receipt_sha256": {
+        "result.json": "c7349269074eec18d355f762a3da92e2c6ffb907a20ff6b2b9344533a2244010",
+        "intent.json": "8558caa9c7a6b89a8d2520997e1be090ccae55027cab1bda369226e871bc18f2",
+        "identity.json": "6d57451c4d1108d7797521b5b0acfc1ad4545f1730d13721309a6e169f13a1a2",
+        "import.json": "fef43c3eb0821ffd6bc2858a8d584a556b69a0ed85e97ba85c349e89a86e8b33",
+        "curation.json": "9f0872445bf899035718add16e499daaf38cf4f1cccd640945629b9420e781d0",
+        "prepare.log": "37299ed2fb6dd0d07bd33b79ac5103cb089a9a9ea79d30a6750efad64d3baca0"
+      }
+    }
+  }
+}

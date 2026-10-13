@@ -1,0 +1,207 @@
+{
+  "version": "ai09-forecast-smoke-diagnostics-1.0.0",
+  "observed_at_utc": "2026-10-13T06:55:11.817399+00:00",
+  "base": "7ff94fa6dd2e422a54aeb680fee14c84b2480ce4",
+  "scope": "Regression control for disposable forecast acceptance and owned test cleanup; not Project or actual Docker execution.",
+  "trigger": {
+    "main": "e544c78b757be1524915184155a2ff1b098b4325",
+    "run": 38350390036,
+    "job": 115141488946,
+    "run_status": "completed",
+    "conclusion": "failure",
+    "failed_phase": "read_acceptance",
+    "reason": "TimeoutExpired",
+    "unchanged_timeout_seconds": 420,
+    "secondary_failure": "owned API image removal during cleanup",
+    "other_non_aggregator_jobs_succeeded": 15,
+    "required_result": "failure"
+  },
+  "findings": [
+    "Compose down without the maintenance profile and remove-orphans excludes profiled migration one-offs; this is consistent with the secondary image removal failure, not proof of the original timeout cause.",
+    "A failed attempt could leave a previous passing report, and cleanup could fail after success had been published.",
+    "TimeoutExpired bypassed the existing child diagnostic filtering and lost the last completed read phase."
+  ],
+  "changes": [
+    "Include maintenance profile and one-offs only in cleanup of fresh, owned disposable projects; preserve image owner labels, tag-only no-prune removal and unrelated resources.",
+    "Write running before input validation; publish passed only after child, restart inspection and cleanup success. Preserve original timeout plus cleanup failure and report interruptions as failed.",
+    "Flush closed phase names, counters and elapsed milliseconds to child stderr. Parent releases at most 32 closed-schema records from last 8192 bytes on exit or timeout; raw data, credentials, arbitrary fields and messages are rejected."
+  ],
+  "source": {
+    "tests_passed": 146,
+    "skipped": 0,
+    "junit_sha256": "c673b1534fbd7b58a4eaeb3e5390282b88f92fc3e715c171a339f3141d29d79a",
+    "pytest_seconds": 35.797,
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 36.43528554192744,
+      "sampled_tree_peak_rss_bytes": 289062912,
+      "sampled_worker_cpu_seconds": 35.745043136,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 27674,
+      "sampled_peak_scratch_allocated_bytes": 36864,
+      "minimum_free_disk_bytes": 17183207424,
+      "minimum_available_memory_bytes": 1297727488,
+      "samples": 325,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "code_pins_unchanged": true
+    },
+    "scratch_measurement": "Control logs and JUnit only; pytest scratch excluded, global 6 GiB disk reserve enforced. Not a capacity qualification."
+  },
+  "installed_and_static": {
+    "status": "passed",
+    "scope": "disposable forecast smoke regression source/package parity, not Project or real Docker acceptance",
+    "phases": {
+      "static": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 1.1274294160539284,
+        "sampled_tree_peak_rss_bytes": 135299072,
+        "sampled_worker_cpu_seconds": 0.464677633,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 0,
+        "sampled_peak_scratch_allocated_bytes": 0,
+        "minimum_free_disk_bytes": 17198202880,
+        "minimum_available_memory_bytes": 1542864896,
+        "samples": 11,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "code_pins_unchanged": true
+      },
+      "build": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 1.9155778749845922,
+        "sampled_tree_peak_rss_bytes": 93011968,
+        "sampled_worker_cpu_seconds": 0.55095638,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 0,
+        "sampled_peak_scratch_allocated_bytes": 0,
+        "minimum_free_disk_bytes": 17195171840,
+        "minimum_available_memory_bytes": 1542864896,
+        "samples": 18,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "code_pins_unchanged": true
+      },
+      "install": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 0.5755959170637652,
+        "sampled_tree_peak_rss_bytes": 66895872,
+        "sampled_worker_cpu_seconds": 0.49791228,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 0,
+        "sampled_peak_scratch_allocated_bytes": 0,
+        "minimum_free_disk_bytes": 17163366400,
+        "minimum_available_memory_bytes": 1500053504,
+        "samples": 6,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "code_pins_unchanged": true
+      },
+      "installed-origin": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 0.12232270906679332,
+        "sampled_tree_peak_rss_bytes": 31735808,
+        "sampled_worker_cpu_seconds": 0.005198499,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 0,
+        "sampled_peak_scratch_allocated_bytes": 0,
+        "minimum_free_disk_bytes": 17163358208,
+        "minimum_available_memory_bytes": 1489125376,
+        "samples": 2,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "code_pins_unchanged": true
+      },
+      "installed-tests": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 36.32671479205601,
+        "sampled_tree_peak_rss_bytes": 289144832,
+        "sampled_worker_cpu_seconds": 35.652892352,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 0,
+        "sampled_peak_scratch_allocated_bytes": 0,
+        "minimum_free_disk_bytes": 17149579264,
+        "minimum_available_memory_bytes": 1367113728,
+        "samples": 324,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "code_pins_unchanged": true
+      }
+    },
+    "budgets": {
+      "tree_rss_bytes": 335544320,
+      "scratch_bytes": 268435456,
+      "minimum_available_memory_bytes": 1073741824,
+      "minimum_free_disk_bytes": 6442450944,
+      "sample_seconds": 0.1
+    },
+    "package": {
+      "modules_equal": 687,
+      "wheel_sha256": "b306144169698fc5626c484d8b149cdc03c0bfd6a539c93b3d5989e194a2745f",
+      "wheel_bytes": 3131197
+    },
+    "source_tests": 146,
+    "installed_tests": 146,
+    "same_inventory": true,
+    "code_pins_unchanged": true,
+    "scratch_measurement": "Recorded counters cover only the unused measurements directory, not actual build, install, dependency or test scratch. Zero is not evidence of zero scratch. Actual global free disk reserve 6 GiB was enforced. No capacity conclusion is drawn."
+  },
+  "test_inventory_equal": true,
+  "mypy_source_files": 821,
+  "source_code_pins_sha256": "539b9c2dbbc41543a7cbd15d1c5da52db393e48f1887e1e2bc915c064fcdfae6",
+  "actual_docker_regression_executed": false,
+  "required_ci_for_this_change_accepted": false,
+  "canonical_dispatched": false,
+  "new_project_operations": 0,
+  "fresh_final_reads": 0,
+  "tree_rss_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "stage_ready": false,
+  "remaining": [
+    "Run actual disposable Docker acceptance and exact full PR/main Required CI for this additional fix.",
+    "Determine original read timeout cause from phase evidence if it recurs; current results do not establish an intrinsic runtime improvement.",
+    "Complete remaining AI09 workflow, selection, assessments and representative profile checks before a new canonical diagnostic."
+  ],
+  "primary_references": [
+    "https://docs.docker.com/compose/how-tos/profiles/",
+    "https://github.com/docker/compose/blob/v2.39.4/pkg/compose/down.go",
+    "https://github.com/docker/compose/blob/v2.39.4/pkg/compose/containers.go"
+  ],
+  "publication_check": {
+    "checks": [
+      "documentation_contract",
+      "git_diff_check",
+      "full_git_history_secrets_scan",
+      "full_directory_secrets_scan"
+    ],
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 74.4265382499434,
+      "sampled_tree_peak_rss_bytes": 182910976,
+      "sampled_worker_cpu_seconds": 75.202155033,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 2133,
+      "sampled_peak_scratch_allocated_bytes": 12288,
+      "minimum_free_disk_bytes": 17151365120,
+      "minimum_available_memory_bytes": 1263239168,
+      "samples": 685,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "code_pins_unchanged": true
+    }
+  }
+}

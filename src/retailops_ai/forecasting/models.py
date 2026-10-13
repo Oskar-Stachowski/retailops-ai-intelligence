@@ -95,6 +95,9 @@ def model_code() -> ModelCode:
     base = evaluation_code()
     hashes = {
         **base.code_files,
+        "worker_resources.py": hashlib.sha256(
+            files("retailops_ai").joinpath("worker_resources.py").read_bytes()
+        ).hexdigest(),
         **{
             "forecasting/" + name: hashlib.sha256(
                 files("retailops_ai.forecasting").joinpath(name).read_bytes()

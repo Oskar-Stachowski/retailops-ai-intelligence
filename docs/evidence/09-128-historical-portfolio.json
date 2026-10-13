@@ -1,0 +1,317 @@
+{
+  "version": "ai09-historical-portfolio-consolidation-1.0.0",
+  "scope": "historical_accepted_AI07_AI08_not_new_joint_final_campaign",
+  "checked_at": "2026-10-13",
+  "evidence_consumer_commit": "3c242e7838be72ce3cbe23a9943ae50f0738a75a",
+  "files": [
+    {
+      "path": "docs/evidence/07-completion.md",
+      "size_bytes": 8689,
+      "sha256": "18ede938a7291293e5e1985164cb2c43b41c014b94807708dfec3a6e555ecd6f"
+    },
+    {
+      "path": "docs/evidence/07-main-integration.md",
+      "size_bytes": 2512,
+      "sha256": "91d6126bb947e626546e7ca76ed6dc0463bb5084c189df83df2b370b8784fecc"
+    },
+    {
+      "path": "docs/evidence/07-ready/capsules.json",
+      "size_bytes": 3084,
+      "sha256": "6917479ae5652de87e8d3d9b06ec2b449fb0a713cc5a9a8fa9a9781b273e9f18"
+    },
+    {
+      "path": "docs/evidence/07-ready/required-ci.json",
+      "size_bytes": 10113,
+      "sha256": "64835299c3bec2401772d9ee75683c78493b554cefc4648ef745e8964f26fa92"
+    },
+    {
+      "path": "docs/evidence/07-ready/ci-fix-oci-acceptance.json",
+      "size_bytes": 3306,
+      "sha256": "e8e9d292e9b3f6140816f700bac4c766b0f8cdcaef522b4c9830c930e966b12c"
+    },
+    {
+      "path": "docs/evidence/08-28-final-ready.json",
+      "size_bytes": 12619,
+      "sha256": "53566233eb499ed7aece7722373998b04b3fd462238a6db94717530967d84a4a"
+    },
+    {
+      "path": "docs/evidence/08-26-qualification.json",
+      "size_bytes": 9997,
+      "sha256": "a25c68a720c20afaa17534fc0762721c50d5ed7ab26ec9a83d6ed5a00c8a3a34"
+    },
+    {
+      "path": "docs/evidence/08-26-model-card.json",
+      "size_bytes": 430250,
+      "sha256": "756bc3639b30c0598f107bfd1fde75a312801602ba7386700cc7f6f84f98e2d6"
+    },
+    {
+      "path": "docs/evidence/08-25-final-quality.json",
+      "size_bytes": 362030,
+      "sha256": "5d12a98dacb2064a62286b56ac6ae357bdd2b4658b6b11d6f06d2ce13be96548"
+    },
+    {
+      "path": "docs/evidence/08-27-accepted-model/acceptance.json",
+      "size_bytes": 1351,
+      "sha256": "f21b5ec9154bc9c2465f442fcaed2b4df2de8af3661b45be5670e4f081ca6bc0"
+    }
+  ],
+  "anomaly": {
+    "stage_status": "ready",
+    "models": [
+      {
+        "role": "primary",
+        "model_id": "anomaly-detector-sha256-dc2a1a12aca7eb306e26d185b286cb71271f6bd64bd4dfc0da97f20f413a11b2",
+        "family": "seasonal_residual",
+        "capsule": {
+          "path": "docs/evidence/07-ready/primary.zip",
+          "size_bytes": 480348,
+          "sha256": "453556c69bf92c8873552e64f1b178769aec5dc0528379431bfa566c03ad38d4"
+        },
+        "model": {
+          "member": "model.json",
+          "size_bytes": 212416,
+          "sha256": "febb4393e3d93d6f47bd59d464c245a09315ba6ad18d96e1c186207d1d27af56"
+        },
+        "model_card": {
+          "member": "model_card.json",
+          "size_bytes": 81787,
+          "sha256": "584da330ee5e7e0d0d20806c34c6c8bfaf03786aa253b10e50089f639ef5068e"
+        },
+        "qualification": {
+          "member": "qualification.json",
+          "size_bytes": 3093,
+          "sha256": "7bd885a358039035512fe233a0d3418d38c1a6a7885e3d46d115895df7cc2996"
+        },
+        "receipt": {
+          "member": "capsule_receipt.json",
+          "size_bytes": 475,
+          "sha256": "10a56dd165e2b1a95b53c30b6efd46600a15300d98d7eecac0587ec9b62402e0"
+        },
+        "evaluation_id": "anomaly-quality-sha256-2ea20bddeaa1064dc52bb2294d0066b175511fb8b086aeac9db2a9d1f0e9a6b7",
+        "limitations": [
+          "Synthetic scope ai-07-portfolio-v4: 128 days, 12 products, 2 selling pairs and 2 stock locations.",
+          "Historical calendar 2025-01-01 through 2025-05-08.",
+          "Repeated synthetic experiments are correlated; previous failed cohorts are retained.",
+          "At least three final episodes per type; estimates have small-sample uncertainty.",
+          "Scores describe observations and do not establish causes or intent.",
+          "Daily evidence has a causal 24h sale / 72h return origin; no realtime detection claim.",
+          "Historical inputs remain stale when served beyond their scoring-origin freshness limit.",
+          "Offline replay only; broker ACK/DLQ durability and business projections belong to AI10."
+        ]
+      },
+      {
+        "role": "reference",
+        "model_id": "anomaly-detector-sha256-817e886307b3437dd63cc9244f83febe656539b2b840acebe7d9e9902202eeaa",
+        "family": "isolation_forest",
+        "capsule": {
+          "path": "docs/evidence/07-ready/reference.zip",
+          "size_bytes": 492162,
+          "sha256": "51bdd48b2ba7a1e58ae038a69d100c582187aa57a131cc218c79c63cda0cd98a"
+        },
+        "model": {
+          "member": "model.json",
+          "size_bytes": 212410,
+          "sha256": "34b53975b815e24e34d117553fa1e7d148b7077d913ece13eaa41a0cc008888c"
+        },
+        "model_card": {
+          "member": "model_card.json",
+          "size_bytes": 82171,
+          "sha256": "fd57c259a3161dc415fae219d9c5f39819677dc98b7ff4562acfcdb92ecf1b35"
+        },
+        "qualification": {
+          "member": "qualification.json",
+          "size_bytes": 3092,
+          "sha256": "41b9d1c777f76766ff1ee758bca52027e1babdae79fe2ab7b795cbaf44812ba0"
+        },
+        "receipt": {
+          "member": "capsule_receipt.json",
+          "size_bytes": 477,
+          "sha256": "01047ea233f2d359662f640d3a472034490ae58748a4ca442f8a08886706f776"
+        },
+        "evaluation_id": "anomaly-quality-sha256-d31ea1666f61038cfb526234a8d9861684c2ff5b7dadf68b59f2dea340fc1a57",
+        "limitations": [
+          "Synthetic scope ai-07-portfolio-v4: 128 days, 12 products, 2 selling pairs and 2 stock locations.",
+          "Historical calendar 2025-01-01 through 2025-05-08.",
+          "Repeated synthetic experiments are correlated; previous failed cohorts are retained.",
+          "At least three final episodes per type; estimates have small-sample uncertainty.",
+          "Scores describe observations and do not establish causes or intent.",
+          "Daily evidence has a causal 24h sale / 72h return origin; no realtime detection claim.",
+          "Historical inputs remain stale when served beyond their scoring-origin freshness limit.",
+          "Offline replay only; broker ACK/DLQ durability and business projections belong to AI10."
+        ]
+      }
+    ],
+    "accepted_ai_main": "18e771f9c2e89e91bf7afeb1744e0cd9112f50b5",
+    "accepted_main_required_ci": 37304852763,
+    "accepted_source_main": "1de462729012a1bad458a8da4ad317ec22dbc5b8",
+    "accepted_source_required_ci": 37305855911,
+    "historical_lifecycle": {
+      "status": "passed",
+      "consumer_commit": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+      "producer_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+      "path": "ci-fix-oci-acceptance.json",
+      "evidence_sha256": "e8e9d292e9b3f6140816f700bac4c766b0f8cdcaef522b4c9830c930e966b12c",
+      "oci_image_digest": "sha256:f5b5162fa1d49d411aed11bc15cc8ecb4f65c9350275e6b428eddebb3fd96efc",
+      "fresh_native_source_and_complete_public_parents": "passed",
+      "api_ready_http_status": 200,
+      "checks": 17,
+      "published_results": 1232,
+      "restart": "passed",
+      "owned_project_cleanup": "completed",
+      "owned_vm": "stopped"
+    }
+  },
+  "stockout": {
+    "stage_status": "ready",
+    "model_id": "risk-model-sha256-15dc9b39125f0c01512f45e8fddec946ed254ee819d6f18159a300b7cb6ea518",
+    "calibrator_sha256": "463fca5ce911c26e7f01efda9dfd27d37725f6f481ab24d7c4f2ee3355219d0b",
+    "selection_id": "stockout-selection-sha256-01832134958dc4ee8ad9ad91fab707412b28938b3e5607da2dea15a002b5828e",
+    "qualification_id": "stockout-qualification-serving-sha256-0a31aa522287a8f52aa5424dcb289c446b209f4a35dec3fb53735d5825df9bf8",
+    "model_card_id": "stockout-final-card-sha256-2be3a5e0202de42f686a21fada90a62b190b8b10cfbbb2cd4f8df0e52cde733b",
+    "selected": "logistic_regression:with_upstream:conditional-C10.0",
+    "frozen_policy": {
+      "model": "LogisticRegression with_upstream",
+      "calibration": "conditional sigmoid C10",
+      "risk_bands_percent": [
+        25,
+        50,
+        90
+      ],
+      "capacity_top_percent": 50,
+      "development_cost_top20": 605,
+      "development_cost_top40": 201,
+      "development_cost_top50": 113,
+      "final_refits": 0,
+      "final_recalibrations": 0,
+      "warning_rule": "Prospectively approved category-only warning: 20 <= n < 100, >= 5 per class, AP/Brier pass, 0.15 < ECE <= 0.20. Original strict calibration result remains visible."
+    },
+    "quality": {
+      "sources": 6,
+      "eligible_points": 9296,
+      "passed_gates": 90,
+      "approved_warnings": 3,
+      "blockers": 0,
+      "worlds": "matching and later stress on preregistered seeds 42/137/2026, assessed separately",
+      "overlapping_windows_are_independent_episodes": false,
+      "evidence": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/blob/2565a216fa7807a756387dcbaa408d6ccc07840d/docs/evidence/08-25-final-quality.json"
+    },
+    "historical_lifecycle": {
+      "actual_HTTP_auth_scope_idempotency": true,
+      "approval_id": "stockout-approval-sha256-3e55e60a48ec207fcad0d5559de09bdc1ae6df2d0a201f06649e3d5ec6f3f3db",
+      "batch_run_id": "run-ffabc320c5541140fe8799cd1208f35d",
+      "campaign_id": "stockout-final-campaign-sha256-d2465bfc93930d02ec84e4761354a4a51fa5b51739473475811a3f795fbc795a",
+      "commit": "68a3ede16da4bd8b93609c2489514c08e95a7384",
+      "image_digest": "sha256:441403e308e2a3dd57bb97480fb0677a3ac485edb773ad9ad643de65338543c9",
+      "mlflow_run_id": "f4f7493bfff343a1bcf3d8d6e6953ac4",
+      "model_refits": 0,
+      "output_id": "stockout-output-sha256-af4cd47f4c1171601eacbb52c3d705ae2fc73c623002318fa2139d845126bce6",
+      "production_deployed": false,
+      "promoted_versions": [
+        "1",
+        "2"
+      ],
+      "purpose": "actual_final_model_on_isolated_disposable_runner",
+      "qualification_id": "stockout-qualification-serving-sha256-0a31aa522287a8f52aa5424dcb289c446b209f4a35dec3fb53735d5825df9bf8",
+      "real_cold_worker": true,
+      "real_mlflow": true,
+      "real_postgres": true,
+      "real_public_inputs": true,
+      "registered_versions": [
+        "1",
+        "2",
+        "3"
+      ],
+      "rejected_version": "3",
+      "review_gates": [
+        "calibration",
+        "features",
+        "freshness_drift_compatibility",
+        "model_card",
+        "pit",
+        "protocol",
+        "resources",
+        "security_license",
+        "segments",
+        "signature",
+        "source",
+        "threshold_capacity"
+      ],
+      "rolled_back_to": "1",
+      "smoke_rows": 40,
+      "source_generation": false,
+      "status": "passed",
+      "wall_seconds": 55.72047717000004,
+      "workflow_run_id": 37281251759
+    },
+    "serving_valid_until": "2026-10-06T07:38:07.956794Z",
+    "current_serving_approval_renewed": false,
+    "limitations": [
+      "Synthetic source worlds do not establish generalization to a real retailer.",
+      "Overlapping seven-day windows are not independent stockout episodes.",
+      "Worlds are reported separately; repeated physical keys are never pooled.",
+      "Coefficients and factual reason codes do not claim causal effects.",
+      "Costs are illustrative units, not validated money savings.",
+      "Capacity applies to one complete registered physical input profile at one origin.",
+      "No global source watermark is supplied; serving freshness remains explicit.",
+      "The final campaign permission does not authorize production promotion."
+    ],
+    "accepted_publication": {
+      "pr": 14,
+      "merged": true,
+      "head_sha": "6fb5c7ae3b01e1e63deefe6acdc0fcdc4391068d",
+      "merge_commit": "2565a216fa7807a756387dcbaa408d6ccc07840d",
+      "pr_required_ci_run": 37282434148,
+      "pr_required_ci_conclusion": "success",
+      "main_required_ci_run": 37288700026,
+      "main_required_ci_conclusion": "success",
+      "full_suite_tests_passed": 2543,
+      "protected_normal_merge": true
+    }
+  },
+  "validation": {
+    "capsule_outer_hashes_and_sizes": "passed",
+    "capsule_inner_model_qualification_card_identity": "passed",
+    "stockout_original_card_and_quality_hashes": "passed",
+    "stockout_policy_campaign_and_acceptance_identity": "passed",
+    "new_model_fits": 0,
+    "new_label_evaluations": 0,
+    "historical_models_changed": false,
+    "new_promotion_authorized": false
+  },
+  "ai09_stage_ready": false,
+  "historical_main_ci_reverified_at": "2026-10-13T09:03:27.855633+00:00",
+  "historical_main_ci": [
+    {
+      "id": 37304852763,
+      "head_sha": "18e771f9c2e89e91bf7afeb1744e0cd9112f50b5",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37304852763"
+    },
+    {
+      "id": 37288700026,
+      "head_sha": "2565a216fa7807a756387dcbaa408d6ccc07840d",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37288700026"
+    },
+    {
+      "id": 37305855911,
+      "head_sha": "1de462729012a1bad458a8da4ad317ec22dbc5b8",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37305855911"
+    },
+    {
+      "id": 37262096351,
+      "head_sha": "684f18f999ce6bddc5aa83bf6d7fa7aaef9fc832",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351"
+    }
+  ]
+}

@@ -6,7 +6,6 @@ import importlib
 import io
 import math
 import os
-import platform
 import resource
 import subprocess
 import sys
@@ -31,6 +30,7 @@ from retailops_ai.tensorflow_challenger.pipeline import (
     _terminate,
     verify_artifact,
 )
+from retailops_ai.worker_resources import worker_peak_rss_bytes
 
 
 def _supervise(root: Path, policy: ChallengerPolicy) -> ResourceReceipt:
@@ -242,9 +242,7 @@ def worker(root: Path) -> None:
                 "validation_windows": len(x),
                 "cold_load_seconds_including_framework_import": cold_load,
                 "batch_prediction_seconds": prediction_seconds,
-                "peak_rss_bytes": int(
-                    usage.ru_maxrss * (1 if platform.system() == "Darwin" else 1024)
-                ),
+                "peak_rss_bytes": worker_peak_rss_bytes(),
                 "cpu_seconds": usage.ru_utime + usage.ru_stime,
                 "output_sha256": hashlib.sha256(
                     read_bytes(root, "output.npy", policy.max_matrix_bytes + 1024)
