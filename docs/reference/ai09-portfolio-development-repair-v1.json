@@ -1,0 +1,36 @@
+{
+  "version": "ai09-portfolio-development-repair-1.0.0",
+  "reason": "Explicit single engineering repair after attempt1 failed at legacy model resource validation; no quality-directed tuning. Reuse verified data; keep all original costs and failed fit.",
+  "original": {
+    "run_id": 38372487953,
+    "head": "3c242e7838be72ce3cbe23a9943ae50f0738a75a",
+    "artifact_id": 11799744916,
+    "name": "ai09-portfolio-development-3c242e7838be72ce3cbe23a9943ae50f0738a75a-38372487953",
+    "zip_sha256": "2c1336369773008b0c6c52f877c1f7142d0c3d7986d830363741cad93da63442",
+    "zip_size_bytes": 202936788,
+    "charged_preparation_wall_seconds": 432.518961493,
+    "charged_forecast_wall_seconds": 746.849792391,
+    "accepted_model_fits": 0
+  },
+  "parents": {
+    "curated": "control/curated/data/generated/curated/curated-sha256-07cf098be723e55d99ca84a4bbe98ebe8cb9f610550f253e14e88304c484a51e",
+    "features": "control/features/features-sha256-0e90402283bb4247686dbde30baf20c89f7b6117fd5643cb7c991e27c1a9f9a1",
+    "split": "control/splits/split-sha256-eabe4ce425a13d8a4d85f5706476dfc609c3fcbe9ea49fcdcaf214bdca6c899a"
+  },
+  "original_path_prefix": "/home/runner/work/retailops-ai-intelligence/retailops-ai-intelligence/",
+  "comparison_policy": "identical_to_ai09-portfolio-development-v1.json",
+  "allowed_change": "Use current-executable Linux VmHWM instead of inherited getrusage peak in legacy workers; diagnostics and explicit repair transport only.",
+  "maximum_additional_comparison_attempts": 1,
+  "budgets": {
+    "tree_rss_bytes": 12884901888,
+    "scratch_bytes": 6442450944,
+    "wall_seconds": 3600,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "transport_maximum_bytes": 536870912,
+  "source_regenerated": false,
+  "final_test_opened": false,
+  "stage_ready": false
+}

@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import logging
 import os
 import subprocess
 import sys
@@ -123,6 +124,18 @@ def fit_worker(
             or cpu > policy.fit_cpu_seconds
             or elapsed > policy.fit_wall_seconds
         ):
+            logging.getLogger(__name__).error(
+                "forecast_model_fit_final_budget_exceeded head=%s "
+                "rss_bytes=%d rss_limit=%d cpu_seconds=%.3f cpu_limit=%.3f "
+                "wall_seconds=%.3f wall_limit=%.3f",
+                head,
+                peak,
+                policy.fit_rss_bytes,
+                cpu,
+                policy.fit_cpu_seconds,
+                elapsed,
+                policy.fit_wall_seconds,
+            )
             raise SnapshotError("forecast_model_fit_final_budget_exceeded")
         raw = read_bytes(root, "estimator.json", MAX_MODEL_BYTES)
         decode_model_json(raw)

@@ -13,6 +13,7 @@ from typing import Any
 import numpy as np
 
 from retailops_ai.tensorflow_challenger.contract import ChallengerPolicy
+from retailops_ai.worker_resources import worker_peak_rss_bytes
 
 
 def main(root: Path) -> None:
@@ -193,8 +194,7 @@ def main(root: Path) -> None:
         "interval_status": "not_ready",
         "promotion_allowed": False,
         "final_test_accessed": False,
-        "peak_self_rss_bytes": int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
-        * (1 if platform.system() == "Darwin" else 1024),
+        "peak_self_rss_bytes": worker_peak_rss_bytes(),
         "self_cpu_seconds": resource.getrusage(resource.RUSAGE_SELF).ru_utime
         + resource.getrusage(resource.RUSAGE_SELF).ru_stime,
     }

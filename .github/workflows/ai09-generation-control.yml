@@ -15,6 +15,7 @@ on:
           - checkpoint_recovery
           - census_memory
           - portfolio_development
+          - portfolio_repair
         default: generation
       previous_run_id:
         description: Completed original failure run, required only for checkpoint_recovery
@@ -44,14 +45,14 @@ concurrency:
 jobs:
   control:
     runs-on: ubuntu-24.04
-    timeout-minutes: ${{ inputs.mode == 'portfolio_development' && 110 || 25 }}
+    timeout-minutes: ${{ startsWith(inputs.mode, 'portfolio_') && 110 || 25 }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
           path: consumer
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        if: inputs.mode != 'census_memory'
+        if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair'
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
           ref: ${{ inputs.mode == 'portfolio_development' && 'd2363a5c78e0b190132e5e3d804da73b3136487d' || inputs.mode != 'generation' && 'ff2504a9cf6e4f46040c8327901b7bcb82d115c0' || '16d34887b058b3dfb270af474f28242194a968ca' }}
@@ -63,7 +64,7 @@ jobs:
           python-version: "3.11.15"
           enable-cache: true
       - name: Install locked consumer dependencies
-        if: inputs.mode != 'portfolio_development'
+        if: inputs.mode != 'portfolio_development' && inputs.mode != 'portfolio_repair'
         env:
           CONTROL_MODE: ${{ inputs.mode }}
         run: |
@@ -75,10 +76,10 @@ jobs:
             uv sync --directory consumer --locked --extra snapshot --extra forecast
           fi
       - name: Install locked portfolio TensorFlow and consumer dependencies
-        if: inputs.mode == 'portfolio_development'
+        if: startsWith(inputs.mode, 'portfolio_')
         run: uv sync --directory consumer/environments/tensorflow --locked --no-install-project --no-install-package retailops-ai-intelligence
       - name: Install pinned producer dependencies
-        if: inputs.mode != 'census_memory'
+        if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair'
         run: |
           uv venv --python 3.11.15 source/.venv
           uv pip install --python source/.venv/bin/python \
@@ -269,5 +270,49 @@ jobs:
             control/second/resumed/resume-receipts/*.json
             control/second/resumed/checkpoints/
           if-no-files-found: warn
+          retention-days: 90
+          overwrite: false
+      - name: Prove Linux memory accounting and real TensorFlow CPU reload
+        if: inputs.mode == 'portfolio_repair'
+        working-directory: consumer
+        env:
+          PYTHONPATH: ${{ github.workspace }}/consumer/src:${{ github.workspace }}/consumer/tests
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+          TF_CPP_MIN_LOG_LEVEL: "2"
+          TF_ENABLE_ONEDNN_OPTS: "0"
+          CUDA_VISIBLE_DEVICES: "-1"
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/repair-preflight"
+          environments/tensorflow/.venv/bin/python -m pytest -q -rA \
+            tests/test_forecast_worker_resources.py tests/test_campaign_worker_memory.py \
+            tests/test_ai09_portfolio_repair.py environments/tensorflow/tests \
+            --junitxml="$GITHUB_WORKSPACE/repair-preflight/tests.xml"
+      - name: Reuse original development data for the one explicit repair
+        if: inputs.mode == 'portfolio_repair'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CUDA_VISIBLE_DEVICES: "-1"
+          TF_CPP_MIN_LOG_LEVEL: "2"
+          TF_ENABLE_ONEDNN_OPTS: "0"
+          TF_NUM_INTEROP_THREADS: "1"
+          TF_NUM_INTRAOP_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+        run: |
+          consumer/environments/tensorflow/.venv/bin/python consumer/scripts/run_ai09_portfolio_repair.py \
+            --output "$GITHUB_WORKSPACE/repair"
+      - name: Preserve the repair and original failed attempt together
+        if: always() && inputs.mode == 'portfolio_repair'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai09-portfolio-repair-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            repair/
+            repair-preflight/
+          if-no-files-found: error
+          compression-level: 0
           retention-days: 90
           overwrite: false

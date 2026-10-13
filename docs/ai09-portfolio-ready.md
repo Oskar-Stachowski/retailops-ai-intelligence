@@ -78,6 +78,22 @@ wersji planu, z zachowaniem jego kosztu. Wykonanie odbywa się w trybie
 `portfolio_development` istniejącego workflow na izolowanym Linux, bez
 ingerowania w lokalne sesje. Dokument i kod nie stanowią dowodu wykonania.
 
+Pierwszy rzeczywisty przebieg zakończył pięć faz przygotowania w 432,52 s
+oraz utworzył niepuste role. Porównanie modeli zatrzymało się na pierwszym RF;
+nie rozpoczęło TensorFlow. [Dowód próby 1](evidence/09-130-portfolio-development-attempt-1.json)
+zachowuje błąd i koszt kolejnych 746,85 s. Całe drzewo procesu osiągnęło około
+2,59 GiB; nie przekroczyło limitu 12 GiB. Podejrzewany błąd dotyczy starszego
+pomiaru RSS workera na Linuksie, nie jakości modelu; brak zachowanego końcowego
+pomiaru tego workera uniemożliwia uznanie przyczyny za bezpośrednio udowodnioną.
+
+[Jawny plan naprawy](reference/ai09-portfolio-development-repair-v1.json)
+dopuszcza jedną dodatkową próbę porównania na dokładnie tych samych danych,
+po teście regresji na Linuksie i natywnym teście TF. Zachowuje konfiguracje
+modeli i ich limity. Pobiera ZIP o przypiętym SHA-256, nie generuje ponownie
+Source ani nie zeruje historii niepowodzenia. Nowy budżet wykonania naprawy
+wynosi 60 minut, obok zachowanego kosztu pierwszej próby. Wynik development
+nadal nie zastępuje osobnej kalibracji i końcowej oceny trzech seedów.
+
 1. Przypiąć zakres i zinwentaryzować istniejące dane, modele i historię ekspozycji.
 2. Zamrozić mały development i wykonać jeden oryginalny przebieg od Source,
    przez niepuste role i model, do odtworzenia oraz raportu. Zachować koszty.

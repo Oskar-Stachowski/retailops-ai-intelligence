@@ -67,6 +67,7 @@ def implementation() -> dict[str, str]:
     } | {
         name: hashlib.sha256(files("retailops_ai").joinpath(name).read_bytes()).hexdigest()
         for name in (
+            "worker_resources.py",
             "data_contracts/common.py",
             "data_contracts/identity.py",
             "evaluation_campaign/comparison.py",
