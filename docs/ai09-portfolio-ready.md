@@ -51,6 +51,13 @@ po poprawce pomiaru RSS. [09.137](evidence/09-137-portfolio-publication-prefligh
 zachowuje błąd, przegląd czterech plików oraz odbiór poprawionego wpisu
 przez 11 testów transferu i wszystkie kontrole kontraktów. Historycznych
 pinów kampanii, modeli i kalibracji nie zmieniono.
+[Pełny wynik kolejnego CI](evidence/09-138-portfolio-ci-contract-repair.json)
+zachowuje 15 zaliczonych jobs i jedną przyczynę odmowy: nieaktualną listę
+trybów w teście zależności workflow. Listę i warunek pomijania Source
+uzgodniono z wykonanym trybem naprawy; tę szybką kontrolę dołączono także
+do preflightu. Cała kolekcja testów, cztery części i wszystkie bramki
+pozostają wymagane. Lokalnie 265 testów przeszło; jeden test właściwy tylko
+dla Linuksa był pominięty na Macu i ma oryginalny zaliczony wynik Linux.
 **Ready obowiązuje dopiero po tych odbiorach**, bez ponownego eksperymentu.
 
 Liczba zaliczonych testów komponentów nie jest procentem gotowości kampanii.
